@@ -2,6 +2,7 @@
 
 MyGame::MyGame()
 {
+    gameState = GameState::StartMenu;
 }
 
 void MyGame::ProcessEvents()

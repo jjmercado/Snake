@@ -21,12 +21,27 @@
     <ClInclude Include="MyGame.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Button.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Panel.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MyGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Panel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
