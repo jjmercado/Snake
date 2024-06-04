@@ -1,8 +1,9 @@
 #include "MyGame.hpp"
 
-MyGame::MyGame()
+MyGame::MyGame() : startMenuPanel(window), gameState(MyGame::StartMenu)
 {
-    gameState = GameState::StartMenu;
+    //startMenupanel = Panel(window);
+    //gameState = GameState::StartMenu;
 }
 
 void MyGame::ProcessEvents()
@@ -64,10 +65,13 @@ void MyGame::Update(sf::Time deltaTime)
 
 void MyGame::Render()
 {
+    window.clear();
+
     switch (gameState)
     {
         case MyGame::StartMenu:
         {
+            startMenuPanel.Render(window);
             break;
         }
         case MyGame::Playing:
@@ -76,17 +80,19 @@ void MyGame::Render()
         }
         case MyGame::GameOver:
         {
-
             break;
         }
         default:
             std::cerr << "Invalid game state in Render" << std::endl;
             break;
     }
+
+    window.display();
 }
 
 void MyGame::handleStartMenuEvents(sf::Event& event)
 {
+
 }
 
 void MyGame::handlePlayingEvents(sf::Event& event)

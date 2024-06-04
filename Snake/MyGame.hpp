@@ -1,5 +1,6 @@
 #pragma once
 #include "Game.hpp"
+#include "Panel.hpp"
 #include <iostream>
 
 class MyGame : public Game
@@ -19,5 +20,7 @@ class MyGame : public Game
 
 	private:
 		GameState gameState;
+
+		Panel startMenuPanel;
 };
 
