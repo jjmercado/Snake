@@ -1,7 +1,7 @@
 #include "Panel.hpp"
 
 Panel::Panel()
-{
+{	
 }
 
 Panel::Panel(sf::RenderWindow& window)
@@ -22,8 +22,20 @@ Panel::Panel(sf::RenderWindow& window)
 	menuText.setOrigin(menuText.getLocalBounds().width / 2, menuText.getLocalBounds().height / 2);
 	menuText.setPosition(sf::Vector2f(window.getSize().x / 2, (window.getSize().y / 2) - 165));
 
-	optionsButton.LoadTexture(sf::IntRect(0, 0, 190, 49));
-	optionsButton.SetPosition(sf::Vector2f(window.getSize().x / 2, (window.getSize().y / 2)));
+	startButton.LoadTexture("..\\UIpack\\PNG\\yellow_button00.png");
+	startButton.SetPosition(sf::Vector2f(window.getSize().x / 2, (window.getSize().y / 2) - 50));
+	startButton.SetText("Start");
+	startButton.SetTextPosition(sf::Vector2f(window.getSize().x / 2 - 55, (window.getSize().y / 2) - 70));
+
+	optionsButton.LoadTexture("..\\UIpack\\PNG\\blue_button00.png", sf::IntRect(0, 0, 190, 49));
+	optionsButton.SetPosition(sf::Vector2f(window.getSize().x / 2, (window.getSize().y / 2) + 20));
+	optionsButton.SetText("Options");
+	optionsButton.SetTextPosition(sf::Vector2f(window.getSize().x / 2 - 75, (window.getSize().y / 2)));
+
+	exitButton.LoadTexture("..\\UIpack\\PNG\\blue_button00.png");
+	exitButton.SetPosition(sf::Vector2f(window.getSize().x / 2, (window.getSize().y / 2) + 90));
+	exitButton.SetText("Exit");
+	exitButton.SetTextPosition(sf::Vector2f(window.getSize().x / 2 - 40, (window.getSize().y / 2) + 70));
 }
 
 bool Panel::LoadTexture(std::string filePath)
@@ -41,6 +53,8 @@ bool Panel::LoadTexture(std::string filePath)
 void Panel::Render(sf::RenderWindow& window)
 {
 	window.draw(sprite);
+	startButton.Render(window);
 	optionsButton.Render(window);
+	exitButton.Render(window);
 	window.draw(menuText);
 }

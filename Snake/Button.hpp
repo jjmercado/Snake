@@ -6,6 +6,7 @@ class Button
 {
 	public:
 		Button();
+		bool LoadTexture(std::string filePath);
 		void SetPosition(sf::Vector2f position);
 
 		void SetText(std::string text);
@@ -13,17 +14,12 @@ class Button
 		void SetTextPosition(sf::Vector2f position);
 
 		void Render(sf::RenderWindow& window);
-		bool LoadTexture(std::string filePath);
-		bool LoadTexture(sf::IntRect rect);
+		bool LoadTexture(std::string filePath, sf::IntRect rect);
 
 	private:
-		sf::Texture textureSpriteSheet;
 		sf::Texture texture;
 		sf::Sprite sprite;
 		sf::Text text;
 		sf::Font font;
-
-
-		bool LoadSpriteSheet(std::string filePath);
 };
 
