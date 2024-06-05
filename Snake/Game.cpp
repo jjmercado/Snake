@@ -2,6 +2,10 @@
 
 Game::Game() : window(sf::VideoMode(800, 600), "Snake")
 {
+    if(!font.loadFromFile("../UIpack/Font/kenvector_future.ttf"))
+	{
+		std::cout << "Error loading font" << std::endl;
+	}
 }
 
 Game::~Game()

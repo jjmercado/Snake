@@ -1,6 +1,6 @@
 #include "Button.hpp"
 
-Button::Button()
+Button::Button(sf::Font& font)
 {
 	if(!font.loadFromFile("..\\UIpack\\Font\\kenvector_future.ttf"))
 	{
@@ -15,18 +15,6 @@ Button::Button()
 bool Button::LoadTexture(std::string filePath)
 {
 	if (!texture.loadFromFile(filePath))
-	{
-		return EXIT_FAILURE;
-	}
-	sprite.setOrigin(sf::Vector2f(texture.getSize().x / 2, texture.getSize().y / 2));
-	sprite.setTexture(texture);
-	std::cout << "Texture loaded" << std::endl;
-	return EXIT_SUCCESS;
-}
-
-bool Button::LoadTexture(std::string filePath, sf::IntRect rect)
-{
-	if (!texture.loadFromFile(filePath, rect))
 	{
 		return EXIT_FAILURE;
 	}

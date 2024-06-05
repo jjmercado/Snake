@@ -6,8 +6,7 @@
 class Panel
 {
 	public:
-		Panel();
-		Panel(sf::RenderWindow& window);
+		Panel(sf::RenderWindow& window, sf::Font& font);
 		bool LoadTexture(std::string filePath);
 
 		void Render(sf::RenderWindow& window);
@@ -16,7 +15,6 @@ class Panel
 		sf::Texture texture;
 		sf::Sprite sprite;
 		sf::Text menuText;
-		sf::Font font;
 
 		Button startButton;
 		Button optionsButton;

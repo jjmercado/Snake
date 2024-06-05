@@ -1,6 +1,6 @@
 #include "MyGame.hpp"
 
-MyGame::MyGame() : startMenuPanel(window), gameState(MyGame::StartMenu)
+MyGame::MyGame() : startMenuPanel(window, font), gameState(MyGame::StartMenu)
 {
     //startMenupanel = Panel(window);
     //gameState = GameState::StartMenu;

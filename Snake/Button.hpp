@@ -5,7 +5,7 @@
 class Button
 {
 	public:
-		Button();
+		Button(sf::Font& font);
 		bool LoadTexture(std::string filePath);
 		void SetPosition(sf::Vector2f position);
 
@@ -14,12 +14,10 @@ class Button
 		void SetTextPosition(sf::Vector2f position);
 
 		void Render(sf::RenderWindow& window);
-		bool LoadTexture(std::string filePath, sf::IntRect rect);
 
 	private:
 		sf::Texture texture;
 		sf::Sprite sprite;
 		sf::Text text;
-		sf::Font font;
 };
 

@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 class Game
 {
@@ -15,5 +16,6 @@ class Game
 		virtual void Render();
 
 		sf::RenderWindow window;
+		sf::Font font;
 };
 

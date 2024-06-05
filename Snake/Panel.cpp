@@ -1,19 +1,10 @@
 #include "Panel.hpp"
 
-Panel::Panel()
-{	
-}
-
-Panel::Panel(sf::RenderWindow& window)
+Panel::Panel(sf::RenderWindow& window, sf::Font& font) : startButton(font), optionsButton(font), exitButton(font)
 {
 	LoadTexture("..\\UIpack\\PNG\\panel.png");
 	sprite.setOrigin(sf::Vector2f(texture.getSize().x / 2, texture.getSize().y / 2));
 	sprite.setPosition(sf::Vector2f(window.getSize().x / 2, window.getSize().y / 2));
-
-	if (!font.loadFromFile("..\\UIpack\\Font\\kenvector_future.ttf"))
-	{
-		std::cout << "Error loading font" << std::endl;
-	}
 
 	menuText.setFont(font);
 	menuText.setCharacterSize(40);
@@ -27,7 +18,7 @@ Panel::Panel(sf::RenderWindow& window)
 	startButton.SetText("Start");
 	startButton.SetTextPosition(sf::Vector2f(window.getSize().x / 2 - 55, (window.getSize().y / 2) - 70));
 
-	optionsButton.LoadTexture("..\\UIpack\\PNG\\blue_button00.png", sf::IntRect(0, 0, 190, 49));
+	optionsButton.LoadTexture("..\\UIpack\\PNG\\blue_button00.png");
 	optionsButton.SetPosition(sf::Vector2f(window.getSize().x / 2, (window.getSize().y / 2) + 20));
 	optionsButton.SetText("Options");
 	optionsButton.SetTextPosition(sf::Vector2f(window.getSize().x / 2 - 75, (window.getSize().y / 2)));
