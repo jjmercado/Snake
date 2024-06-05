@@ -2,6 +2,9 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Button.hpp"
+#include <unordered_map>
+#include <string>
+#include <stdexcept>
 
 class Panel
 {
@@ -10,8 +13,11 @@ class Panel
 		bool LoadTexture(std::string filePath);
 
 		void Render(sf::RenderWindow& window);
+		Button GetButton(const std::string& buttonName);
 
 	private:
+		std::unordered_map<std::string, Button*> buttonMap;
+
 		sf::Texture texture;
 		sf::Sprite sprite;
 		sf::Text menuText;

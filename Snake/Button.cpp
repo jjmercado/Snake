@@ -1,5 +1,9 @@
 #include "Button.hpp"
 
+Button::Button()
+{
+}
+
 Button::Button(sf::Font& font)
 {
 	if(!font.loadFromFile("..\\UIpack\\Font\\kenvector_future.ttf"))
@@ -43,4 +47,16 @@ void Button::Render(sf::RenderWindow& window)
 {
 	window.draw(sprite);
 	window.draw(text);
+}
+
+bool Button::IsMouseOnButton(sf::RenderWindow& window)
+{
+	if (sf::Mouse::getPosition(window).x > sprite.getPosition().x - sprite.getLocalBounds().width / 2 &&
+		sf::Mouse::getPosition(window).x < sprite.getPosition().x + sprite.getLocalBounds().width / 2 &&
+		sf::Mouse::getPosition(window).y > sprite.getPosition().y - sprite.getLocalBounds().height / 2 &&
+		sf::Mouse::getPosition(window).y < sprite.getPosition().y + sprite.getLocalBounds().height / 2)
+	{
+		return true;
+	}
+	return false;
 }

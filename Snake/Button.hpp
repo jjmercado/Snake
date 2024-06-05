@@ -5,6 +5,7 @@
 class Button
 {
 	public:
+		Button();
 		Button(sf::Font& font);
 		bool LoadTexture(std::string filePath);
 		void SetPosition(sf::Vector2f position);
@@ -14,6 +15,8 @@ class Button
 		void SetTextPosition(sf::Vector2f position);
 
 		void Render(sf::RenderWindow& window);
+
+		bool IsMouseOnButton(sf::RenderWindow& window);
 
 	private:
 		sf::Texture texture;

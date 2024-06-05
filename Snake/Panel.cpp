@@ -2,6 +2,10 @@
 
 Panel::Panel(sf::RenderWindow& window, sf::Font& font) : startButton(font), optionsButton(font), exitButton(font)
 {
+	buttonMap["Start"] = &startButton;
+	buttonMap["Options"] = &optionsButton;
+	buttonMap["Exit"] = &exitButton;
+
 	LoadTexture("..\\UIpack\\PNG\\panel.png");
 	sprite.setOrigin(sf::Vector2f(texture.getSize().x / 2, texture.getSize().y / 2));
 	sprite.setPosition(sf::Vector2f(window.getSize().x / 2, window.getSize().y / 2));
@@ -48,4 +52,14 @@ void Panel::Render(sf::RenderWindow& window)
 	optionsButton.Render(window);
 	exitButton.Render(window);
 	window.draw(menuText);
+}
+
+Button Panel::GetButton(const std::string& buttonName)
+{
+	auto it = buttonMap.find(buttonName);
+	if (it != buttonMap.end())
+	{
+		return *(it->second);
+	}
+	throw std::invalid_argument("Button not found: " + buttonName);
 }

@@ -92,7 +92,13 @@ void MyGame::Render()
 
 void MyGame::handleStartMenuEvents(sf::Event& event)
 {
-
+    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+    {
+        if(startMenuPanel.GetButton("Start").IsMouseOnButton(window))
+		{
+			gameState = MyGame::Playing;
+		}
+    }
 }
 
 void MyGame::handlePlayingEvents(sf::Event& event)
