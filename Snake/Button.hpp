@@ -18,6 +18,9 @@ class Button
 
 		bool IsMouseOnButton(sf::RenderWindow& window);
 
+		bool IsButtonPressed(sf::RenderWindow& window);
+		void SetSprite(std::string filePath);
+
 	private:
 		sf::Texture texture;
 		sf::Sprite sprite;

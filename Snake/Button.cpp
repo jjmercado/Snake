@@ -60,3 +60,17 @@ bool Button::IsMouseOnButton(sf::RenderWindow& window)
 	}
 	return false;
 }
+
+//void Button::SetSprite(std::string filePath)
+//{
+//	sf::Texture newTexture;
+//	if (!newTexture.loadFromFile(filePath)) {
+//		// Fehlerbehandlung, z.B. Fehlermeldung ausgeben oder Ausnahme werfen
+//		std::cerr << "Failed to load texture from file: " << filePath << std::endl;
+//		return;
+//	}
+//
+//	// Ersetzen der aktuellen Textur und des Sprites
+//	texture = newTexture;
+//	sprite.setTexture(texture);
+//}

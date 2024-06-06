@@ -13,7 +13,7 @@ class Panel
 		bool LoadTexture(std::string filePath);
 
 		void Render(sf::RenderWindow& window);
-		Button GetButton(const std::string& buttonName);
+		Button& GetButton(const std::string& buttonName);
 
 	private:
 		std::unordered_map<std::string, Button*> buttonMap;
@@ -22,8 +22,8 @@ class Panel
 		sf::Sprite sprite;
 		sf::Text menuText;
 
-		Button startButton;
 		Button optionsButton;
+		Button startButton;
 		Button exitButton;
 };
 

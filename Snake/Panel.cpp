@@ -54,7 +54,7 @@ void Panel::Render(sf::RenderWindow& window)
 	window.draw(menuText);
 }
 
-Button Panel::GetButton(const std::string& buttonName)
+Button& Panel::GetButton(const std::string& buttonName)
 {
 	auto it = buttonMap.find(buttonName);
 	if (it != buttonMap.end())

@@ -98,8 +98,20 @@ void MyGame::handleStartMenuEvents(sf::Event& event)
 		{
 			gameState = MyGame::Playing;
 		}
+        else if (startMenuPanel.GetButton("Options").IsMouseOnButton(window))
+		{
+            std::cout << "Options button pressed" << std::endl;
+            startMenuPanel.GetButton("Options").LoadTexture("..\\UIpack\\PNG\\yellow_button00.png");
+			// TODO: Implement options menu
+		}
+		else if (startMenuPanel.GetButton("Exit").IsMouseOnButton(window))
+		{
+			window.close();
+		}
     }
 }
+
+//void MyGame::handleStartMenuDrawings(sf::RenderWindow& window)
 
 void MyGame::handlePlayingEvents(sf::Event& event)
 {
