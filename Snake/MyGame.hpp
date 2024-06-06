@@ -15,6 +15,7 @@ class MyGame : public Game
 		void Render() override;
 
 		void handleStartMenuEvents(sf::Event& event);
+		void handleStartMenuDrawings(sf::RenderWindow& window);
 		void handlePlayingEvents(sf::Event& event);
 		void handleGameOver(sf::Event& event);
 

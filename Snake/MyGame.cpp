@@ -71,7 +71,7 @@ void MyGame::Render()
     {
         case MyGame::StartMenu:
         {
-            startMenuPanel.Render(window);
+            handleStartMenuDrawings(window);
             break;
         }
         case MyGame::Playing:
@@ -100,8 +100,6 @@ void MyGame::handleStartMenuEvents(sf::Event& event)
 		}
         else if (startMenuPanel.GetButton("Options").IsMouseOnButton(window))
 		{
-            std::cout << "Options button pressed" << std::endl;
-            startMenuPanel.GetButton("Options").LoadTexture("..\\UIpack\\PNG\\yellow_button00.png");
 			// TODO: Implement options menu
 		}
 		else if (startMenuPanel.GetButton("Exit").IsMouseOnButton(window))
@@ -111,7 +109,31 @@ void MyGame::handleStartMenuEvents(sf::Event& event)
     }
 }
 
-//void MyGame::handleStartMenuDrawings(sf::RenderWindow& window)
+void MyGame::handleStartMenuDrawings(sf::RenderWindow& window)
+{
+    if (startMenuPanel.GetButton("Start").IsMouseOnButton(window))
+    {
+        startMenuPanel.GetButton("Start").SetSprite(TextureManager::getTexture("blueButton13"));
+        startMenuPanel.GetButton("Start").SetTextFillColor(sf::Color::Black);
+    }
+    else if (startMenuPanel.GetButton("Options").IsMouseOnButton(window))
+    {
+        startMenuPanel.GetButton("Options").SetSprite(TextureManager::getTexture("yellowButton"));
+    }
+    else if (startMenuPanel.GetButton("Exit").IsMouseOnButton(window))
+    {
+        startMenuPanel.GetButton("Exit").SetSprite(TextureManager::getTexture("yellowButton"));
+    }
+    else
+	{
+        startMenuPanel.GetButton("Start").SetTextFillColor(sf::Color::White);
+		startMenuPanel.GetButton("Start").SetSprite(TextureManager::getTexture("yellowButton"));
+		startMenuPanel.GetButton("Options").SetSprite(TextureManager::getTexture("blueButton"));
+		startMenuPanel.GetButton("Exit").SetSprite(TextureManager::getTexture("blueButton"));
+	}
+    // viel zu übel ich darf nicht ständig die texturen neu laden und setzen 
+    startMenuPanel.Render(window);
+}
 
 void MyGame::handlePlayingEvents(sf::Event& event)
 {

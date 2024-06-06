@@ -5,15 +5,16 @@
 #include <unordered_map>
 #include <string>
 #include <stdexcept>
+#include "TextureManager.hpp"
 
 class Panel
 {
 	public:
 		Panel(sf::RenderWindow& window, sf::Font& font);
-		bool LoadTexture(std::string filePath);
 
 		void Render(sf::RenderWindow& window);
 		Button& GetButton(const std::string& buttonName);
+		void SetTexture(sf::Texture texture);
 
 	private:
 		std::unordered_map<std::string, Button*> buttonMap;
