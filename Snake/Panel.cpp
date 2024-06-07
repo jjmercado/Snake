@@ -8,7 +8,7 @@ Panel::Panel(sf::RenderWindow& window, sf::Font& font) : startButton(font), opti
 
 	SetTexture(TextureManager::getTexture("panel"));
 
-	sprite.setOrigin(sf::Vector2f(texture.getSize().x / 2, texture.getSize().y / 2));
+	sprite.setOrigin(sf::Vector2f(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2));
 	sprite.setPosition(sf::Vector2f(window.getSize().x / 2, window.getSize().y / 2));
 
 	menuText.setFont(font);

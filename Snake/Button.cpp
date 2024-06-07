@@ -6,11 +6,6 @@ Button::Button()
 
 Button::Button(sf::Font& font)
 {
-	if(!font.loadFromFile("..\\UIpack\\Font\\kenvector_future.ttf"))
-	{
-		std::cout << "Error loading font" << std::endl;
-	}
-
 	text.setFont(font);
 	text.setCharacterSize(30);
 	text.setFillColor(sf::Color::White);
@@ -18,6 +13,7 @@ Button::Button(sf::Font& font)
 
 void Button::SetPosition(sf::Vector2f position)
 {
+	sprite.setOrigin(sf::Vector2f(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2));
 	sprite.setPosition(position);
 }
 
