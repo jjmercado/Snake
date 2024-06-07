@@ -54,7 +54,7 @@ bool Button::IsMouseOnButton(sf::RenderWindow& window)
 	return false;
 }
 
-void Button::SetSprite(sf::Texture texture)
+void Button::SetSprite(sf::Texture& texture)
 {
 	sprite.setTexture(texture);
 }

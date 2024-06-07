@@ -19,7 +19,7 @@ class Button
 		bool IsMouseOnButton(sf::RenderWindow& window);
 
 		bool IsButtonPressed(sf::RenderWindow& window);
-		void SetSprite(sf::Texture texture);
+		void SetSprite(sf::Texture& texture);
 
 	private:
 		sf::Texture texture;

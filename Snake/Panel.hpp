@@ -14,7 +14,7 @@ class Panel
 
 		void Render(sf::RenderWindow& window);
 		Button& GetButton(const std::string& buttonName);
-		void SetTexture(sf::Texture texture);
+		void SetTexture(sf::Texture& texture);
 
 	private:
 		std::unordered_map<std::string, Button*> buttonMap;

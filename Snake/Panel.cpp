@@ -53,7 +53,7 @@ Button& Panel::GetButton(const std::string& buttonName)
 	throw std::invalid_argument("Button not found: " + buttonName);
 }
 
-void Panel::SetTexture(sf::Texture texture)
+void Panel::SetTexture(sf::Texture& texture)
 {
 	sprite.setTexture(texture);
 }
