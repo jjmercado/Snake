@@ -1,9 +1,11 @@
 #include "MyGame.hpp"
 
-MyGame::MyGame() : startMenuPanel(window, font), gameState(MyGame::StartMenu)
+MyGame::MyGame() : gameState(IGameState::StartMenu), menu(window, font)
+{  
+}
+
+MyGame::~MyGame()
 {
-    //startMenupanel = Panel(window);
-    //gameState = GameState::StartMenu;
 }
 
 void MyGame::ProcessEvents()
@@ -18,17 +20,17 @@ void MyGame::ProcessEvents()
 
         switch (gameState)
         {
-            case MyGame::StartMenu:
+            case IGameState::StartMenu:
             {
-                handleStartMenuEvents(event);
+                menu.handleEvents(window, event, *this);
                 break;
             }
-            case MyGame::Playing:
+            case IGameState::Playing:
             {
                 handlePlayingEvents(event);
                 break;
             }
-            case MyGame::GameOver:
+            case IGameState::GameOver:
             {
 
                 break;
@@ -44,15 +46,15 @@ void MyGame::Update(sf::Time deltaTime)
 {
     switch (gameState)
     {
-        case MyGame::StartMenu:
+        case IGameState::StartMenu:
         {
             break;
         }
-        case MyGame::Playing:
+        case IGameState::Playing:
         {
             break;
         }
-        case MyGame::GameOver:
+        case IGameState::GameOver:
         {
 
             break;
@@ -69,16 +71,16 @@ void MyGame::Render()
 
     switch (gameState)
     {
-        case MyGame::StartMenu:
+        case IGameState::StartMenu:
         {
-            handleStartMenuDrawings(window);
+            menu.handleDrawings(window);
             break;
         }
-        case MyGame::Playing:
+        case IGameState::Playing:
         {
             break;
         }
-        case MyGame::GameOver:
+        case IGameState::GameOver:
         {
             break;
         }
@@ -90,55 +92,15 @@ void MyGame::Render()
     window.display();
 }
 
-void MyGame::handleStartMenuEvents(sf::Event& event)
-{
-    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
-    {
-        if(startMenuPanel.GetButton("Start").IsMouseOnButton(window))
-		{
-			gameState = MyGame::Playing;
-		}
-        else if (startMenuPanel.GetButton("Options").IsMouseOnButton(window))
-		{
-			// TODO: Implement options menu
-		}
-		else if (startMenuPanel.GetButton("Exit").IsMouseOnButton(window))
-		{
-			window.close();
-		}
-    }
-}
-
-void MyGame::handleStartMenuDrawings(sf::RenderWindow& window)
-{
-    if (startMenuPanel.GetButton("Start").IsMouseOnButton(window))
-    {
-        startMenuPanel.GetButton("Start").SetSprite(TextureManager::getTexture("blueButton13"));
-        startMenuPanel.GetButton("Start").SetTextFillColor(sf::Color::Black);
-    }
-    else if (startMenuPanel.GetButton("Options").IsMouseOnButton(window))
-    {
-        startMenuPanel.GetButton("Options").SetSprite(TextureManager::getTexture("yellowButton"));
-    }
-    else if (startMenuPanel.GetButton("Exit").IsMouseOnButton(window))
-    {
-        startMenuPanel.GetButton("Exit").SetSprite(TextureManager::getTexture("yellowButton"));
-    }
-    else
-	{
-        startMenuPanel.GetButton("Start").SetTextFillColor(sf::Color::White);
-		startMenuPanel.GetButton("Start").SetSprite(TextureManager::getTexture("yellowButton"));
-		startMenuPanel.GetButton("Options").SetSprite(TextureManager::getTexture("blueButton"));
-		startMenuPanel.GetButton("Exit").SetSprite(TextureManager::getTexture("blueButton"));
-	}
-    // viel zu übel ich darf nicht ständig die texturen neu laden und setzen 
-    startMenuPanel.Render(window);
-}
-
 void MyGame::handlePlayingEvents(sf::Event& event)
 {
 }
 
 void MyGame::handleGameOver(sf::Event& event)
 {
+}
+
+void MyGame::SetState(GameState newState)
+{
+    gameState = newState;
 }

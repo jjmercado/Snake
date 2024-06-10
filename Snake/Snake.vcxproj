@@ -77,6 +77,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>"C:\Development\C++\SFML-2.6.1-windows-vc17-32-bit\SFML-2.6.1\include"</AdditionalIncludeDirectories>
+      <ShowIncludes>false</ShowIncludes>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -135,6 +136,8 @@
   <ItemGroup>
     <ClInclude Include="Button.hpp" />
     <ClInclude Include="Game.hpp" />
+    <ClInclude Include="IGameState.hpp" />
+    <ClInclude Include="Menu.hpp" />
     <ClInclude Include="MyGame.hpp" />
     <ClInclude Include="Panel.hpp" />
     <ClInclude Include="TextureManager.hpp" />
@@ -143,6 +146,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MyGame.cpp" />
     <ClCompile Include="Panel.cpp" />
     <ClCompile Include="TextureManager.cpp" />

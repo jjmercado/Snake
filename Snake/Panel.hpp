@@ -10,6 +10,7 @@
 class Panel
 {
 	public:
+		Panel();
 		Panel(sf::RenderWindow& window, sf::Font& font);
 
 		void Render(sf::RenderWindow& window);
@@ -18,7 +19,6 @@ class Panel
 
 	private:
 		std::unordered_map<std::string, Button*> buttonMap;
-
 		sf::Texture texture;
 		sf::Sprite sprite;
 		sf::Text menuText;

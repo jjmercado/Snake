@@ -1,5 +1,9 @@
 #include "Panel.hpp"
 
+Panel::Panel()
+{
+}
+
 Panel::Panel(sf::RenderWindow& window, sf::Font& font) : startButton(font), optionsButton(font), exitButton(font)
 {
 	buttonMap["Start"] = &startButton;
@@ -45,12 +49,19 @@ void Panel::Render(sf::RenderWindow& window)
 
 Button& Panel::GetButton(const std::string& buttonName)
 {
-	auto it = buttonMap.find(buttonName);
-	if (it != buttonMap.end())
+	if (buttonMap.empty())
 	{
-		return *(it->second);
+		throw std::invalid_argument("Button map is empty");
 	}
-	throw std::invalid_argument("Button not found: " + buttonName);
+	else
+	{
+		auto it = buttonMap.find(buttonName);
+		if (it != buttonMap.end())
+		{
+			return *(it->second);
+		}
+		throw std::invalid_argument("Button not found: " + buttonName);
+	}
 }
 
 void Panel::SetTexture(sf::Texture& texture)
