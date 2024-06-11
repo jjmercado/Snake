@@ -140,6 +140,7 @@
     <ClInclude Include="Menu.hpp" />
     <ClInclude Include="MyGame.hpp" />
     <ClInclude Include="Panel.hpp" />
+    <ClInclude Include="Play.hpp" />
     <ClInclude Include="TextureManager.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -149,6 +150,7 @@
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MyGame.cpp" />
     <ClCompile Include="Panel.cpp" />
+    <ClCompile Include="Play.cpp" />
     <ClCompile Include="TextureManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

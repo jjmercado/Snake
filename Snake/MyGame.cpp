@@ -1,6 +1,6 @@
 #include "MyGame.hpp"
 
-MyGame::MyGame() : gameState(IGameState::StartMenu), menu(window, font)
+MyGame::MyGame() : gameState(IGameState::StartMenu), menu(window, font), play(window, font)
 {  
 }
 
@@ -27,7 +27,7 @@ void MyGame::ProcessEvents()
             }
             case IGameState::Playing:
             {
-                handlePlayingEvents(event);
+                play.handleEvents(window, event, *this);
                 break;
             }
             case IGameState::GameOver:
@@ -78,6 +78,7 @@ void MyGame::Render()
         }
         case IGameState::Playing:
         {
+            play.handleDrawings(window);
             break;
         }
         case IGameState::GameOver:
@@ -90,10 +91,6 @@ void MyGame::Render()
     }
 
     window.display();
-}
-
-void MyGame::handlePlayingEvents(sf::Event& event)
-{
 }
 
 void MyGame::handleGameOver(sf::Event& event)
