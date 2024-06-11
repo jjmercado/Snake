@@ -6,6 +6,7 @@ Menu::Menu()
 
 Menu::Menu(sf::RenderWindow& window, sf::Font& font) : panel(window, font)
 {
+    background.setTexture(TextureManager::getTexture("startMenuBackground"));
 }
 
 void Menu::handleEvents(sf::RenderWindow& window, sf::Event& event, IGameState& gameState)
@@ -29,6 +30,7 @@ void Menu::handleEvents(sf::RenderWindow& window, sf::Event& event, IGameState& 
 
 void Menu::handleDrawings(sf::RenderWindow& window)
 {
+	window.draw(background);
     if (panel.GetButton("Start").IsMouseOnButton(window))
     {
         panel.GetButton("Start").SetSprite(TextureManager::getTexture("blueButton13"));
@@ -44,6 +46,7 @@ void Menu::handleDrawings(sf::RenderWindow& window)
     }
     else
     {
+
         panel.GetButton("Start").SetTextFillColor(sf::Color::White);
         panel.GetButton("Start").SetSprite(TextureManager::getTexture("yellowButton"));
         panel.GetButton("Options").SetSprite(TextureManager::getTexture("blueButton"));

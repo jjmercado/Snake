@@ -18,7 +18,7 @@ void TextureManager::loadTextures()
     loadTexture("yellowButton", "..\\UIpack\\PNG\\yellow_button00.png");
 	loadTexture("blueButton", "..\\UIpack\\PNG\\blue_button00.png");
     loadTexture("blueButton13", "..\\UIpack\\PNG\\blue_button13.png");
-    loadTexture("startMenuBackground", "..\\snake_graphics\\sky-background-with-game-template\\startMenuBackground.jpg");
+    loadTexture("startMenuBackground", "..\\snake_graphics\\snakeBackground.png");
 }
 
 void TextureManager::loadTexture(const std::string& name, const std::string& filePath) 

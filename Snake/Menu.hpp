@@ -3,8 +3,6 @@
 #include "Panel.hpp"
 #include "IGameState.hpp"
 
-class MyGame; // forward declaration because of circular dependency
-
 class Menu
 {
 	public:
@@ -15,5 +13,6 @@ class Menu
 
 	private:
 		Panel panel;
+		sf::Sprite background;
 };
 

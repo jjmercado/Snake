@@ -9,7 +9,7 @@ class MyGame : public Game, public IGameState
 	public:
 		MyGame();
 		~MyGame();
-		void SetState(GameState newState) override;
+		void SetState(GameState state) override;
 
 	protected:
 		void ProcessEvents() override;

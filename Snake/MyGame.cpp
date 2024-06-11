@@ -100,7 +100,7 @@ void MyGame::handleGameOver(sf::Event& event)
 {
 }
 
-void MyGame::SetState(GameState newState)
+void MyGame::SetState(GameState state)
 {
-    gameState = newState;
+	gameState = state;
 }
