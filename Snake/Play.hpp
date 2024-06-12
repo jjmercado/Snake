@@ -1,7 +1,8 @@
 #pragma once
+#include "TextureManager.hpp"
 #include <SFML/Graphics.hpp>
 #include "IGameState.hpp"
-#include "TextureManager.hpp"
+#include "Charakter.hpp"
 
 class Play
 {
@@ -11,7 +12,10 @@ class Play
 		void handleEvents(sf::RenderWindow& window, sf::Event& event, IGameState& gameState);
 		void handleDrawings(sf::RenderWindow& window);
 
+		void handleUpdate(sf::Time deltaTime);
+
 	private:
 		sf::Sprite background;
+		Charakter charakter;
 };
 

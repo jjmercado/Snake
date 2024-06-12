@@ -52,6 +52,7 @@ void MyGame::Update(sf::Time deltaTime)
         }
         case IGameState::Playing:
         {
+            play.handleUpdate(deltaTime);
             break;
         }
         case IGameState::GameOver:
