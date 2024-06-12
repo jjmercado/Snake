@@ -17,19 +17,19 @@ void Charakter::Events(sf::Event& event)
 {
 	if (event.type == sf::Event::KeyPressed)
 	{
-		if (event.key.code == sf::Keyboard::Right)
+		if (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D)
 		{
 			direction = sf::Vector2f(1.0f, 0.0f);
 		}
-		else if (event.key.code == sf::Keyboard::Left)
+		else if (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)
 		{
 			direction = sf::Vector2f(-1.0f, 0.0f);
 		}
-		else if (event.key.code == sf::Keyboard::Down)
+		else if (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)
 		{
 			direction = sf::Vector2f(0.0f, 1.0f);
 		}
-		else if (event.key.code == sf::Keyboard::Up)
+		else if (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W)
 		{
 			direction = sf::Vector2f(0.0f, -1.0f);
 		}
