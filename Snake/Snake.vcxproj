@@ -135,6 +135,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Button.hpp" />
+    <ClInclude Include="Charakter.hpp" />
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="IGameState.hpp" />
     <ClInclude Include="Menu.hpp" />
@@ -145,6 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Charakter.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Menu.cpp" />
