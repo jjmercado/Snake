@@ -21,6 +21,9 @@ void TextureManager::loadTextures()
     loadTexture("startMenuBackground", "..\\snake_graphics\\snakeBackground.png");
     loadTexture("playingBackground", "..\\snake_graphics\\playingBackground.png");
     loadTexture("headLeft", "..\\snake_graphics\\Graphics\\head_left.png");
+    loadTexture("headRight", "..\\snake_graphics\\Graphics\\head_right.png");
+    loadTexture("headUp", "..\\snake_graphics\\Graphics\\head_up.png");
+    loadTexture("headDown", "..\\snake_graphics\\Graphics\\head_down.png");
 }
 
 void TextureManager::loadTexture(const std::string& name, const std::string& filePath) 

@@ -7,12 +7,16 @@
 class Charakter
 {
 	public:
-		Charakter();
+		Charakter(sf::RenderWindow& window);
 		~Charakter();
+		void Events(sf::Event& event);
 		void Render(sf::RenderWindow& window);
 		void Update(sf::Time deltaTime);
+		void Move(sf::Time deltaTime);
 
 	private:
+		float speed;
+		sf::Vector2f direction;
 		sf::Sprite sprite;
 		std::list<sf::Sprite> sprites;
 };
