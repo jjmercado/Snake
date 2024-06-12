@@ -28,4 +28,5 @@ void Play::handleDrawings(sf::RenderWindow& window)
 void Play::handleUpdate(sf::Time deltaTime)
 {
 	charakter.Update(deltaTime);
+	charakter.Collision(apple.GetRect(), apple);
 }

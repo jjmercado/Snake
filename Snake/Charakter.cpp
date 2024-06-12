@@ -5,7 +5,7 @@ Charakter::Charakter(sf::RenderWindow& window)
 	sprite.setTexture(TextureManager::getTexture("headLeft"));
 	sprites.push_front(sprite);
 	sprites.front().setPosition(window.getSize().x / 2 - sprite.getGlobalBounds().width / 2, window.getSize().y / 2 - sprite.getGlobalBounds().height / 2);
-	speed = 20.0f;
+	speed = 80.0f;
 	direction = sf::Vector2f(-1.0f, 0.0f);
 }
 
@@ -43,6 +43,7 @@ void Charakter::Render(sf::RenderWindow& window)
 
 void Charakter::Update(sf::Time deltaTime)
 {
+	rect = sf::IntRect(sprites.front().getPosition().x, sprites.front().getPosition().y, sprites.front().getGlobalBounds().width, sprites.front().getGlobalBounds().height);
 	Move(deltaTime);
 }
 
@@ -67,5 +68,13 @@ void Charakter::Move(sf::Time deltaTime)
 	{
 		sprites.front().move(0.0f, -speed * deltaTime.asSeconds());
 		sprites.front().setTexture(TextureManager::getTexture("headUp"));
+	}
+}
+
+void Charakter::Collision(const sf::IntRect& rect, Apple& apple)
+{
+	if (this->rect.intersects(rect))
+	{
+		apple.SetPosition(sf::Vector2f(rand() % 800, rand() % 600));
 	}
 }
