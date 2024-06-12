@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "IGameState.hpp"
 #include "Charakter.hpp"
+#include "Apple.hpp"
 
 class Play
 {
@@ -16,5 +17,6 @@ class Play
 	private:
 		sf::Sprite background;
 		Charakter charakter;
+		Apple apple;
 };
 
