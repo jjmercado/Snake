@@ -24,6 +24,7 @@ void TextureManager::loadTextures()
     loadTexture("headRight", "..\\snake_graphics\\Graphics\\head_right.png");
     loadTexture("headUp", "..\\snake_graphics\\Graphics\\head_up.png");
     loadTexture("headDown", "..\\snake_graphics\\Graphics\\head_down.png");
+    loadTexture("apple", "..\\snake_graphics\\Graphics\\apple.png");
 }
 
 void TextureManager::loadTexture(const std::string& name, const std::string& filePath) 
