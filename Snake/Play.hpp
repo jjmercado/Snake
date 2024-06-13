@@ -4,6 +4,7 @@
 #include "IGameState.hpp"
 #include "Charakter.hpp"
 #include "Apple.hpp"
+#include "Grid.hpp"
 
 class Play
 {
@@ -17,5 +18,6 @@ class Play
 		sf::Sprite background;
 		Charakter charakter;
 		Apple apple;
+		Grid grid;
 };
 

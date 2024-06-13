@@ -138,6 +138,7 @@
     <ClInclude Include="Button.hpp" />
     <ClInclude Include="Charakter.hpp" />
     <ClInclude Include="Game.hpp" />
+    <ClInclude Include="Grid.hpp" />
     <ClInclude Include="IGameState.hpp" />
     <ClInclude Include="Menu.hpp" />
     <ClInclude Include="MyGame.hpp" />
@@ -150,6 +151,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Charakter.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Grid.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MyGame.cpp" />

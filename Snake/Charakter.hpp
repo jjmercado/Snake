@@ -4,6 +4,7 @@
 #include "TextureManager.hpp"
 #include <iostream>
 #include "Apple.hpp"
+#include <cmath>
 
 class Charakter
 {
@@ -14,13 +15,17 @@ class Charakter
 		void Render(sf::RenderWindow& window);
 		void Update(sf::Time deltaTime);
 		void Move(sf::Time deltaTime);
+		void MoveBodyParts(sf::Time deltaTime);
 		void Collision(const sf::IntRect& rect, Apple& apple);
+		void AddBodyPart(sf::Texture& texture);
+
+		sf::Vector2f CalculateTargetPosition();
 
 	private:
 		float speed;
 		sf::Vector2f direction;
-		sf::Sprite sprite;
 		std::list<sf::Sprite> sprites;
 		sf::IntRect rect;
+		sf::Vector2f Lerp(const sf::Vector2f& a, const sf::Vector2f& b, float t);
 };
 

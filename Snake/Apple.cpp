@@ -1,9 +1,10 @@
 #include "Apple.hpp"
+#include "Charakter.hpp"
 
 Apple::Apple()
 {
 	srand(time(NULL));
-	position = sf::Vector2f(rand() % 800, rand() % 600);
+	position = sf::Vector2f(rand() % (800 / 40) * 40, rand() % (600 / 40) * 40);
 	sprite.setPosition(position);
 	sprite.setTexture(TextureManager::getTexture("apple"));
 	rect = sf::IntRect(position.x, position.y, sprite.getGlobalBounds().width, sprite.getGlobalBounds().height);

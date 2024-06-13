@@ -23,6 +23,7 @@ void Play::handleDrawings(sf::RenderWindow& window)
 	window.draw(background);
 	charakter.Render(window);
 	apple.Render(window);
+	grid.Render(window);
 }
 
 void Play::handleUpdate(sf::Time deltaTime)

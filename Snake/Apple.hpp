@@ -1,7 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "TextureManager.hpp"
-#include <random>
 #include <iostream>
 
 class Apple
@@ -17,6 +16,5 @@ class Apple
 		sf::Sprite sprite;
 		sf::Vector2f position;
 		sf::IntRect rect;
-
 };
 
