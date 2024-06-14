@@ -18,14 +18,14 @@ class Charakter
 		void MoveBodyParts(sf::Time deltaTime);
 		void Collision(const sf::IntRect& rect, Apple& apple);
 		void AddBodyPart(sf::Texture& texture);
-
-		sf::Vector2f CalculateTargetPosition();
+		sf::Vector2f CalculateTargetPosition(sf::Time deltaTime);
 
 	private:
 		float speed;
 		sf::Vector2f direction;
 		std::list<sf::Sprite> sprites;
 		sf::IntRect rect;
+		bool isMoving;
 		sf::Vector2f Lerp(const sf::Vector2f& a, const sf::Vector2f& b, float t);
 };
 

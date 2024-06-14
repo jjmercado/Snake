@@ -14,8 +14,10 @@ Charakter::Charakter(sf::RenderWindow& window)
 
 	sprites.back().setPosition(window.getSize().x / 2 + 80, window.getSize().y / 2 - 20);
 
-	speed = 160.0f;
+	speed = 0.4f;
 	direction = sf::Vector2f(-1.0f, 0.0f);
+
+	isMoving = false;
 }
 
 Charakter::~Charakter()
@@ -24,24 +26,31 @@ Charakter::~Charakter()
 
 void Charakter::Events(sf::Event& event)
 {
-
 	if (event.type == sf::Event::KeyPressed)
 	{
+		sf::Vector2f newDirection = direction;
+
 		if (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D)
 		{
-			direction = sf::Vector2f(1.0f, 0.0f);
+			newDirection = sf::Vector2f(1.0f, 0.0f);
 		}
 		else if (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)
 		{
-			direction = sf::Vector2f(-1.0f, 0.0f);
+			newDirection = sf::Vector2f(-1.0f, 0.0f);
 		}
 		else if (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)
 		{
-			direction = sf::Vector2f(0.0f, 1.0f);
+			newDirection = sf::Vector2f(0.0f, 1.0f);
 		}
 		else if (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W)
 		{
-			direction = sf::Vector2f(0.0f, -1.0f);
+			newDirection = sf::Vector2f(0.0f, -1.0f);
+		}
+
+		if (newDirection != direction)
+		{
+			direction = newDirection;
+			isMoving = true;
 		}
 	}
 }
@@ -56,21 +65,24 @@ void Charakter::Render(sf::RenderWindow& window)
 
 void Charakter::Update(sf::Time deltaTime)
 {
-	// Zielposition basierend auf der aktuellen Richtung und der Grid-Größe berechnen
-	sf::Vector2f targetPosition = CalculateTargetPosition();
+	sf::Vector2f newPosition;
 
-	// Interpolationsfaktor basierend auf der Geschwindigkeit und der Zeit aktualisieren
-	float t = std::min(1.0f, speed * deltaTime.asSeconds() / 40); // Angenommen, die Grid-Größe ist 40
+	if (isMoving)
+	{
+		newPosition = CalculateTargetPosition(deltaTime);
+		isMoving = false;
+		newPosition = Lerp(sprites.front().getPosition(), newPosition, 0.5f);
+		sprites.front().setPosition(newPosition);
+	}
 
-	// Neue Position mit linearer Interpolation berechnen
-	sf::Vector2f newPosition = Lerp(sprites.front().getPosition(), targetPosition, t);
-
-	// Setzt die neue Position des Charakters
+	newPosition = sprites.front().getPosition() + (direction * speed * deltaTime.asSeconds());
 	sprites.front().setPosition(newPosition);
+	
+	// Setzt die neue Position des Charakters
 
 	rect = sf::IntRect(sprites.front().getPosition().x, sprites.front().getPosition().y, sprites.front().getGlobalBounds().width, sprites.front().getGlobalBounds().height);
 	Move(deltaTime);
-	MoveBodyParts(deltaTime);
+	//MoveBodyParts(deltaTime);
 }
 
 void Charakter::Move(sf::Time deltaTime)
@@ -127,7 +139,7 @@ sf::Vector2f Charakter::Lerp(const sf::Vector2f& a, const sf::Vector2f& b, float
 	return a + t * (b - a);
 }
 
-sf::Vector2f Charakter::CalculateTargetPosition()
+sf::Vector2f Charakter::CalculateTargetPosition(sf::Time deltaTime)
 {
 	sf::Vector2f currentPosition = sprites.front().getPosition();
 	sf::Vector2f gridPosition = sf::Vector2f(
