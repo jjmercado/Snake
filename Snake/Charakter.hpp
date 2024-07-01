@@ -22,6 +22,7 @@ class Charakter
 
 	private:
 		float speed;
+		sf::Vector2f targetPosition;
 		sf::Vector2f direction;
 		std::list<sf::Sprite> sprites;
 		sf::IntRect rect;

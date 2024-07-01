@@ -14,7 +14,7 @@ Charakter::Charakter(sf::RenderWindow& window)
 
 	sprites.back().setPosition(window.getSize().x / 2 + 80, window.getSize().y / 2 - 20);
 
-	speed = 0.4f;
+	speed = 1.0f;
 	direction = sf::Vector2f(-1.0f, 0.0f);
 
 	isMoving = false;
@@ -65,20 +65,32 @@ void Charakter::Render(sf::RenderWindow& window)
 
 void Charakter::Update(sf::Time deltaTime)
 {
-	sf::Vector2f newPosition;
-
 	if (isMoving)
 	{
-		newPosition = CalculateTargetPosition(deltaTime);
-		isMoving = false;
-		newPosition = Lerp(sprites.front().getPosition(), newPosition, 0.5f);
+		// Berechnet die Zielposition auf dem Grid
+		targetPosition = CalculateTargetPosition(deltaTime);
+
+		// Interpoliert die Position des Charakters zur Zielposition
+		sf::Vector2f currentPosition = sprites.front().getPosition();
+		sf::Vector2f newPosition = Lerp(currentPosition, targetPosition, speed * deltaTime.asSeconds());
+
+		// Setzt die neue Position
+		sprites.front().setPosition(newPosition);
+
+		// Überprüft, ob der Charakter nahe genug an der Zielposition ist
+		if (std::abs(newPosition.x - targetPosition.x) < 0.1f && std::abs(newPosition.y - targetPosition.y) < 0.1f)
+		{
+			// Korrigiert die Position, um kleine Abweichungen zu vermeiden
+			sprites.front().setPosition(targetPosition);
+			isMoving = false; // Stoppt die Interpolation, wenn die Zielposition erreicht ist
+		}
+	}
+	else
+	{
+		// Führt die kontinuierliche Bewegung nur aus, wenn der Charakter nicht interpoliert wird
+		sf::Vector2f newPosition = sprites.front().getPosition() + (direction * speed * deltaTime.asSeconds());
 		sprites.front().setPosition(newPosition);
 	}
-
-	newPosition = sprites.front().getPosition() + (direction * speed * deltaTime.asSeconds());
-	sprites.front().setPosition(newPosition);
-	
-	// Setzt die neue Position des Charakters
 
 	rect = sf::IntRect(sprites.front().getPosition().x, sprites.front().getPosition().y, sprites.front().getGlobalBounds().width, sprites.front().getGlobalBounds().height);
 	Move(deltaTime);
@@ -134,11 +146,6 @@ void Charakter::AddBodyPart(sf::Texture& texture)
 	sprites.push_back(sprite);
 }
 
-sf::Vector2f Charakter::Lerp(const sf::Vector2f& a, const sf::Vector2f& b, float t)
-{
-	return a + t * (b - a);
-}
-
 sf::Vector2f Charakter::CalculateTargetPosition(sf::Time deltaTime)
 {
 	sf::Vector2f currentPosition = sprites.front().getPosition();
@@ -147,5 +154,10 @@ sf::Vector2f Charakter::CalculateTargetPosition(sf::Time deltaTime)
 		std::round(currentPosition.y / 40.0f) * 40.0f
 	);
 
-	return gridPosition + (direction * 40.0f); // Angenommen, die Grid-Größe ist 40
+	return gridPosition + (direction * 40.0f * deltaTime.asSeconds()); // Angenommen, die Grid-Größe ist 40
+}
+
+sf::Vector2f Charakter::Lerp(const sf::Vector2f& a, const sf::Vector2f& b, float t)
+{
+	return a + (b - a) * t;
 }
