@@ -47,10 +47,11 @@ void Charakter::Events(sf::Event& event)
 			newDirection = sf::Vector2f(0.0f, -1.0f);
 		}
 
-		if (newDirection != direction)
+		if (directionChangeClock.getElapsedTime().asSeconds() > 0.085f) 
 		{
 			direction = newDirection;
 			isMoving = true;
+			directionChangeClock.restart();
 		}
 	}
 }
@@ -67,15 +68,16 @@ void Charakter::Update(sf::Time deltaTime)
 {
 	if (isMoving)
 	{
+		float lerpRate = 2.0f;
 		// Berechnet die Zielposition auf dem Grid
 		targetPosition = CalculateTargetPosition(deltaTime);
 
 		// Interpoliert die Position des Charakters zur Zielposition
 		sf::Vector2f currentPosition = sprites.front().getPosition();
-		sf::Vector2f newPosition = Lerp(currentPosition, targetPosition, speed * deltaTime.asSeconds());
+		sf::Vector2f newPosition = Lerp(currentPosition, targetPosition, lerpRate * deltaTime.asSeconds());
+		sprites.front().setPosition(newPosition);
 
 		// Setzt die neue Position
-		sprites.front().setPosition(newPosition);
 
 		// Überprüft, ob der Charakter nahe genug an der Zielposition ist
 		if (std::abs(newPosition.x - targetPosition.x) < 0.1f && std::abs(newPosition.y - targetPosition.y) < 0.1f)

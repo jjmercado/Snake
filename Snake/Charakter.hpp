@@ -27,6 +27,7 @@ class Charakter
 		std::list<sf::Sprite> sprites;
 		sf::IntRect rect;
 		bool isMoving;
+		sf::Clock directionChangeClock;
 		sf::Vector2f Lerp(const sf::Vector2f& a, const sf::Vector2f& b, float t);
 };
 
