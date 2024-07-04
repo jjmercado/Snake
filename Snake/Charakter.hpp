@@ -16,6 +16,7 @@ class Charakter
 		void Render(sf::RenderWindow& window);
 		void Update(sf::Time deltaTime);
 		void Move(sf::Time deltaTime);
+		void MoveTail();
 		void MoveBodyParts(sf::Time deltaTime);
 		void Collision(const sf::IntRect& rect, Apple& apple);
 		void AddBodyPart(sf::Texture& texture);
@@ -31,9 +32,11 @@ class Charakter
 		sf::Sprite tail;
 		std::list<sf::Sprite> bodyParts;
 		std::list<sf::Vector2f> positions;
+		std::list<sf::Vector2f> directions;
 		sf::IntRect rect;
 		bool isLerping;
 		sf::Clock directionChangeClock;
 		sf::Vector2f Lerp(const sf::Vector2f& a, const sf::Vector2f& b, float t);
+		void DelaySetPosition();
 };
 
