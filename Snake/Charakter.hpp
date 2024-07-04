@@ -5,6 +5,7 @@
 #include <iostream>
 #include "Apple.hpp"
 #include <cmath>
+#include <queue>
 
 class Charakter
 {
@@ -24,9 +25,14 @@ class Charakter
 		float speed;
 		sf::Vector2f targetPosition;
 		sf::Vector2f direction;
-		std::list<sf::Sprite> sprites;
+		sf::Vector2f headPosition;
+		sf::Vector2f tailPosition;
+		sf::Sprite head;
+		sf::Sprite tail;
+		std::list<sf::Sprite> bodyParts;
+		std::list<sf::Vector2f> positions;
 		sf::IntRect rect;
-		bool isMoving;
+		bool isLerping;
 		sf::Clock directionChangeClock;
 		sf::Vector2f Lerp(const sf::Vector2f& a, const sf::Vector2f& b, float t);
 };

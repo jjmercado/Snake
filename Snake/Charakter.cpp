@@ -2,22 +2,22 @@
 
 Charakter::Charakter(sf::RenderWindow& window)
 {
-	AddBodyPart(TextureManager::getTexture("headLeft"));
-	AddBodyPart(TextureManager::getTexture("bodyHorizontal"));
-	AddBodyPart(TextureManager::getTexture("tailRight"));
 
-	sprites.front().setPosition(window.getSize().x / 2, window.getSize().y / 2 - 20);
+	headPosition = sf::Vector2f(window.getSize().x / 2, window.getSize().y / 2 - 20);
+	tailPosition = sf::Vector2f(window.getSize().x / 2, window.getSize().y / 2 - 20);
 
-	auto itr = sprites.begin();
-	std::advance(itr, 1);
-	itr->setPosition(window.getSize().x / 2 + 40, window.getSize().y / 2 - 20);
+	head.setPosition(headPosition);
+	tail.setPosition(tailPosition);
+	//auto itr = sprites.begin();
+	//std::advance(itr, 1);
+	//itr->setPosition(window.getSize().x / 2 + 40, window.getSize().y / 2 - 20);
 
-	sprites.back().setPosition(window.getSize().x / 2 + 80, window.getSize().y / 2 - 20);
+	//sprites.back().setPosition(window.getSize().x / 2 + 80, window.getSize().y / 2 - 20);
 
 	speed = 1.0f;
 	direction = sf::Vector2f(-1.0f, 0.0f);
 
-	isMoving = false;
+	isLerping = false;
 }
 
 Charakter::~Charakter()
@@ -50,7 +50,7 @@ void Charakter::Events(sf::Event& event)
 		if (directionChangeClock.getElapsedTime().asSeconds() > 0.085f) 
 		{
 			direction = newDirection;
-			isMoving = true;
+			isLerping = true;
 			directionChangeClock.restart();
 		}
 	}
@@ -58,24 +58,31 @@ void Charakter::Events(sf::Event& event)
 
 void Charakter::Render(sf::RenderWindow& window)
 {
-	for (auto& part : sprites)
+	window.draw(head);
+	window.draw(tail);
+
+	if (!bodyParts.empty())
 	{
-		window.draw(part);
+		for (auto& part : bodyParts)
+		{
+			window.draw(part);
+		}
 	}
 }
 
 void Charakter::Update(sf::Time deltaTime)
 {
-	if (isMoving)
+	if (isLerping)
 	{
 		float lerpRate = 2.0f;
+
 		// Berechnet die Zielposition auf dem Grid
 		targetPosition = CalculateTargetPosition(deltaTime);
 
 		// Interpoliert die Position des Charakters zur Zielposition
-		sf::Vector2f currentPosition = sprites.front().getPosition();
+		sf::Vector2f currentPosition = head.getPosition();
 		sf::Vector2f newPosition = Lerp(currentPosition, targetPosition, lerpRate * deltaTime.asSeconds());
-		sprites.front().setPosition(newPosition);
+		head.setPosition(newPosition);
 
 		// Setzt die neue Position
 
@@ -83,54 +90,59 @@ void Charakter::Update(sf::Time deltaTime)
 		if (std::abs(newPosition.x - targetPosition.x) < 0.1f && std::abs(newPosition.y - targetPosition.y) < 0.1f)
 		{
 			// Korrigiert die Position, um kleine Abweichungen zu vermeiden
-			sprites.front().setPosition(targetPosition);
-			isMoving = false; // Stoppt die Interpolation, wenn die Zielposition erreicht ist
+			head.setPosition(targetPosition);
+			isLerping = false; // Stoppt die Interpolation, wenn die Zielposition erreicht ist
 		}
 	}
 	else
 	{
 		// Führt die kontinuierliche Bewegung nur aus, wenn der Charakter nicht interpoliert wird
-		sf::Vector2f newPosition = sprites.front().getPosition() + (direction * speed * deltaTime.asSeconds());
-		sprites.front().setPosition(newPosition);
+		sf::Vector2f newPosition = head.getPosition() + (direction * speed * deltaTime.asSeconds());
+		head.setPosition(newPosition);
 	}
 
-	rect = sf::IntRect(sprites.front().getPosition().x, sprites.front().getPosition().y, sprites.front().getGlobalBounds().width, sprites.front().getGlobalBounds().height);
+	rect = sf::IntRect(head.getPosition().x, head.getPosition().y, head.getGlobalBounds().width, head.getGlobalBounds().height);
 	Move(deltaTime);
-	//MoveBodyParts(deltaTime);
+
+	positions.push_back(head.getPosition());
+
+	MoveBodyParts(deltaTime);
 }
 
 void Charakter::Move(sf::Time deltaTime)
 {
 	if (direction.x > 0)
 	{
-		sprites.front().setTexture(TextureManager::getTexture("headRight"));
+		head.setTexture(TextureManager::getTexture("headRight"));
 	}
 	else if (direction.x < 0)
 	{
-		sprites.front().setTexture(TextureManager::getTexture("headLeft"));
+		head.setTexture(TextureManager::getTexture("headLeft"));
 	}
 	else if (direction.y > 0)
 	{
-		sprites.front().setTexture(TextureManager::getTexture("headDown"));
+		head.setTexture(TextureManager::getTexture("headDown"));
 	}
 	else if (direction.y < 0)
 	{
-		sprites.front().setTexture(TextureManager::getTexture("headUp"));
+		head.setTexture(TextureManager::getTexture("headUp"));
 	}
 }
 
-// Klappt nicht so ganz
 void Charakter::MoveBodyParts(sf::Time deltaTime)
 {
-	sf::Vector2f lastPosition = sprites.front().getPosition();
-	sf::Vector2f lastDirection = direction;
+	//sf::Vector2f offset = 40.0f * direction;
 
-	for (auto& part : sprites)
-	{
-		sf::Vector2f tempPosition = part.getPosition();
-		part.setPosition(lastPosition);
-		lastPosition = tempPosition;
-	}
+	//for (auto itr = std::next(sprites.begin()); itr != sprites.end(); ++itr)
+	//{
+	//	sf::Vector2f previousPosition = positions.front();
+	//	sf::Vector2f newPosition = previousPosition - offset;
+
+	//	itr->setPosition(newPosition);
+	//}
+
+	//if(sprites.size() < positions.size())
+	//	positions.pop_front();
 }
 
 void Charakter::Collision(const sf::IntRect& rect, Apple& apple)
@@ -145,12 +157,12 @@ void Charakter::AddBodyPart(sf::Texture& texture)
 {
 	sf::Sprite sprite;
 	sprite.setTexture(texture);
-	sprites.push_back(sprite);
+	bodyParts.push_back(sprite);
 }
 
 sf::Vector2f Charakter::CalculateTargetPosition(sf::Time deltaTime)
 {
-	sf::Vector2f currentPosition = sprites.front().getPosition();
+	sf::Vector2f currentPosition = head.getPosition();
 	sf::Vector2f gridPosition = sf::Vector2f(
 		std::round(currentPosition.x / 40.0f) * 40.0f,
 		std::round(currentPosition.y / 40.0f) * 40.0f
