@@ -29,6 +29,7 @@ void TextureManager::loadTextures()
     loadTexture("tailUp", "..\\snake_graphics\\Graphics\\tail_up.png");
     loadTexture("tailDown", "..\\snake_graphics\\Graphics\\tail_down.png");
     loadTexture("bodyHorizontal", "..\\snake_graphics\\Graphics\\body_horizontal.png");
+    loadTexture("bodyVertical", "..\\snake_graphics\\Graphics\\body_vertical.png");
     loadTexture("apple", "..\\snake_graphics\\Graphics\\apple.png");
 }
 

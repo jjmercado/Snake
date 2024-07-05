@@ -2,6 +2,10 @@
 
 Charakter::Charakter(sf::RenderWindow& window)
 {
+	AddBodyPart(TextureManager::getTexture("bodyHorizontal"));
+	AddBodyPart(TextureManager::getTexture("bodyHorizontal"));
+	AddBodyPart(TextureManager::getTexture("bodyHorizontal"));
+
 	tail.setTexture(TextureManager::getTexture("tailRight"));
 
 	headPosition = sf::Vector2f(window.getSize().x / 2, window.getSize().y / 2 - 20);
@@ -14,6 +18,7 @@ Charakter::Charakter(sf::RenderWindow& window)
 	direction = sf::Vector2f(-1.0f, 0.0f);
 
 	isLerping = false;
+	counter = 0;
 }
 
 Charakter::~Charakter()
@@ -70,7 +75,11 @@ void Charakter::Update(sf::Time deltaTime)
 {
 	//sf::Vector2f offset = direction * 40.0f;
 
-	positions.push_back(head.getPosition());
+	headPositions.push_back(head.getPosition());
+
+	TrackBodyPartsPosition();
+	TrackLastBodyPartsPosition();
+	SetBodyPartPosition();
 
 	if (isLerping)
 	{
@@ -83,8 +92,6 @@ void Charakter::Update(sf::Time deltaTime)
 		sf::Vector2f currentPosition = head.getPosition();
 		sf::Vector2f newPosition = Lerp(currentPosition, targetPosition, lerpRate * deltaTime.asSeconds());
 		head.setPosition(newPosition);
-
-		DelaySetPosition();
 
 		// Setzt die neue Position
 
@@ -102,17 +109,30 @@ void Charakter::Update(sf::Time deltaTime)
 		// Führt die kontinuierliche Bewegung nur aus, wenn der Charakter nicht interpoliert wird
 		sf::Vector2f newPosition = head.getPosition() + (direction * speed * deltaTime.asSeconds());
 		head.setPosition(newPosition);
+	}
 
-		DelaySetPosition();
+	if (bodyPartsPositions.size() > 3000)
+	{
+		bodyPartsPositions.pop_front();
+		bodyPartsPositions.pop_front();
+		bodyPartsPositions.pop_front();
+
+		lastBodyPartsPositions.pop_front();
+		lastBodyPartsPositions.pop_front();
+		lastBodyPartsPositions.pop_front();
+	}
+
+	if (headPositions.size() > 3000)
+	{
+		headPositions.pop_front();
 	}
 
 	rect = sf::IntRect(head.getPosition().x, head.getPosition().y, head.getGlobalBounds().width, head.getGlobalBounds().height);
-	Move(deltaTime);
+	MoveHead();
 
-	MoveBodyParts(deltaTime);
 }
 
-void Charakter::Move(sf::Time deltaTime)
+void Charakter::MoveHead()
 {
 	if (direction.x > 0)
 	{
@@ -132,7 +152,7 @@ void Charakter::Move(sf::Time deltaTime)
 	}
 }
 
-void Charakter::MoveTail()
+void Charakter::MoveTail() // refactor that shit xD
 {
 	if (direction.x > 0)
 	{
@@ -152,20 +172,27 @@ void Charakter::MoveTail()
 	}
 }
 
-void Charakter::MoveBodyParts(sf::Time deltaTime)
+void Charakter::MoveBodyParts()
 {
-	//sf::Vector2f offset = 40.0f * direction;
-
-	//for (auto itr = std::next(sprites.begin()); itr != sprites.end(); ++itr)
-	//{
-	//	sf::Vector2f previousPosition = positions.front();
-	//	sf::Vector2f newPosition = previousPosition - offset;
-
-	//	itr->setPosition(newPosition);
-	//}
-
-	//if(sprites.size() < positions.size())
-	//	positions.pop_front();
+	for (auto &part : bodyParts)
+	{
+		if (direction.x > 0)
+		{
+			part.setTexture(TextureManager::getTexture("bodyHorizontal"));
+		}
+		else if (direction.x < 0)
+		{
+			part.setTexture(TextureManager::getTexture("bodyHorizontal"));
+		}
+		else if (direction.y > 0)
+		{
+			part.setTexture(TextureManager::getTexture("bodyVertical"));
+		}
+		else if (direction.y < 0)
+		{
+			part.setTexture(TextureManager::getTexture("bodyVertical"));
+		}
+	}
 }
 
 void Charakter::Collision(const sf::IntRect& rect, Apple& apple)
@@ -199,12 +226,40 @@ sf::Vector2f Charakter::Lerp(const sf::Vector2f& a, const sf::Vector2f& b, float
 	return a + (b - a) * t;
 }
 
-void Charakter::DelaySetPosition()
+void Charakter::TrackBodyPartsPosition()
 {
-	if (positions.size() >= 2000)
+	int counter = 0;
+	for (auto& part : bodyParts)
 	{
-		tail.setPosition(positions.front());
-		MoveTail();
-		positions.pop_front();
+		bodyPartsPositions.push_back(part.getPosition());
+		std::cout << "BodyPartsTracking " << counter << " PosX: " << part.getPosition().x << " Part PosY: " << part.getPosition().y << std::endl;
+		counter++;
+	}
+
+	std::cout << bodyPartsPositions.size() << std::endl;
+}
+
+void Charakter::TrackLastBodyPartsPosition()
+{
+	for(auto& part : bodyParts)
+	{
+		lastBodyPartsPositions.push_back(bodyPartsPositions.front());
+		std::cout << "Last Part PosX: " << bodyPartsPositions.front().x << " Last Part PosY: " << bodyPartsPositions.front().y << std::endl;
+		std::cout << "Last Size: " << lastBodyPartsPositions.size() << std::endl;
+	}
+}
+
+void Charakter::SetBodyPartPosition()
+{
+	int counter = 0;
+	auto itr = std::next(bodyParts.begin(), counter);
+	auto itr2 = std::next(lastBodyPartsPositions.begin(), counter);
+
+	bodyPartsPositions.push_back(headPositions.front());
+
+	for (auto& i = itr; i != bodyParts.end(); i++)
+	{
+		i->setPosition(sf::Vector2f(itr2->x, itr2->y));
+		counter++;
 	}
 }
