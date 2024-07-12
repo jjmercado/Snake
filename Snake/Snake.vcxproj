@@ -135,6 +135,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Apple.hpp" />
+    <ClInclude Include="BodyPart.hpp" />
     <ClInclude Include="Button.hpp" />
     <ClInclude Include="Charakter.hpp" />
     <ClInclude Include="Game.hpp" />
@@ -148,6 +149,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Apple.cpp" />
+    <ClCompile Include="BodyPart.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Charakter.cpp" />
     <ClCompile Include="Game.cpp" />
