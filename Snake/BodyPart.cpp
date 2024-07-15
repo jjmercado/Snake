@@ -1,10 +1,14 @@
 #include "BodyPart.hpp"
 
-BodyPart::BodyPart(sf::Texture& texture)
+BodyPart::BodyPart(sf::Texture& texture, std::string name)
 {
+	this->name = name; // for debugging purposes
 	bodyPart.setTexture(texture);
-	delay = 0.5f;
-	currentTime = 0.0f;
+
+	for(int i = 0; i < 3000; i++)
+	{
+		positions.push_back(sf::Vector2f(0.0f, 0.0f));
+	}
 }
 
 BodyPart::~BodyPart()
@@ -31,13 +35,17 @@ void BodyPart::Render(sf::RenderWindow& window)
 	window.draw(bodyPart);
 }
 
-void BodyPart::Update(const sf::Vector2f& prevPos)
+void BodyPart::Update(const sf::Vector2f prev)
 {
-	currentTime = clock.getElapsedTime().asSeconds();
+	positions.push_back(prev);
 
-	if(currentTime - lastUpdateTime > delay)
+	if (positions.size() > 3000)
 	{
-		this->bodyPart.setPosition(prevPos);
-		lastUpdateTime = currentTime;
+		positions.pop_front();
 	}
+}
+
+sf::Vector2f& BodyPart::GetLastPosition()
+{
+	return positions.front();
 }

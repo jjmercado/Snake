@@ -2,9 +2,9 @@
 
 Charakter::Charakter(sf::RenderWindow& window)
 {
-	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("headLeft")));
-	AddBodyPart();
-	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("tailRight")));
+	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("headLeft"), "Head"));
+	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("bodyHorizontal"), "BodyPart0"));
+	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("tailRight"), "Tail"));
 
 	snakeBodyParts.front().SetPosition(sf::Vector2f(window.getSize().x / 2, window.getSize().y / 2 - 20));
 
@@ -71,6 +71,12 @@ void Charakter::Update(sf::Time deltaTime)
 			itr = std::next(itr, 1);
 
 		itr->Update(std::prev(itr)->GetPosition());
+		itr->SetPosition(itr->GetLastPosition());
+
+		//std::cout << "Last POs: "  << counter << " " << itr->GetLastPosition().x << "-" << itr->GetLastPosition().y << std::endl;
+		//std::cout << "Pos: " << counter << "Current Position: " << itr->GetPosition().x << ", " << itr->GetPosition().y << std::endl;
+		//std::cout << "Pos: " << counter << "Previous Position: " << std::prev(itr)->GetPosition().x << ", " << std::prev(itr)->GetPosition().y << std::endl;
+		counter++;
 	}
 
 	if (isLerping)
@@ -140,7 +146,17 @@ void Charakter::Collision(const sf::IntRect& rect, Apple& apple)
 
 void Charakter::AddBodyPart()
 {
-	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("bodyHorizontal")));
+	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("bodyHorizontal"), "BodyPart" + counter));
+
+	auto letztesElement = snakeBodyParts.end();
+	--letztesElement; // Bewegt den Iterator zum letzten Element
+
+	auto vorletztesElement = letztesElement;
+	--vorletztesElement; // Bewegt den Iterator zum vorletzten Element
+
+	// Tauscht die Werte der Elemente, auf die die beiden Iteratoren zeigen
+	std::iter_swap(letztesElement, vorletztesElement);
+	counter++;
 }
 
 sf::Vector2f Charakter::CalculateTargetPosition(sf::Time deltaTime)
