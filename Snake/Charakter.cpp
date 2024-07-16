@@ -76,12 +76,14 @@ void Charakter::Render(sf::RenderWindow& window)
 			itr->SetTexture(TextureManager::getTexture("bodyVertical"));
 		}
 
+
 		lastDirection = std::prev(itr)->GetLastDirection();
 		itr->SetDirection(lastDirection);
+
+		ChangeTailTexture();
 	}
 
 	ChangeHeadTexture();
-	ChangeTailTexture();
 }
 
 void Charakter::Update(sf::Time deltaTime)
@@ -178,17 +180,10 @@ void Charakter::Collision(const sf::IntRect& rect, Apple& apple)
 
 void Charakter::AddBodyPart()
 {
-	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("bodyHorizontal"), "BodyPart" + counter, lastPosition));
+	auto penultimate = std::prev(snakeBodyParts.end(), 2);
+	auto second = std::next(snakeBodyParts.begin(), 1);
 
-	auto letztesElement = snakeBodyParts.end();
-	--letztesElement; // Bewegt den Iterator zum letzten Element
-
-	auto vorletztesElement = letztesElement;
-	--vorletztesElement; // Bewegt den Iterator zum vorletzten Element
-
-	// Tauscht die Werte der Elemente, auf die die beiden Iteratoren zeigen
-	std::iter_swap(letztesElement, vorletztesElement);
-	counter++;
+	snakeBodyParts.insert(penultimate, BodyPart(TextureManager::getTexture("bodyHorizontal"), "BodyPart", second->GetPosition()));
 }
 
 sf::Vector2f Charakter::CalculateTargetPosition(sf::Time deltaTime)

@@ -30,4 +30,5 @@ class BodyPart
 		std::list<sf::Vector2f> directions;
 		std::list<sf::Vector2f> positions;
 		std::string name;
+		int dynamicCounter;
 };
