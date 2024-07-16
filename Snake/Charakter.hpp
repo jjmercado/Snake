@@ -16,10 +16,10 @@ class Charakter
 		void Events(sf::Event& event);
 		void Render(sf::RenderWindow& window);
 		void Update(sf::Time deltaTime);
-		//void MoveHead();
+		void ChangeHeadTexture();
+		void ChangeTailTexture();
 		void Collision(const sf::IntRect& rect, Apple& apple);
 		void AddBodyPart();
-		//void Move(sf::Time deltaTime);
 		sf::Vector2f CalculateTargetPosition(sf::Time deltaTime);
 
 	private:
@@ -28,7 +28,6 @@ class Charakter
 		sf::Vector2f targetPosition;
 		sf::Vector2f direction;
 		std::list<BodyPart> snakeBodyParts;
-		std::list<sf::Vector2f> directions;
 		sf::IntRect rect;
 		bool isLerping;
 		sf::Clock directionChangeClock;
@@ -36,5 +35,7 @@ class Charakter
 		float timer;
 		sf::Vector2f Lerp(const sf::Vector2f& a, const sf::Vector2f& b, float t);
 		int counter;
+		sf::Vector2f lastPosition;
+		sf::Vector2f lastDirection;
 };
 
