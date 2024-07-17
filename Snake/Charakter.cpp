@@ -43,6 +43,11 @@ void Charakter::Events(sf::Event& event)
 			newDirection = sf::Vector2f(0.0f, -1.0f);
 		}
 
+		if(event.key.code == sf::Keyboard::Space)
+		{
+			AddBodyPart();
+		}
+
 		if (directionChangeClock.getElapsedTime().asSeconds() > 0.085f) 
 		{
 			direction = newDirection;
@@ -67,18 +72,17 @@ void Charakter::Render(sf::RenderWindow& window)
 			itr = std::next(itr, 1);
 		}
 
-		if (itr->GetLastDirection().x < 0 || itr->GetLastDirection().x > 0)
+		lastDirection = std::prev(itr)->GetLastDirection();
+		itr->SetDirection(lastDirection);
+
+		if (lastDirection.x < 0 || lastDirection.x > 0)
 		{
 			itr->SetTexture(TextureManager::getTexture("bodyHorizontal"));
 		}
-		else if (itr->GetLastDirection().y < 0 || itr->GetLastDirection().y > 0)
+		else if (lastDirection.y < 0 || lastDirection.y > 0)
 		{
 			itr->SetTexture(TextureManager::getTexture("bodyVertical"));
 		}
-
-
-		lastDirection = std::prev(itr)->GetLastDirection();
-		itr->SetDirection(lastDirection);
 
 		ChangeTailTexture();
 	}
@@ -180,10 +184,17 @@ void Charakter::Collision(const sf::IntRect& rect, Apple& apple)
 
 void Charakter::AddBodyPart()
 {
-	auto penultimate = std::prev(snakeBodyParts.end(), 2);
+	auto head = snakeBodyParts.front();
 	auto second = std::next(snakeBodyParts.begin(), 1);
 
-	snakeBodyParts.insert(penultimate, BodyPart(TextureManager::getTexture("bodyHorizontal"), "BodyPart", second->GetPosition()));
+	if (lastDirection.x > 0 || lastDirection.x < 0)
+	{
+		snakeBodyParts.insert(second, BodyPart(TextureManager::getTexture("bodyHorizontal"), "BodyPart", head.GetPosition()));
+	}
+	else if(lastDirection.y > 0 || lastDirection.y < 0)
+	{
+		snakeBodyParts.insert(second, BodyPart(TextureManager::getTexture("bodyVertical"), "BodyPart", head.GetPosition()));
+	}
 }
 
 sf::Vector2f Charakter::CalculateTargetPosition(sf::Time deltaTime)

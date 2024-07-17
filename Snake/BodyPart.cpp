@@ -4,7 +4,6 @@ BodyPart::BodyPart(sf::Texture& texture, std::string name, sf::Vector2f prev)
 {
 	this->name = name; // for debugging purposes
 	bodyPart.setTexture(texture);
-	direction = sf::Vector2f(-1.0f, 0.0f);
 	dynamicCounter = 1700;
 
 	for(int i = 0; i < 2000; i++)
