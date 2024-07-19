@@ -63,37 +63,35 @@ void Charakter::Events(sf::Event& event)
 
 void Charakter::Render(sf::RenderWindow& window)
 {
-	if(CheckBoundaries())
-	{
-
-	}
-
 	for (auto& bodyPart : snakeBodyParts)
 	{
 		bodyPart.Render(window);
 		bodyPart.SetDirection(direction);
 	}
 
-	for (auto itr = snakeBodyParts.begin(); itr != snakeBodyParts.end(); ++itr)
+	if (!CheckBoundaries())
 	{
-		if (itr == snakeBodyParts.begin())
+		for (auto itr = snakeBodyParts.begin(); itr != snakeBodyParts.end(); ++itr)
 		{
-			itr = std::next(itr, 1);
-		}
+			if (itr == snakeBodyParts.begin())
+			{
+				itr = std::next(itr, 1);
+			}
 
-		lastDirection = std::prev(itr)->GetLastDirection();
-		itr->SetDirection(lastDirection);
+			lastDirection = std::prev(itr)->GetLastDirection();
+			itr->SetDirection(lastDirection);
 
-		if (lastDirection.x < 0 || lastDirection.x > 0)
-		{
-			itr->SetTexture(TextureManager::getTexture("bodyHorizontal"));
-		}
-		else if (lastDirection.y < 0 || lastDirection.y > 0)
-		{
-			itr->SetTexture(TextureManager::getTexture("bodyVertical"));
-		}
+			if (lastDirection.x < 0 || lastDirection.x > 0)
+			{
+				itr->SetTexture(TextureManager::getTexture("bodyHorizontal"));
+			}
+			else if (lastDirection.y < 0 || lastDirection.y > 0)
+			{
+				itr->SetTexture(TextureManager::getTexture("bodyVertical"));
+			}
 
-		ChangeTailTexture();
+			ChangeTailTexture();
+		}
 	}
 
 	ChangeHeadTexture();
