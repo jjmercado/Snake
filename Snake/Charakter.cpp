@@ -52,7 +52,7 @@ void Charakter::Events(sf::Event& event)
 				AddBodyPart();
 		}
 
-		if (directionChangeClock.getElapsedTime().asSeconds() > 0.095f && newDirection != direction) 
+		if (directionChangeClock.getElapsedTime().asSeconds() > 0.120f && newDirection != direction) 
 		{
 			direction = newDirection;
 			isLerping = true;
@@ -199,7 +199,16 @@ void Charakter::Collision(const sf::IntRect& rect, Apple& apple)
 {
 	if (this->rect.intersects(rect))
 	{
-		apple.SetPosition(sf::Vector2f(rand() % (800 / 40) * 40, rand() % (600 / 40) * 40));
+		sf::Vector2f rndApplePos = sf::Vector2f(rand() % (800 / 40) * 40, rand() % (600 / 40) * 40);
+
+		for(auto position : snakeBodyParts)
+		{
+			if(position.GetPosition() == rndApplePos)
+			{
+				rndApplePos = sf::Vector2f(rand() % (800 / 40) * 40, rand() % (600 / 40) * 40);
+			}
+		}
+		apple.SetPosition(rndApplePos);
 		AddBodyPart();
 	}
 }
