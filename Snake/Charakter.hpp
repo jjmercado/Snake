@@ -23,6 +23,7 @@ class Charakter
 		sf::Vector2f CalculateTargetPosition(sf::Time deltaTime);
 
 	private:
+		bool CheckBoundaries();
 		float speed;
 		int maxValues;
 		sf::Vector2f targetPosition;

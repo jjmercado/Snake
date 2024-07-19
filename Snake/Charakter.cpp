@@ -6,6 +6,7 @@ Charakter::Charakter(sf::RenderWindow& window)
 	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("headLeft"), "Head", startPosition));
 	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("bodyHorizontal"), "BodyPart0", startPosition));
 	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("tailRight"), "Tail", startPosition));
+	window.setKeyRepeatEnabled(false);
 
 	snakeBodyParts.front().SetPosition(startPosition);
 
@@ -20,35 +21,38 @@ Charakter::~Charakter()
 {
 }
 
+// eventuell ein struct definieren für die richtungen
+
 void Charakter::Events(sf::Event& event)
 {
-	if (event.type == sf::Event::KeyPressed)
+	if (event.type == sf::Event::KeyPressed && !CheckBoundaries())
 	{
 		sf::Vector2f newDirection = direction;
 
-		if (event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D)
+		if ((event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D) && newDirection != sf::Vector2f(-1.0f, 0.0f))
 		{
 			newDirection = sf::Vector2f(1.0f, 0.0f);
 		}
-		else if (event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A)
+		else if ((event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A) && newDirection != sf::Vector2f(1.0f, 0.0f))
 		{
 			newDirection = sf::Vector2f(-1.0f, 0.0f);
 		}
-		else if (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S)
+		else if ((event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S) && newDirection != sf::Vector2f(0.0f, -1.0f))
 		{
 			newDirection = sf::Vector2f(0.0f, 1.0f);
 		}
-		else if (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W)
+		else if ((event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W) && newDirection != sf::Vector2f(0.0f, 1.0f))
 		{
 			newDirection = sf::Vector2f(0.0f, -1.0f);
 		}
 
 		if(event.key.code == sf::Keyboard::Space)
 		{
-			AddBodyPart();
+			for(int i = 0; i < 300; i++)
+				AddBodyPart();
 		}
 
-		if (directionChangeClock.getElapsedTime().asSeconds() > 0.085f) 
+		if (directionChangeClock.getElapsedTime().asSeconds() > 0.095f && newDirection != direction) 
 		{
 			direction = newDirection;
 			isLerping = true;
@@ -59,6 +63,11 @@ void Charakter::Events(sf::Event& event)
 
 void Charakter::Render(sf::RenderWindow& window)
 {
+	if(CheckBoundaries())
+	{
+
+	}
+
 	for (auto& bodyPart : snakeBodyParts)
 	{
 		bodyPart.Render(window);
@@ -92,14 +101,28 @@ void Charakter::Render(sf::RenderWindow& window)
 
 void Charakter::Update(sf::Time deltaTime)
 {
-	for (auto itr = snakeBodyParts.begin(); itr != snakeBodyParts.end(); ++itr)
+	if (CheckBoundaries())
 	{
-		if(itr == snakeBodyParts.begin())
-			itr = std::next(itr, 1);
+		speed = 0.0f;
+		for (auto itr = snakeBodyParts.begin(); itr != snakeBodyParts.end(); ++itr)
+		{
+			if (itr == snakeBodyParts.begin())
+				itr = std::next(itr, 1);
 
-		itr->Update(std::prev(itr)->GetPosition());
-		lastPosition = itr->GetLastPosition();
-		itr->SetPosition(lastPosition);
+			itr->SetPosition(itr->GetPosition());
+		}
+	}
+	else
+	{
+		for (auto itr = snakeBodyParts.begin(); itr != snakeBodyParts.end(); ++itr)
+		{
+			if (itr == snakeBodyParts.begin())
+				itr = std::next(itr, 1);
+
+			itr->Update(std::prev(itr)->GetPosition());
+			lastPosition = itr->GetLastPosition();
+			itr->SetPosition(lastPosition);
+		}
 	}
 
 	if (isLerping)
@@ -126,7 +149,8 @@ void Charakter::Update(sf::Time deltaTime)
 	else
 	{
 		// Führt die kontinuierliche Bewegung nur aus, wenn der Charakter nicht interpoliert wird
-		sf::Vector2f newPosition = snakeBodyParts.front().GetPosition() + (direction * speed * deltaTime.asSeconds());
+		sf::Vector2f velocity = direction * speed * deltaTime.asSeconds();
+		sf::Vector2f newPosition = snakeBodyParts.front().GetPosition() + velocity;
 		snakeBodyParts.front().SetPosition(newPosition);
 	}
 
@@ -206,6 +230,22 @@ sf::Vector2f Charakter::CalculateTargetPosition(sf::Time deltaTime)
 	);
 
 	return gridPosition + (direction * 40.0f * deltaTime.asSeconds()); // Angenommen, die Grid-Größe ist 40
+}
+
+bool Charakter::CheckBoundaries()
+{
+	if (snakeBodyParts.front().GetPosition().x < 0 || snakeBodyParts.front().GetPosition().x > 800 - 40)
+	{
+		return true;
+	}
+	else if (snakeBodyParts.front().GetPosition().y < 0 || snakeBodyParts.front().GetPosition().y > 600 - 40)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 sf::Vector2f Charakter::Lerp(const sf::Vector2f& a, const sf::Vector2f& b, float t)

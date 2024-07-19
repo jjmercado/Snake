@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <string>
-#include <list>
+#include <deque>
 #include "TextureManager.hpp"
 #include <iostream>
 
@@ -27,8 +27,8 @@ class BodyPart
 		sf::Vector2f lastPosition;
 		sf::Vector2f lastDirection;
 		sf::Vector2f direction;
-		std::list<sf::Vector2f> directions;
-		std::list<sf::Vector2f> positions;
+		std::deque<sf::Vector2f> directions;
+		std::deque<sf::Vector2f> positions;
 		std::string name;
 		int dynamicCounter;
 };
