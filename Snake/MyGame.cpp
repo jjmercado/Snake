@@ -1,6 +1,6 @@
 #include "MyGame.hpp"
 
-MyGame::MyGame() : gameState(IGameState::StartMenu), menu(window, font), play(window, font)
+MyGame::MyGame() : gameState(IGameState::StartMenu), menu(window, font), play(window, font), gameOver(window, font)
 {  
 }
 
@@ -30,9 +30,9 @@ void MyGame::ProcessEvents()
                 play.handleEvents(window, event, *this);
                 break;
             }
-            case IGameState::GameOver:
+            case IGameState::GameIsOver:
             {
-
+                gameOver.handleEvents(event, window, *this, play.GetCharakter());
                 break;
             }
             default:
@@ -52,14 +52,13 @@ void MyGame::Update(sf::Time deltaTime)
         }
         case IGameState::Playing:
         {
-            play.handleUpdate(deltaTime);
+            play.handleUpdate(deltaTime, *this);
             break;
         }
-        case IGameState::GameOver:
-        {
-
-            break;
-        }
+        case IGameState::GameIsOver:
+		{
+			break;
+		}
         default:
             std::cerr << "Invalid game state in Update" << std::endl;
             break;
@@ -82,8 +81,10 @@ void MyGame::Render()
             play.handleDrawings(window);
             break;
         }
-        case IGameState::GameOver:
+        case IGameState::GameIsOver:
         {
+            play.handleDrawings(window);
+            gameOver.handleDrawings(window);
             break;
         }
         default:
@@ -92,10 +93,6 @@ void MyGame::Render()
     }
 
     window.display();
-}
-
-void MyGame::handleGameOver(sf::Event& event)
-{
 }
 
 void MyGame::SetState(GameState state)

@@ -12,11 +12,12 @@ class Play
 		Play(sf::RenderWindow& window, sf::Font& font);
 		void handleEvents(sf::RenderWindow& window, sf::Event& event, IGameState& gameState);
 		void handleDrawings(sf::RenderWindow& window);
-		void handleUpdate(sf::Time deltaTime);
+		void handleUpdate(sf::Time deltaTime, IGameState& gameState);
+		Charakter* GetCharakter();
 
 	private:
-		sf::Sprite background;
 		Charakter charakter;
+		sf::Sprite background;
 		Apple apple;
 		Grid grid;
 };

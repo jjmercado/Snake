@@ -7,6 +7,8 @@ Game::Game() : window(sf::VideoMode(800, 600), "Snake")
 		std::cout << "Error loading font" << std::endl;
 	}
 
+    window.setKeyRepeatEnabled(false);
+
     TextureManager::loadTextures();
 }
 

@@ -1,12 +1,15 @@
 #include "Charakter.hpp"
 
+Charakter::Charakter()
+{
+}
+
 Charakter::Charakter(sf::RenderWindow& window)
 {
 	sf::Vector2f startPosition = sf::Vector2f(window.getSize().x / 2, window.getSize().y / 2 - 20);
 	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("headLeft"), "Head", startPosition));
 	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("bodyHorizontal"), "BodyPart0", startPosition));
 	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("tailRight"), "Tail", startPosition));
-	window.setKeyRepeatEnabled(false);
 
 	snakeBodyParts.front().SetPosition(startPosition);
 
@@ -97,11 +100,12 @@ void Charakter::Render(sf::RenderWindow& window)
 	ChangeHeadTexture();
 }
 
-void Charakter::Update(sf::Time deltaTime)
+void Charakter::Update(sf::Time deltaTime, IGameState& gameState)
 {
 	if (CheckBoundaries())
 	{
 		speed = 0.0f;
+		gameState.SetState(IGameState::GameIsOver);
 		for (auto itr = snakeBodyParts.begin(); itr != snakeBodyParts.end(); ++itr)
 		{
 			if (itr == snakeBodyParts.begin())
@@ -228,6 +232,23 @@ void Charakter::AddBodyPart()
 	}
 }
 
+void Charakter::Reset(sf::RenderWindow& window)
+{
+	snakeBodyParts.clear();
+	sf::Vector2f startPosition = sf::Vector2f(window.getSize().x / 2, window.getSize().y / 2 - 20);
+	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("headLeft"), "Head", startPosition));
+	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("bodyHorizontal"), "BodyPart0", startPosition));
+	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("tailRight"), "Tail", startPosition));
+
+	snakeBodyParts.front().SetPosition(startPosition);
+
+	speed = 1.0f;
+	direction = sf::Vector2f(-1.0f, 0.0f);
+
+	isLerping = false;
+	counter = 0;
+}
+
 sf::Vector2f Charakter::CalculateTargetPosition(sf::Time deltaTime)
 {
 	sf::Vector2f currentPosition = snakeBodyParts.front().GetPosition();
@@ -249,10 +270,7 @@ bool Charakter::CheckBoundaries()
 	{
 		return true;
 	}
-	else
-	{
-		return false;
-	}
+	return false;
 }
 
 sf::Vector2f Charakter::Lerp(const sf::Vector2f& a, const sf::Vector2f& b, float t)

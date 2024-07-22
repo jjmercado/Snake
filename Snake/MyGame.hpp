@@ -3,6 +3,7 @@
 #include "Game.hpp"
 #include "Menu.hpp"
 #include "Play.hpp"
+#include "GameOver.hpp"
 #include "IGameState.hpp"
 
 class MyGame : public Game, public IGameState
@@ -16,11 +17,11 @@ class MyGame : public Game, public IGameState
 		void ProcessEvents() override;
 		void Update(sf::Time deltaTime) override;
 		void Render() override;
-		void handleGameOver(sf::Event& event);
 
 	private:
 		GameState gameState;
 		Menu menu;
 		Play play;
+		GameOver gameOver;
 };
 

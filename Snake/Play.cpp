@@ -13,9 +13,8 @@ void Play::handleEvents(sf::RenderWindow& window, sf::Event& event, IGameState& 
 		{
 			gameState.SetState(IGameState::StartMenu);
 		}
-
-		charakter.Events(event);
 	}
+	charakter.Events(event);
 }
 
 void Play::handleDrawings(sf::RenderWindow& window)
@@ -26,8 +25,13 @@ void Play::handleDrawings(sf::RenderWindow& window)
 	//grid.Render(window);
 }
 
-void Play::handleUpdate(sf::Time deltaTime)
+void Play::handleUpdate(sf::Time deltaTime, IGameState& gameState)
 {
-	charakter.Update(deltaTime);
+	charakter.Update(deltaTime, gameState);
 	charakter.Collision(apple.GetRect(), apple);
+}
+
+Charakter* Play::GetCharakter()
+{
+	return &charakter;
 }

@@ -7,19 +7,22 @@
 #include <cmath>
 #include <queue>
 #include "BodyPart.hpp"
+#include "IGameState.hpp"
 
 class Charakter
 {
 	public:
+		Charakter();
 		Charakter(sf::RenderWindow& window);
 		~Charakter();
 		void Events(sf::Event& event);
 		void Render(sf::RenderWindow& window);
-		void Update(sf::Time deltaTime);
+		void Update(sf::Time deltaTime, IGameState& gameState);
 		void ChangeHeadTexture();
 		void ChangeTailTexture();
 		void Collision(const sf::IntRect& rect, Apple& apple);
 		void AddBodyPart();
+		void Reset(sf::RenderWindow& window);
 		sf::Vector2f CalculateTargetPosition(sf::Time deltaTime);
 
 	private:
