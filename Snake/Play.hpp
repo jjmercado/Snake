@@ -13,7 +13,7 @@ class Play
 		void handleEvents(sf::RenderWindow& window, sf::Event& event, IGameState& gameState);
 		void handleDrawings(sf::RenderWindow& window);
 		void handleUpdate(sf::Time deltaTime, IGameState& gameState);
-		Charakter* GetCharakter();
+		Charakter& GetCharakter();
 
 	private:
 		Charakter charakter;

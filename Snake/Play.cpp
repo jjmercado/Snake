@@ -31,7 +31,7 @@ void Play::handleUpdate(sf::Time deltaTime, IGameState& gameState)
 	charakter.Collision(apple.GetRect(), apple);
 }
 
-Charakter* Play::GetCharakter()
+Charakter& Play::GetCharakter()
 {
-	return &charakter;
+	return charakter;
 }
