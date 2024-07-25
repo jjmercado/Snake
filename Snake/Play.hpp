@@ -14,6 +14,7 @@ class Play
 		void handleDrawings(sf::RenderWindow& window);
 		void handleUpdate(sf::Time deltaTime, IGameState& gameState);
 		Charakter& GetCharakter();
+		Apple& GetApple();
 
 	private:
 		Charakter charakter;

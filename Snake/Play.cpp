@@ -35,3 +35,8 @@ Charakter& Play::GetCharakter()
 {
 	return charakter;
 }
+
+Apple& Play::GetApple()
+{
+	return apple;
+}

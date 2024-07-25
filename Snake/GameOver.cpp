@@ -39,14 +39,14 @@ void GameOver::handleDrawings(sf::RenderWindow& window)
     gameOverPanel.Render(window);
 }
 
-void GameOver::handleEvents(sf::Event& event, sf::RenderWindow& window, IGameState& gameState, Charakter& charakter)
+void GameOver::handleEvents(sf::Event& event, sf::RenderWindow& window, IGameState& gameState, Charakter& charakter, Apple& apple)
 {
     if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
     {
         if (gameOverPanel.GetButton("PlayAgain").IsMouseOnButton(window))
         {
             gameState.SetState(IGameState::Playing);
-            charakter.Reset(window);
+            charakter.Reset(window, apple);
         }
         else if (gameOverPanel.GetButton("Options").IsMouseOnButton(window))
         {

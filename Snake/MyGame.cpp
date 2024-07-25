@@ -32,7 +32,7 @@ void MyGame::ProcessEvents()
             }
             case IGameState::GameIsOver:
             {
-                gameOver.handleEvents(event, window, *this, play.GetCharakter());
+                gameOver.handleEvents(event, window, *this, play.GetCharakter(), play.GetApple());
                 break;
             }
             default:

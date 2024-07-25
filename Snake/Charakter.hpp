@@ -22,7 +22,7 @@ class Charakter
 		void ChangeTailTexture();
 		void Collision(const sf::IntRect& rect, Apple& apple);
 		void AddBodyPart();
-		void Reset(sf::RenderWindow& window);
+		void Reset(sf::RenderWindow& window, Apple& apple);
 		sf::Vector2f CalculateTargetPosition(sf::Time deltaTime);
 
 	private:
@@ -42,5 +42,7 @@ class Charakter
 		int counter;
 		sf::Vector2f lastPosition;
 		sf::Vector2f lastDirection;
+		bool isBodyCollisionActive;
+		sf::Vector2f rndApplePos;
 };
 

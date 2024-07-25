@@ -6,11 +6,13 @@ Charakter::Charakter()
 
 Charakter::Charakter(sf::RenderWindow& window)
 {
+	srand(time(NULL));
+	isBodyCollisionActive = false;
 	sf::Vector2f startPosition = sf::Vector2f(window.getSize().x / 2, window.getSize().y / 2 - 20);
 	direction = sf::Vector2f(-1.0f, 0.0f);
 	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("headLeft"), startPosition));
-	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("bodyHorizontal"), startPosition + sf::Vector2f(25,0)));
-	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("tailRight"), startPosition + sf::Vector2f(25, 0)));
+	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("bodyHorizontal"), startPosition));
+	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("tailRight"), startPosition));
 
 	snakeBodyParts.front().SetPosition(startPosition);
 
@@ -61,6 +63,7 @@ void Charakter::Events(sf::Event& event)
 			isLerping = true;
 			directionChangeClock.restart();
 		}
+		isBodyCollisionActive = true; // collision nach dem ersten input aktivieren
 	}
 }
 
@@ -223,7 +226,7 @@ void Charakter::Collision(const sf::IntRect& rect, Apple& apple)
 {
 	if (snakeHeadRect.intersects(rect))
 	{
-		sf::Vector2f rndApplePos = sf::Vector2f(rand() % (800 / 40) * 40, rand() % (600 / 40) * 40);
+		rndApplePos = sf::Vector2f(rand() % (800 / 40) * 40, rand() % (600 / 40) * 40);
 
 		for(auto position : snakeBodyParts)
 		{
@@ -261,7 +264,7 @@ void Charakter::AddBodyPart()
 	}
 }
 
-void Charakter::Reset(sf::RenderWindow& window)
+void Charakter::Reset(sf::RenderWindow& window, Apple& apple)
 {
 	snakeBodyParts.clear();
 	sf::Vector2f startPosition = sf::Vector2f(window.getSize().x / 2, window.getSize().y / 2 - 20);
@@ -270,6 +273,11 @@ void Charakter::Reset(sf::RenderWindow& window)
 	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("tailRight"), startPosition));
 
 	snakeBodyParts.front().SetPosition(startPosition);
+
+	isBodyCollisionActive = false;
+
+	rndApplePos = sf::Vector2f(rand() % (800 / 40) * 40, rand() % (600 / 40) * 40);
+	apple.SetPosition(rndApplePos);
 
 	speed = 1.0f;
 	direction = sf::Vector2f(-1.0f, 0.0f);
@@ -291,7 +299,7 @@ sf::Vector2f Charakter::CalculateTargetPosition(sf::Time deltaTime)
 
 void Charakter::BodyPartCollision(const sf::IntRect& bodyPartRect, IGameState& gameState)
 {
-	if (snakeHeadRect.intersects(bodyPartRect))
+	if (snakeHeadRect.intersects(bodyPartRect) && isBodyCollisionActive)
 	{
 		counter++;
 		//gameState.SetState(IGameState::GameIsOver);
