@@ -26,13 +26,14 @@ class Charakter
 		sf::Vector2f CalculateTargetPosition(sf::Time deltaTime);
 
 	private:
+		void BodyPartCollision(const sf::IntRect& bodyPartRect, IGameState& gameState);
 		bool CheckBoundaries();
 		float speed;
 		int maxValues;
 		sf::Vector2f targetPosition;
 		sf::Vector2f direction;
 		std::list<BodyPart> snakeBodyParts;
-		sf::IntRect rect;
+		sf::IntRect snakeHeadRect;
 		bool isLerping;
 		sf::Clock directionChangeClock;
 		sf::Clock testClock;

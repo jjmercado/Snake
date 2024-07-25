@@ -1,12 +1,17 @@
 #include "BodyPart.hpp"
 
-BodyPart::BodyPart(sf::Texture& texture, std::string name, sf::Vector2f prev)
+BodyPart::BodyPart(sf::Texture& texture, sf::Vector2f prev)
 {
-	this->name = name; // for debugging purposes
+	collisionTexture.create(5, 5);
+	collision.setTexture(collisionTexture);
+	collision.setColor(sf::Color::Red);
+	collision.setOrigin(-17.5f, -17.5f);
+
+	bodyPart.setPosition(prev);
 	bodyPart.setTexture(texture);
 	dynamicCounter = 1700;
 
-	for(int i = 0; i < 2000; i++)
+	for(int i = 0; i < 20; i++)
 	{
 		positions.push_back(prev);
 	}
@@ -58,6 +63,11 @@ void BodyPart::Render(sf::RenderWindow& window)
 	}
 }
 
+void BodyPart::RenderCollisionRect(sf::RenderWindow& window)
+{
+	window.draw(collision);
+}
+
 void BodyPart::Update(const sf::Vector2f prev)
 {
 	positions.push_back(prev);
@@ -76,4 +86,28 @@ sf::Vector2f& BodyPart::GetLastPosition()
 sf::Vector2f& BodyPart::GetLastDirection()
 {
 	return directions.front();
+}
+
+void BodyPart::CollisionPart()
+{
+	collision.setPosition(bodyPart.getPosition());
+}
+
+sf::IntRect BodyPart::GetColisionRect()
+{
+	return collision.getTextureRect();
+}
+
+void BodyPart::RotateBodyPart()
+{
+	bodyPart.setOrigin(20, 20);
+	if (direction.x < 0 || direction.x > 0)
+	{
+		bodyPart.setRotation(0);
+	}
+	else if (direction.y < 0 || direction.y > 0)
+	{
+		bodyPart.setRotation(90);
+	}
+	bodyPart.setOrigin(0, 0);
 }

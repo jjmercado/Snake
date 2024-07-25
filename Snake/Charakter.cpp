@@ -7,14 +7,14 @@ Charakter::Charakter()
 Charakter::Charakter(sf::RenderWindow& window)
 {
 	sf::Vector2f startPosition = sf::Vector2f(window.getSize().x / 2, window.getSize().y / 2 - 20);
-	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("headLeft"), "Head", startPosition));
-	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("bodyHorizontal"), "BodyPart0", startPosition));
-	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("tailRight"), "Tail", startPosition));
+	direction = sf::Vector2f(-1.0f, 0.0f);
+	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("headLeft"), startPosition));
+	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("bodyHorizontal"), startPosition + sf::Vector2f(25,0)));
+	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("tailRight"), startPosition + sf::Vector2f(25, 0)));
 
 	snakeBodyParts.front().SetPosition(startPosition);
 
 	speed = 1.0f;
-	direction = sf::Vector2f(-1.0f, 0.0f);
 
 	isLerping = false;
 	counter = 0;
@@ -51,7 +51,7 @@ void Charakter::Events(sf::Event& event)
 
 		if(event.key.code == sf::Keyboard::Space)
 		{
-			for(int i = 0; i < 300; i++)
+			for(int i = 0; i < 10; i++)
 				AddBodyPart();
 		}
 
@@ -72,6 +72,14 @@ void Charakter::Render(sf::RenderWindow& window)
 		bodyPart.SetDirection(direction);
 	}
 
+	for (auto itr = snakeBodyParts.begin(); itr != snakeBodyParts.end(); ++itr)
+	{
+		if (itr == snakeBodyParts.begin())
+			itr = std::next(itr, 1);
+
+		itr->RenderCollisionRect(window);
+	}
+
 	if (!CheckBoundaries())
 	{
 		for (auto itr = snakeBodyParts.begin(); itr != snakeBodyParts.end(); ++itr)
@@ -86,12 +94,13 @@ void Charakter::Render(sf::RenderWindow& window)
 
 			if (lastDirection.x < 0 || lastDirection.x > 0)
 			{
-				itr->SetTexture(TextureManager::getTexture("bodyHorizontal"));
+				itr->SetTexture(TextureManager::getTexture("bodyHorizontal")); // performance issue
 			}
 			else if (lastDirection.y < 0 || lastDirection.y > 0)
 			{
 				itr->SetTexture(TextureManager::getTexture("bodyVertical"));
 			}
+			//itr->RotateBodyPart();
 
 			ChangeTailTexture();
 		}
@@ -124,6 +133,7 @@ void Charakter::Update(sf::Time deltaTime, IGameState& gameState)
 			itr->Update(std::prev(itr)->GetPosition());
 			lastPosition = itr->GetLastPosition();
 			itr->SetPosition(lastPosition);
+			itr->CollisionPart();
 		}
 	}
 
@@ -156,7 +166,17 @@ void Charakter::Update(sf::Time deltaTime, IGameState& gameState)
 		snakeBodyParts.front().SetPosition(newPosition);
 	}
 
-	rect = sf::IntRect(snakeBodyParts.front().GetPosition().x, snakeBodyParts.front().GetPosition().y, snakeBodyParts.front().GetRect().width, snakeBodyParts.front().GetRect().height);
+	for (auto itr = snakeBodyParts.begin(); itr != snakeBodyParts.end(); ++itr)
+	{
+		if (itr == snakeBodyParts.begin())
+			itr = std::next(itr, 1);
+
+		sf::IntRect col = sf::IntRect(itr->GetPosition().x, itr->GetPosition().y, itr->GetColisionRect().width, itr->GetColisionRect().height);
+
+		BodyPartCollision(col, gameState);
+	}
+
+	snakeHeadRect = sf::IntRect(snakeBodyParts.front().GetPosition().x, snakeBodyParts.front().GetPosition().y, snakeBodyParts.front().GetColisionRect().width, snakeBodyParts.front().GetColisionRect().height);
 }
 
 void Charakter::ChangeHeadTexture()
@@ -201,7 +221,7 @@ void Charakter::ChangeTailTexture()
 
 void Charakter::Collision(const sf::IntRect& rect, Apple& apple)
 {
-	if (this->rect.intersects(rect))
+	if (snakeHeadRect.intersects(rect))
 	{
 		sf::Vector2f rndApplePos = sf::Vector2f(rand() % (800 / 40) * 40, rand() % (600 / 40) * 40);
 
@@ -219,16 +239,25 @@ void Charakter::Collision(const sf::IntRect& rect, Apple& apple)
 
 void Charakter::AddBodyPart()
 {
-	auto head = snakeBodyParts.front();
-	auto second = std::next(snakeBodyParts.begin(), 1);
+	auto back = snakeBodyParts.back();
+	sf::Vector2f positionOffsetX = sf::Vector2f(25, 0); // nötig um die Lücke zu schließen wenn ein BodyPart hinzugefügt wird
+	sf::Vector2f positionOffsetY = sf::Vector2f(0, 25);
 
-	if (lastDirection.x > 0 || lastDirection.x < 0)
+	if (lastDirection.x > 0)
 	{
-		snakeBodyParts.insert(second, BodyPart(TextureManager::getTexture("bodyHorizontal"), "BodyPart", head.GetPosition()));
+		snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("bodyHorizontal"), back.GetPosition() + positionOffsetX));
 	}
-	else if(lastDirection.y > 0 || lastDirection.y < 0)
+	else if (lastDirection.x < 0)
 	{
-		snakeBodyParts.insert(second, BodyPart(TextureManager::getTexture("bodyVertical"), "BodyPart", head.GetPosition()));
+		snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("bodyHorizontal"), back.GetPosition() - positionOffsetX));
+	}
+	else if (lastDirection.y > 0)
+	{
+		snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("bodyVertical"), back.GetPosition() + positionOffsetY));
+	}
+	else if(lastDirection.y < 0)
+	{
+		snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("bodyVertical"), back.GetPosition() - positionOffsetY));
 	}
 }
 
@@ -236,9 +265,9 @@ void Charakter::Reset(sf::RenderWindow& window)
 {
 	snakeBodyParts.clear();
 	sf::Vector2f startPosition = sf::Vector2f(window.getSize().x / 2, window.getSize().y / 2 - 20);
-	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("headLeft"), "Head", startPosition));
-	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("bodyHorizontal"), "BodyPart0", startPosition));
-	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("tailRight"), "Tail", startPosition));
+	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("headLeft"), startPosition));
+	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("bodyHorizontal"), startPosition));
+	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("tailRight"), startPosition));
 
 	snakeBodyParts.front().SetPosition(startPosition);
 
@@ -258,6 +287,16 @@ sf::Vector2f Charakter::CalculateTargetPosition(sf::Time deltaTime)
 	);
 
 	return gridPosition + (direction * 40.0f * deltaTime.asSeconds()); // Angenommen, die Grid-Größe ist 40
+}
+
+void Charakter::BodyPartCollision(const sf::IntRect& bodyPartRect, IGameState& gameState)
+{
+	if (snakeHeadRect.intersects(bodyPartRect))
+	{
+		counter++;
+		//gameState.SetState(IGameState::GameIsOver);
+		std::cout << "Game Over: " << counter << std::endl;
+	}
 }
 
 bool Charakter::CheckBoundaries()

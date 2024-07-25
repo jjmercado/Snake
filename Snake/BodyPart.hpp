@@ -8,7 +8,7 @@
 class BodyPart
 {
 	public:
-		BodyPart(sf::Texture& texture, std::string name, sf::Vector2f prev);
+		BodyPart(sf::Texture& texture, sf::Vector2f prev);
 		~BodyPart();
 		void SetDirection(const sf::Vector2f& position);
 		sf::Vector2f GetDirection();
@@ -17,18 +17,22 @@ class BodyPart
 		sf::IntRect GetRect();
 		void SetTexture(sf::Texture& texture);
 		void Render(sf::RenderWindow& window);
+		void RenderCollisionRect(sf::RenderWindow& window);
 		void Update(const sf::Vector2f prev);
 		sf::Vector2f& GetLastPosition();
 		sf::Vector2f& GetLastDirection();
-
+		void CollisionPart();
+		sf::IntRect GetColisionRect();
+		void RotateBodyPart();
 
 	private:
+		sf::Sprite collision;
 		sf::Sprite bodyPart;
-		sf::Vector2f lastPosition;
-		sf::Vector2f lastDirection;
+		sf::Texture collisionTexture;
+		//sf::Vector2f lastPosition;
+		//sf::Vector2f lastDirection;
 		sf::Vector2f direction;
 		std::deque<sf::Vector2f> directions;
 		std::deque<sf::Vector2f> positions;
-		std::string name;
 		int dynamicCounter;
 };
