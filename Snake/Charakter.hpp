@@ -27,7 +27,7 @@ class Charakter
 
 	private:
 		void BodyPartCollision(const sf::IntRect& bodyPartRect, IGameState& gameState);
-		bool CheckBoundaries();
+		void CheckBoundaries();
 		float speed;
 		int maxValues;
 		sf::Vector2f targetPosition;
@@ -43,6 +43,7 @@ class Charakter
 		sf::Vector2f lastPosition;
 		sf::Vector2f lastDirection;
 		bool isBodyCollisionActive;
+		bool hasCollided;
 		sf::Vector2f rndApplePos;
 };
 

@@ -8,6 +8,7 @@ Charakter::Charakter(sf::RenderWindow& window)
 {
 	srand(time(NULL));
 	isBodyCollisionActive = false;
+	hasCollided = false;
 	sf::Vector2f startPosition = sf::Vector2f(window.getSize().x / 2, window.getSize().y / 2 - 20);
 	direction = sf::Vector2f(-1.0f, 0.0f);
 	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("headLeft"), startPosition));
@@ -30,7 +31,7 @@ Charakter::~Charakter()
 
 void Charakter::Events(sf::Event& event)
 {
-	if (event.type == sf::Event::KeyPressed && !CheckBoundaries())
+	if (event.type == sf::Event::KeyPressed && !hasCollided)
 	{
 		sf::Vector2f newDirection = direction;
 
@@ -76,7 +77,7 @@ void Charakter::Render(sf::RenderWindow& window)
 		bodyPart.SetDirection(direction);
 	}
 
-	if (!CheckBoundaries())
+	if (!hasCollided)
 	{
 		for (auto itr = snakeBodyParts.begin(); itr != snakeBodyParts.end(); ++itr)
 		{
@@ -107,7 +108,7 @@ void Charakter::Render(sf::RenderWindow& window)
 
 void Charakter::Update(sf::Time deltaTime, IGameState& gameState)
 {
-	if (CheckBoundaries())
+	if (hasCollided)
 	{
 		speed = 0.0f;
 		gameState.SetState(IGameState::GameIsOver);
@@ -190,7 +191,7 @@ void Charakter::Update(sf::Time deltaTime, IGameState& gameState)
 		snakeHeadRect = sf::IntRect(snakeBodyParts.front().GetPosition().x + 20, snakeBodyParts.front().GetPosition().y - 5, 5, 5);
 	}
 
-	//snakeHeadRect = sf::IntRect(snakeBodyParts.front().GetPosition().x, snakeBodyParts.front().GetPosition().y, 5, 5);
+	CheckBoundaries();
 }
 
 void Charakter::ChangeHeadTexture()
@@ -291,6 +292,7 @@ void Charakter::Reset(sf::RenderWindow& window, Apple& apple)
 	snakeBodyParts.front().SetPosition(startPosition);
 
 	isBodyCollisionActive = false;
+	hasCollided = false;
 
 	rndApplePos = sf::Vector2f(rand() % (800 / 40) * 40, rand() % (600 / 40) * 40);
 	apple.SetPosition(rndApplePos);
@@ -317,23 +319,21 @@ void Charakter::BodyPartCollision(const sf::IntRect& bodyPartRect, IGameState& g
 {
 	if (snakeHeadRect.intersects(bodyPartRect) && isBodyCollisionActive)
 	{
-		counter++;
-		//gameState.SetState(IGameState::GameIsOver);
-		std::cout << "Game Over: " << counter << std::endl;
+		gameState.SetState(IGameState::GameIsOver);
+		hasCollided = true;
 	}
 }
 
-bool Charakter::CheckBoundaries()
+void Charakter::CheckBoundaries()
 {
 	if (snakeBodyParts.front().GetPosition().x < 0 || snakeBodyParts.front().GetPosition().x > 800 - 40)
 	{
-		return true;
+		hasCollided = true;
 	}
 	else if (snakeBodyParts.front().GetPosition().y < 0 || snakeBodyParts.front().GetPosition().y > 600 - 40)
 	{
-		return true;
+		hasCollided = true;
 	}
-	return false;
 }
 
 sf::Vector2f Charakter::Lerp(const sf::Vector2f& a, const sf::Vector2f& b, float t)
