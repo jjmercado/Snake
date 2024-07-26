@@ -18,14 +18,14 @@ GameOverPanel::GameOverPanel(sf::RenderWindow& window, sf::Font& font) : playAga
 	menuText.setFont(font);
 	menuText.setCharacterSize(40);
 	menuText.setFillColor(sf::Color::White);
-	menuText.setString("Game Over");
+	menuText.setString("Lost");
 	menuText.setOrigin(menuText.getLocalBounds().width / 2, menuText.getLocalBounds().height / 2);
 	menuText.setPosition(sf::Vector2f(window.getSize().x / 2, (window.getSize().y / 2) - 165));
 
 	playAgain.SetSprite(TextureManager::getTexture("yellowButton"));
 	playAgain.SetPosition(sf::Vector2f(window.getSize().x / 2, (window.getSize().y / 2) - 50));
-	playAgain.SetText("PlayAgain");
-	playAgain.SetTextPosition(sf::Vector2f(window.getSize().x / 2 - 55, (window.getSize().y / 2) - 70));
+	playAgain.SetText("Restart");
+	playAgain.SetTextPosition(sf::Vector2f(window.getSize().x / 2 - 85, (window.getSize().y / 2) - 70));
 
 	optionsButton.SetSprite(TextureManager::getTexture("blueButton"));
 	optionsButton.SetPosition(sf::Vector2f(window.getSize().x / 2, (window.getSize().y / 2) + 20));
