@@ -69,18 +69,11 @@ void Charakter::Events(sf::Event& event)
 
 void Charakter::Render(sf::RenderWindow& window)
 {
+
 	for (auto& bodyPart : snakeBodyParts)
 	{
 		bodyPart.Render(window);
 		bodyPart.SetDirection(direction);
-	}
-
-	for (auto itr = snakeBodyParts.begin(); itr != snakeBodyParts.end(); ++itr)
-	{
-		if (itr == snakeBodyParts.begin())
-			itr = std::next(itr, 1);
-
-		itr->RenderCollisionRect(window);
 	}
 
 	if (!CheckBoundaries())
@@ -131,12 +124,13 @@ void Charakter::Update(sf::Time deltaTime, IGameState& gameState)
 		for (auto itr = snakeBodyParts.begin(); itr != snakeBodyParts.end(); ++itr)
 		{
 			if (itr == snakeBodyParts.begin())
+			{
 				itr = std::next(itr, 1);
+			}
 
 			itr->Update(std::prev(itr)->GetPosition());
 			lastPosition = itr->GetLastPosition();
 			itr->SetPosition(lastPosition);
-			itr->CollisionPart();
 		}
 	}
 
@@ -174,30 +168,51 @@ void Charakter::Update(sf::Time deltaTime, IGameState& gameState)
 		if (itr == snakeBodyParts.begin())
 			itr = std::next(itr, 1);
 
-		sf::IntRect col = sf::IntRect(itr->GetPosition().x, itr->GetPosition().y, itr->GetColisionRect().width, itr->GetColisionRect().height);
+		sf::IntRect col = sf::IntRect(itr->GetPosition().x, itr->GetPosition().y, itr->GetCollisionRect().width, itr->GetCollisionRect().height);
 
 		BodyPartCollision(col, gameState);
 	}
 
-	snakeHeadRect = sf::IntRect(snakeBodyParts.front().GetPosition().x, snakeBodyParts.front().GetPosition().y, snakeBodyParts.front().GetColisionRect().width, snakeBodyParts.front().GetColisionRect().height);
+	if (direction.x > 0) // rechts
+	{
+		snakeHeadRect = sf::IntRect(snakeBodyParts.front().GetPosition().x + 45, snakeBodyParts.front().GetPosition().y + 17.5, 5, 5);
+	}
+	else if (direction.x < 0) // links
+	{
+		snakeHeadRect = sf::IntRect(snakeBodyParts.front().GetPosition().x - 5, snakeBodyParts.front().GetPosition().y + 20, 5, 5);
+	}
+	else if (direction.y > 0) // runter
+	{
+		snakeHeadRect = sf::IntRect(snakeBodyParts.front().GetPosition().x + 17.5, snakeBodyParts.front().GetPosition().y + 45, 5, 5);
+	}
+	else if (direction.y < 0) // hoch
+	{
+		snakeHeadRect = sf::IntRect(snakeBodyParts.front().GetPosition().x + 20, snakeBodyParts.front().GetPosition().y - 5, 5, 5);
+	}
+
+	//snakeHeadRect = sf::IntRect(snakeBodyParts.front().GetPosition().x, snakeBodyParts.front().GetPosition().y, 5, 5);
 }
 
 void Charakter::ChangeHeadTexture()
 {
 	if (direction.x > 0)
 	{
+		//snakeBodyParts.front().bodyPart.setScale(-1, 1);
 		snakeBodyParts.front().SetTexture(TextureManager::getTexture("headRight"));
 	}
 	else if (direction.x < 0)
 	{
+		//snakeBodyParts.front().bodyPart.setScale(1, 1);
 		snakeBodyParts.front().SetTexture(TextureManager::getTexture("headLeft"));
 	}
 	else if (direction.y > 0)
 	{
+		//snakeBodyParts.front().bodyPart.setScale(1, -1);
 		snakeBodyParts.front().SetTexture(TextureManager::getTexture("headDown"));
 	}
 	else if (direction.y < 0)
 	{
+		//snakeBodyParts.front().bodyPart.setScale(1, 1);
 		snakeBodyParts.front().SetTexture(TextureManager::getTexture("headUp"));
 	}
 }
@@ -226,6 +241,7 @@ void Charakter::Collision(const sf::IntRect& rect, Apple& apple)
 {
 	if (snakeHeadRect.intersects(rect))
 	{
+
 		rndApplePos = sf::Vector2f(rand() % (800 / 40) * 40, rand() % (600 / 40) * 40);
 
 		for(auto position : snakeBodyParts)

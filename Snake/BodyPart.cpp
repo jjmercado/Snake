@@ -2,11 +2,7 @@
 
 BodyPart::BodyPart(sf::Texture& texture, sf::Vector2f prev)
 {
-	collisionTexture.create(5, 5);
-	collision.setTexture(collisionTexture);
-	collision.setColor(sf::Color::Red);
-	collision.setOrigin(-17.5f, -17.5f);
-
+	collisionRect = sf::IntRect(0, 0, 40, 40);
 	bodyPart.setPosition(prev);
 	bodyPart.setTexture(texture);
 	dynamicCounter = 1700;
@@ -41,9 +37,14 @@ sf::Vector2f BodyPart::GetPosition()
 	return bodyPart.getPosition();
 }
 
-sf::IntRect BodyPart::GetRect()
+sf::IntRect BodyPart::GetBodyRect()
 {
 	return bodyPart.getTextureRect();
+}
+
+sf::IntRect BodyPart::GetCollisionRect()
+{
+	return collisionRect;
 }
 
 void BodyPart::SetTexture(sf::Texture& texture)
@@ -61,11 +62,6 @@ void BodyPart::Render(sf::RenderWindow& window)
 	{
 		directions.pop_front();
 	}
-}
-
-void BodyPart::RenderCollisionRect(sf::RenderWindow& window)
-{
-	window.draw(collision);
 }
 
 void BodyPart::Update(const sf::Vector2f prev)
@@ -86,16 +82,6 @@ sf::Vector2f& BodyPart::GetLastPosition()
 sf::Vector2f& BodyPart::GetLastDirection()
 {
 	return directions.front();
-}
-
-void BodyPart::CollisionPart()
-{
-	collision.setPosition(bodyPart.getPosition());
-}
-
-sf::IntRect BodyPart::GetColisionRect()
-{
-	return collision.getTextureRect();
 }
 
 void BodyPart::RotateBodyPart()

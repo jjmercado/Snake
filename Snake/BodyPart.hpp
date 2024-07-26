@@ -14,23 +14,18 @@ class BodyPart
 		sf::Vector2f GetDirection();
 		void SetPosition(const sf::Vector2f& position);
 		sf::Vector2f GetPosition();
-		sf::IntRect GetRect();
+		sf::IntRect GetBodyRect();
+		sf::IntRect GetCollisionRect();
 		void SetTexture(sf::Texture& texture);
 		void Render(sf::RenderWindow& window);
-		void RenderCollisionRect(sf::RenderWindow& window);
 		void Update(const sf::Vector2f prev);
 		sf::Vector2f& GetLastPosition();
 		sf::Vector2f& GetLastDirection();
-		void CollisionPart();
-		sf::IntRect GetColisionRect();
 		void RotateBodyPart();
+		sf::Sprite bodyPart;
 
 	private:
-		sf::Sprite collision;
-		sf::Sprite bodyPart;
-		sf::Texture collisionTexture;
-		//sf::Vector2f lastPosition;
-		//sf::Vector2f lastDirection;
+		sf::IntRect collisionRect;
 		sf::Vector2f direction;
 		std::deque<sf::Vector2f> directions;
 		std::deque<sf::Vector2f> positions;
