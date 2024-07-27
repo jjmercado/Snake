@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "Panel.hpp"
 #include "IGameState.hpp"
+#include <SFML/Audio.hpp>
 
 class Menu
 {
@@ -14,5 +15,8 @@ class Menu
 	private:
 		Panel panel;
 		sf::Sprite background;
+		sf::SoundBuffer buffer;
+		sf::Sound sound;
+		bool hasPlayedSound = false;
 };
 

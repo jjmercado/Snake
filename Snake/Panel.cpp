@@ -38,6 +38,10 @@ Panel::Panel(sf::RenderWindow& window, sf::Font& font) : startButton(font), opti
 	exitButton.SetTextPosition(sf::Vector2f(window.getSize().x / 2 - 40, (window.getSize().y / 2) + 70));
 }
 
+Panel::~Panel()
+{
+}
+
 void Panel::Render(sf::RenderWindow& window)
 {
 	window.draw(sprite);

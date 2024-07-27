@@ -7,12 +7,13 @@
 #include <stdexcept>
 #include "TextureManager.hpp"
 
+
 class Panel
 {
 	public:
 		Panel();
 		Panel(sf::RenderWindow& window, sf::Font& font);
-
+		~Panel();
 		void Render(sf::RenderWindow& window);
 		Button& GetButton(const std::string& buttonName);
 		void SetTexture(sf::Texture& texture);
@@ -22,7 +23,6 @@ class Panel
 		sf::Texture texture;
 		sf::Sprite sprite;
 		sf::Text menuText;
-
 		Button optionsButton;
 		Button startButton;
 		Button exitButton;
