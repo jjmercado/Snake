@@ -8,6 +8,7 @@
 #include <queue>
 #include "BodyPart.hpp"
 #include "IGameState.hpp"
+#include <SFML/Audio.hpp>
 
 class Charakter
 {
@@ -45,5 +46,11 @@ class Charakter
 		bool isBodyCollisionActive;
 		bool hasCollided;
 		sf::Vector2f rndApplePos;
+		sf::SoundBuffer eatBuffer;
+		sf::Sound eat;
+		sf::SoundBuffer gameOverBuffer;
+		sf::Sound gameOver;
+		sf::SoundBuffer moveBuffer;
+		sf::Sound move;
 };
 

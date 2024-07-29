@@ -6,11 +6,18 @@ Menu::Menu()
 
 Menu::Menu(sf::RenderWindow& window, sf::Font& font) : panel(window, font)
 {
-    if (!buffer.loadFromFile("random.wav"))
+    if (!hoverBuffer.loadFromFile("hover.wav"))
     {
         throw std::runtime_error("Failed to load audio file: random.wav");
     }
-    sound.setBuffer(buffer);
+
+    if(!clickBuffer.loadFromFile("click.mp3"))
+	{
+		throw std::runtime_error("Failed to load audio file: click.wav");
+	}
+
+    click.setBuffer(clickBuffer);
+    hover.setBuffer(hoverBuffer);
     background.setTexture(TextureManager::getTexture("startMenuBackground"));
 }
 
@@ -20,7 +27,9 @@ void Menu::handleEvents(sf::RenderWindow& window, sf::Event& event, IGameState& 
     {
         if (panel.GetButton("Start").IsMouseOnButton(window))
         {
+            click.play();
             gameState.SetState(IGameState::Playing);
+
         }
         else if (panel.GetButton("Options").IsMouseOnButton(window))
         {
@@ -40,17 +49,30 @@ void Menu::handleDrawings(sf::RenderWindow& window)
     {
         panel.GetButton("Start").SetSprite(TextureManager::getTexture("blueButton13"));
         panel.GetButton("Start").SetTextFillColor(sf::Color::Black);
-        sound.play();
+
+        if (hover.getStatus() != sf::Sound::Playing && !hasPlayedSound)
+        {
+            hasPlayedSound = true;
+            hover.play();
+        }
     }
     else if (panel.GetButton("Options").IsMouseOnButton(window))
     {
         panel.GetButton("Options").SetSprite(TextureManager::getTexture("yellowButton"));
-        sound.play();
+        if (hover.getStatus() != sf::Sound::Playing && !hasPlayedSound)
+        {
+            hasPlayedSound = true;
+            hover.play();
+        }
     }
     else if (panel.GetButton("Exit").IsMouseOnButton(window))
     {
         panel.GetButton("Exit").SetSprite(TextureManager::getTexture("yellowButton"));
-        sound.play();
+        if (hover.getStatus() != sf::Sound::Playing && !hasPlayedSound)
+        {
+            hasPlayedSound = true;
+            hover.play();
+        }
     }
     else
     {
@@ -58,6 +80,7 @@ void Menu::handleDrawings(sf::RenderWindow& window)
         panel.GetButton("Start").SetSprite(TextureManager::getTexture("yellowButton"));
         panel.GetButton("Options").SetSprite(TextureManager::getTexture("blueButton"));
         panel.GetButton("Exit").SetSprite(TextureManager::getTexture("blueButton"));
+        hasPlayedSound = false;
     }
     panel.Render(window);
 }

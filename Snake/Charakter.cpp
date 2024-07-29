@@ -6,6 +6,24 @@ Charakter::Charakter()
 
 Charakter::Charakter(sf::RenderWindow& window)
 {
+	if(!moveBuffer.loadFromFile("move.wav"))
+	{
+		std::cout << "Error loading sound" << std::endl;
+	}
+	move.setBuffer(moveBuffer);
+
+	if(!gameOverBuffer.loadFromFile("game-over.mp3"))
+	{
+		std::cout << "Error loading sound" << std::endl;
+	}
+	gameOver.setBuffer(gameOverBuffer);
+
+	if(!eatBuffer.loadFromFile("eat.mp3"))
+	{
+		std::cout << "Error loading sound" << std::endl;
+	}
+	eat.setBuffer(eatBuffer);
+
 	srand(time(NULL));
 	isBodyCollisionActive = false;
 	hasCollided = false;
@@ -38,18 +56,22 @@ void Charakter::Events(sf::Event& event)
 		if ((event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D) && newDirection != sf::Vector2f(-1.0f, 0.0f))
 		{
 			newDirection = sf::Vector2f(1.0f, 0.0f);
+			move.play();
 		}
 		else if ((event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A) && newDirection != sf::Vector2f(1.0f, 0.0f))
 		{
 			newDirection = sf::Vector2f(-1.0f, 0.0f);
+			move.play();
 		}
 		else if ((event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S) && newDirection != sf::Vector2f(0.0f, -1.0f))
 		{
 			newDirection = sf::Vector2f(0.0f, 1.0f);
+			move.play();
 		}
 		else if ((event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W) && newDirection != sf::Vector2f(0.0f, 1.0f))
 		{
 			newDirection = sf::Vector2f(0.0f, -1.0f);
+			move.play();
 		}
 
 		if(event.key.code == sf::Keyboard::Space)
@@ -242,7 +264,7 @@ void Charakter::Collision(const sf::IntRect& rect, Apple& apple)
 {
 	if (snakeHeadRect.intersects(rect))
 	{
-
+		eat.play();
 		rndApplePos = sf::Vector2f(rand() % (800 / 40) * 40, rand() % (600 / 40) * 40);
 
 		for(auto position : snakeBodyParts)
@@ -283,6 +305,7 @@ void Charakter::AddBodyPart()
 
 void Charakter::Reset(sf::RenderWindow& window, Apple& apple)
 {
+	gameOver.stop();
 	snakeBodyParts.clear();
 	sf::Vector2f startPosition = sf::Vector2f(window.getSize().x / 2, window.getSize().y / 2 - 20);
 	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("headLeft"), startPosition));
@@ -320,6 +343,7 @@ void Charakter::BodyPartCollision(const sf::IntRect& bodyPartRect, IGameState& g
 	if (snakeHeadRect.intersects(bodyPartRect) && isBodyCollisionActive)
 	{
 		gameState.SetState(IGameState::GameIsOver);
+		gameOver.play();
 		hasCollided = true;
 	}
 }
@@ -328,10 +352,12 @@ void Charakter::CheckBoundaries()
 {
 	if (snakeBodyParts.front().GetPosition().x < 0 || snakeBodyParts.front().GetPosition().x > 800 - 40)
 	{
+		gameOver.play();
 		hasCollided = true;
 	}
 	else if (snakeBodyParts.front().GetPosition().y < 0 || snakeBodyParts.front().GetPosition().y > 600 - 40)
 	{
+		gameOver.play();
 		hasCollided = true;
 	}
 }

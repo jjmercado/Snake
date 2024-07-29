@@ -15,8 +15,10 @@ class Menu
 	private:
 		Panel panel;
 		sf::Sprite background;
-		sf::SoundBuffer buffer;
-		sf::Sound sound;
+		sf::SoundBuffer hoverBuffer;
+		sf::SoundBuffer clickBuffer;
+		sf::Sound hover;
+		sf::Sound click;
 		bool hasPlayedSound = false;
 };
 
