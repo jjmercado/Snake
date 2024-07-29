@@ -36,30 +36,23 @@ void Apple::SetPosition(const sf::Vector2f& position)
 
 void Apple::Animation()
 {
-	float delay = 0.6f;
-	sf::Time time = clock.getElapsedTime();
+    const float delay = 0.6f;
+    const float maxScale = 1.5f;
+    const float minScale = 1.0f;
+    sf::Time time = clock.getElapsedTime();
 
-	sprite.setScale(1.0f + animationSpeed, 1.0f + animationSpeed);
+    if (time.asSeconds() > delay)
+    {
+        float currentScale = sprite.getScale().x; // Da x und y gleich sind, reicht es, eine zu überprüfen
 
-	if (time.asSeconds() > delay)
-	{
-		if(sprite.getScale().x < 1.5f)
-		{
-			animationSpeed += 0.1f;
-		}
+        if (currentScale <= maxScale)
+        {
+            sprite.setScale(currentScale + animationSpeed, currentScale + animationSpeed);
+        }        
 		else
 		{
-			animationSpeed -= 0.1f;
+			sprite.setScale(minScale, minScale);
 		}
-
-		if (sprite.getScale().y < 1.5f)
-		{
-			animationSpeed += 0.1f;
-		}
-		else
-		{
-			animationSpeed -= 0.1f;
-		}
-		clock.restart();
-	}
+        clock.restart();
+    }
 }
