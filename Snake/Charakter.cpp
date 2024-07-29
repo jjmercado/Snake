@@ -274,7 +274,7 @@ void Charakter::Collision(const sf::IntRect& rect, Apple& apple)
 				rndApplePos = sf::Vector2f(rand() % (800 / 40) * 40, rand() % (600 / 40) * 40);
 			}
 		}
-		apple.SetPosition(rndApplePos);
+		apple.SetPosition(rndApplePos + sf::Vector2f(20,20));
 		AddBodyPart();
 	}
 }
@@ -318,7 +318,7 @@ void Charakter::Reset(sf::RenderWindow& window, Apple& apple)
 	hasCollided = false;
 
 	rndApplePos = sf::Vector2f(rand() % (800 / 40) * 40, rand() % (600 / 40) * 40);
-	apple.SetPosition(rndApplePos);
+	apple.SetPosition(rndApplePos + sf::Vector2f(20,20));
 
 	speed = 1.0f;
 	direction = sf::Vector2f(-1.0f, 0.0f);
