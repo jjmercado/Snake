@@ -30,11 +30,17 @@ void Game::Run()
         while (timeSinceLastUpdate > TimePerFrame)
         {
             timeSinceLastUpdate -= TimePerFrame;
-        }
             ProcessEvents();
             Update(TimePerFrame); // Update mit fester Zeitrate
-
-        Render();
+            Render();
+            frameCount++;
+            if (fpsClock.getElapsedTime().asSeconds() >= 1.0f)
+            {
+                std::cout << "FPS: " << frameCount << std::endl;
+                frameCount = 0;
+                fpsClock.restart();
+            }
+        }
     }
 }
 

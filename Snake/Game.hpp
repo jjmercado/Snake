@@ -18,5 +18,7 @@ class Game
 
 		sf::RenderWindow window;
 		sf::Font font;
+		unsigned int frameCount; // Variable für die Frame-Zählung
+		sf::Clock fpsClock; // Uhr für die FPS-Berechnung
 };
 

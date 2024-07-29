@@ -35,7 +35,7 @@ Charakter::Charakter(sf::RenderWindow& window)
 
 	snakeBodyParts.front().SetPosition(startPosition);
 
-	speed = 1.0f;
+	speed = 250.0f;
 
 	isLerping = false;
 	counter = 0;
@@ -159,7 +159,7 @@ void Charakter::Update(sf::Time deltaTime, IGameState& gameState)
 
 	if (isLerping)
 	{
-		float lerpRate = 2.0f;
+		float lerpRate = 35.0f;
 
 		// Berechnet die Zielposition auf dem Grid
 		targetPosition = CalculateTargetPosition(deltaTime);
@@ -320,7 +320,7 @@ void Charakter::Reset(sf::RenderWindow& window, Apple& apple)
 	rndApplePos = sf::Vector2f(rand() % (800 / 40) * 40, rand() % (600 / 40) * 40);
 	apple.SetPosition(rndApplePos + sf::Vector2f(20,20));
 
-	speed = 1.0f;
+	speed = 250.0f;
 	direction = sf::Vector2f(-1.0f, 0.0f);
 
 	isLerping = false;

@@ -5,9 +5,9 @@ BodyPart::BodyPart(sf::Texture& texture, sf::Vector2f prev)
 	collisionRect = sf::IntRect(0, 0, 40, 40);
 	bodyPart.setPosition(prev);
 	bodyPart.setTexture(texture);
-	dynamicCounter = 1700;
+	dynamicCounter = 8;
 
-	for(int i = 0; i < 20; i++)
+	for(int i = 0; i < 8; i++)
 	{
 		positions.push_back(prev);
 	}
@@ -68,7 +68,7 @@ void BodyPart::Update(const sf::Vector2f prev)
 {
 	positions.push_back(prev);
 
-	if (positions.size() > 2000)
+	if (positions.size() > 8)
 	{
 		positions.pop_front();
 	}
