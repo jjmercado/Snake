@@ -3,6 +3,7 @@
 #include "GameOverPanel.hpp"
 #include "IGameState.hpp"
 #include "Charakter.hpp"
+#include <SFML/Audio.hpp>
 
 class GameOver
 {
@@ -16,5 +17,10 @@ class GameOver
 
 	private:
 		GameOverPanel gameOverPanel;
+		sf::SoundBuffer hoverBuffer;
+		sf::SoundBuffer clickBuffer;
+		sf::Sound hover;
+		sf::Sound click;
+		bool hasPlayedSound;
 };
 

@@ -34,9 +34,11 @@ void Menu::handleEvents(sf::RenderWindow& window, sf::Event& event, IGameState& 
         else if (panel.GetButton("Options").IsMouseOnButton(window))
         {
             // TODO: Implement options menu
+            click.play();
         }
         else if (panel.GetButton("Exit").IsMouseOnButton(window))
         {
+            click.play();
             window.close();
         }
     }
