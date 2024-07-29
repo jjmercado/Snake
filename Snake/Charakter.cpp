@@ -159,7 +159,7 @@ void Charakter::Update(sf::Time deltaTime, IGameState& gameState)
 
 	if (isLerping)
 	{
-		float lerpRate = 35.0f;
+		float lerpRate = 60.0f;
 
 		// Berechnet die Zielposition auf dem Grid
 		targetPosition = CalculateTargetPosition(deltaTime);
