@@ -5,12 +5,7 @@ BodyPart::BodyPart(sf::Texture& texture, sf::Vector2f prev)
 	collisionRect = sf::IntRect(0, 0, 40, 40);
 	bodyPart.setPosition(prev);
 	bodyPart.setTexture(texture);
-	dynamicCounter = 8;
-
-	for(int i = 0; i < 8; i++)
-	{
-		positions.push_back(prev);
-	}
+	maxListValue = 8;
 }
 
 BodyPart::~BodyPart()
@@ -58,7 +53,7 @@ void BodyPart::Render(sf::RenderWindow& window)
 
 	directions.push_back(direction);
 
-	if(directions.size() > dynamicCounter)
+	if(directions.size() > maxListValue)
 	{
 		directions.pop_front();
 	}
@@ -68,7 +63,7 @@ void BodyPart::Update(const sf::Vector2f prev)
 {
 	positions.push_back(prev);
 
-	if (positions.size() > 8)
+	if (positions.size() > maxListValue)
 	{
 		positions.pop_front();
 	}
@@ -82,18 +77,4 @@ sf::Vector2f& BodyPart::GetLastPosition()
 sf::Vector2f& BodyPart::GetLastDirection()
 {
 	return directions.front();
-}
-
-void BodyPart::RotateBodyPart()
-{
-	bodyPart.setOrigin(20, 20);
-	if (direction.x < 0 || direction.x > 0)
-	{
-		bodyPart.setRotation(0);
-	}
-	else if (direction.y < 0 || direction.y > 0)
-	{
-		bodyPart.setRotation(90);
-	}
-	bodyPart.setOrigin(0, 0);
 }
