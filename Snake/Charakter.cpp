@@ -80,7 +80,7 @@ void Charakter::Events(sf::Event& event)
 				AddBodyPart();
 		}
 
-		if (directionChangeClock.getElapsedTime().asSeconds() > 0.120f && newDirection != direction) 
+		if (directionChangeClock.getElapsedTime().asSeconds() > 0.10f && newDirection != direction) 
 		{
 			direction = newDirection;
 			isLerping = true;
