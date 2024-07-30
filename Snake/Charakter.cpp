@@ -63,22 +63,22 @@ void Charakter::Events(sf::Event& event)
 	{
 		sf::Vector2f newDirection = direction;
 
-		if ((event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D) && newDirection != Direction::Right)
+		if ((event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D) && newDirection != Direction::Left)
 		{
 			newDirection = Direction::Right;
 			move.play();
 		}
-		else if ((event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A) && newDirection != Direction::Left)
+		else if ((event.key.code == sf::Keyboard::Left || event.key.code == sf::Keyboard::A) && newDirection != Direction::Right)
 		{
 			newDirection = Direction::Left;
 			move.play();
 		}
-		else if ((event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S) && newDirection != Direction::Down)
+		else if ((event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S) && newDirection != Direction::Up)
 		{
 			newDirection = Direction::Down;
 			move.play();
 		}
-		else if ((event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W) && newDirection != Direction::Up)
+		else if ((event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W) && newDirection != Direction::Down)
 		{
 			newDirection = Direction::Up;
 			move.play();
