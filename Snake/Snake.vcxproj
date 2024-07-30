@@ -140,6 +140,7 @@
     <ClInclude Include="BodyPart.hpp" />
     <ClInclude Include="Button.hpp" />
     <ClInclude Include="Charakter.hpp" />
+    <ClInclude Include="Direction.hpp" />
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="GameOver.hpp" />
     <ClInclude Include="GameOverPanel.hpp" />
@@ -156,6 +157,7 @@
     <ClCompile Include="BodyPart.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Charakter.cpp" />
+    <ClCompile Include="Direction.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="GameOverPanel.cpp" />
