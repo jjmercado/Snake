@@ -102,7 +102,6 @@ void Charakter::Events(sf::Event& event)
 
 void Charakter::Render(sf::RenderWindow& window)
 {
-
 	for (auto& bodyPart : snakeBodyParts)
 	{
 		bodyPart.Render(window);
@@ -206,7 +205,7 @@ void Charakter::Update(sf::Time deltaTime, IGameState& gameState)
 	}
 
 	rndApplePos = sf::Vector2f(rand() % (800 / (int)tileSize) * (int)tileSize, rand() % (600 / (int)tileSize) * (int)tileSize);
-
+	SetHeadCollisionRect();
 	CheckBoundaries();
 }
 
@@ -215,22 +214,18 @@ void Charakter::ChangeHeadTexture()
 	if (direction.x > 0)
 	{
 		snakeBodyParts.front().SetTexture(TextureManager::GetTexture("headRight"));
-		snakeHeadRect = sf::IntRect(snakeBodyParts.front().GetPosition().x + 45, snakeBodyParts.front().GetPosition().y + 17.5, 5, 5);
 	}
 	else if (direction.x < 0)
 	{
 		snakeBodyParts.front().SetTexture(TextureManager::GetTexture("headLeft"));
-		snakeHeadRect = sf::IntRect(snakeBodyParts.front().GetPosition().x - 5, snakeBodyParts.front().GetPosition().y + 20, 5, 5);
 	}
 	else if (direction.y > 0)
 	{
 		snakeBodyParts.front().SetTexture(TextureManager::GetTexture("headDown"));
-		snakeHeadRect = sf::IntRect(snakeBodyParts.front().GetPosition().x + 17.5, snakeBodyParts.front().GetPosition().y + 45, 5, 5);
 	}
 	else if (direction.y < 0)
 	{
 		snakeBodyParts.front().SetTexture(TextureManager::GetTexture("headUp"));
-		snakeHeadRect = sf::IntRect(snakeBodyParts.front().GetPosition().x + 20, snakeBodyParts.front().GetPosition().y - 5, 5, 5);
 	}
 }
 
@@ -350,4 +345,24 @@ void Charakter::StartGameOverMusic()
 {
 	gameOver.play();
 	hasCollided = true;
+}
+
+void Charakter::SetHeadCollisionRect()
+{
+	if (direction.x > 0)
+	{
+		snakeHeadRect = sf::IntRect(snakeBodyParts.front().GetPosition().x + 45, snakeBodyParts.front().GetPosition().y + 20, 5, 5);
+	}
+	else if (direction.x < 0)
+	{
+		snakeHeadRect = sf::IntRect(snakeBodyParts.front().GetPosition().x - 5, snakeBodyParts.front().GetPosition().y + 20, 5, 5);
+	}
+	else if (direction.y > 0)
+	{
+		snakeHeadRect = sf::IntRect(snakeBodyParts.front().GetPosition().x + 20, snakeBodyParts.front().GetPosition().y + 45, 5, 5);
+	}
+	else if (direction.y < 0)
+	{
+		snakeHeadRect = sf::IntRect(snakeBodyParts.front().GetPosition().x + 20, snakeBodyParts.front().GetPosition().y - 5, 5, 5);
+	}
 }

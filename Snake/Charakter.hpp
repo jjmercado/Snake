@@ -30,6 +30,7 @@ class Charakter
 		void BodyPartCollision(const sf::IntRect& bodyPartRect, IGameState& gameState);
 		void CheckBoundaries();
 		void StartGameOverMusic();
+		void SetHeadCollisionRect();
 		sf::Vector2f CalculateTargetPosition(sf::Time deltaTime);
 		sf::Vector2f Lerp(const sf::Vector2f& a, const sf::Vector2f& b, float t);
 		float speed;
