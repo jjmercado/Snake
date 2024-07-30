@@ -45,9 +45,6 @@
     <ClInclude Include="Apple.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Grid.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="BodyPart.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -90,9 +87,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Apple.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Grid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BodyPart.cpp">

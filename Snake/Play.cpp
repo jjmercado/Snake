@@ -2,10 +2,10 @@
 
 Play::Play(sf::RenderWindow& window, sf::Font& font) : charakter(window)
 {
-	background.setTexture(TextureManager::getTexture("playingBackground"));
+	background.setTexture(TextureManager::GetTexture("playingBackground"));
 }
 
-void Play::handleEvents(sf::RenderWindow& window, sf::Event& event, IGameState& gameState)
+void Play::HandleEvents(sf::RenderWindow& window, sf::Event& event, IGameState& gameState)
 {
 	if (event.type == sf::Event::KeyPressed)
 	{
@@ -17,15 +17,14 @@ void Play::handleEvents(sf::RenderWindow& window, sf::Event& event, IGameState& 
 	charakter.Events(event);
 }
 
-void Play::handleDrawings(sf::RenderWindow& window)
+void Play::HandleDrawings(sf::RenderWindow& window)
 {
 	window.draw(background);
 	charakter.Render(window);
 	apple.Render(window);
-	//grid.Render(window);
 }
 
-void Play::handleUpdate(sf::Time deltaTime, IGameState& gameState)
+void Play::HandleUpdate(sf::Time deltaTime, IGameState& gameState)
 {
 	charakter.Update(deltaTime, gameState);
 	charakter.Collision(apple.GetRect(), apple);

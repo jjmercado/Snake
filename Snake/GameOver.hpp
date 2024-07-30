@@ -11,9 +11,9 @@ class GameOver
 		GameOver();
 		GameOver(sf::RenderWindow& window, sf::Font& font);
 		~GameOver();
-		void handleDrawings(sf::RenderWindow& window);
-		void handleEvents(sf::Event& event, sf::RenderWindow& window, IGameState& gameState, Charakter& charakter, Apple& apple);
-		void handleUpdate(sf::Time deltaTime);
+		void HandleDrawings(sf::RenderWindow& window);
+		void HandleEvents(sf::Event& event, sf::RenderWindow& window, IGameState& gameState, Charakter& charakter, Apple& apple);
+		void HandleUpdate(sf::Time deltaTime);
 
 	private:
 		GameOverPanel gameOverPanel;
@@ -22,5 +22,6 @@ class GameOver
 		sf::Sound hover;
 		sf::Sound click;
 		bool hasPlayedSound;
+		void PlayHoverSound();
 };
 

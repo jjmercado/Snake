@@ -4,15 +4,14 @@
 #include "IGameState.hpp"
 #include "Charakter.hpp"
 #include "Apple.hpp"
-#include "Grid.hpp"
 
 class Play
 {
 	public:
 		Play(sf::RenderWindow& window, sf::Font& font);
-		void handleEvents(sf::RenderWindow& window, sf::Event& event, IGameState& gameState);
-		void handleDrawings(sf::RenderWindow& window);
-		void handleUpdate(sf::Time deltaTime, IGameState& gameState);
+		void HandleEvents(sf::RenderWindow& window, sf::Event& event, IGameState& gameState);
+		void HandleDrawings(sf::RenderWindow& window);
+		void HandleUpdate(sf::Time deltaTime, IGameState& gameState);
 		Charakter& GetCharakter();
 		Apple& GetApple();
 
@@ -20,6 +19,5 @@ class Play
 		Charakter charakter;
 		sf::Sprite background;
 		Apple apple;
-		Grid grid;
 };
 

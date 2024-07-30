@@ -7,9 +7,9 @@ class Apple
 {
 	public:
 		Apple();
+		sf::IntRect GetRect();
 		void Render(sf::RenderWindow& window);
 		void Update();
-		sf::IntRect GetRect();
 		void SetPosition(const sf::Vector2f& position);
 		void Animation();
 

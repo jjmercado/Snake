@@ -6,6 +6,8 @@ Menu::Menu()
 
 Menu::Menu(sf::RenderWindow& window, sf::Font& font) : panel(window, font)
 {
+    hasPlayedSound = false;
+
     if (!hoverBuffer.loadFromFile("hover.wav"))
     {
         throw std::runtime_error("Failed to load audio file: random.wav");
@@ -18,10 +20,10 @@ Menu::Menu(sf::RenderWindow& window, sf::Font& font) : panel(window, font)
 
     click.setBuffer(clickBuffer);
     hover.setBuffer(hoverBuffer);
-    background.setTexture(TextureManager::getTexture("startMenuBackground"));
+    background.setTexture(TextureManager::GetTexture("startMenuBackground"));
 }
 
-void Menu::handleEvents(sf::RenderWindow& window, sf::Event& event, IGameState& gameState)
+void Menu::HandleEvents(sf::RenderWindow& window, sf::Event& event, IGameState& gameState)
 {
     if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
     {
@@ -44,45 +46,43 @@ void Menu::handleEvents(sf::RenderWindow& window, sf::Event& event, IGameState& 
     }
 }
 
-void Menu::handleDrawings(sf::RenderWindow& window)
+void Menu::HandleDrawings(sf::RenderWindow& window)
 {
 	window.draw(background);
     if (panel.GetButton("Start").IsMouseOnButton(window))
     {
-        panel.GetButton("Start").SetSprite(TextureManager::getTexture("blueButton13"));
+        panel.GetButton("Start").SetSprite(TextureManager::GetTexture("blueButton13"));
         panel.GetButton("Start").SetTextFillColor(sf::Color::Black);
-
-        if (hover.getStatus() != sf::Sound::Playing && !hasPlayedSound)
-        {
-            hasPlayedSound = true;
-            hover.play();
-        }
+        PlayHoverSound();
     }
     else if (panel.GetButton("Options").IsMouseOnButton(window))
     {
-        panel.GetButton("Options").SetSprite(TextureManager::getTexture("yellowButton"));
-        if (hover.getStatus() != sf::Sound::Playing && !hasPlayedSound)
-        {
-            hasPlayedSound = true;
-            hover.play();
-        }
+        panel.GetButton("Options").SetSprite(TextureManager::GetTexture("yellowButton"));
+        PlayHoverSound();
     }
     else if (panel.GetButton("Exit").IsMouseOnButton(window))
     {
-        panel.GetButton("Exit").SetSprite(TextureManager::getTexture("yellowButton"));
-        if (hover.getStatus() != sf::Sound::Playing && !hasPlayedSound)
-        {
-            hasPlayedSound = true;
-            hover.play();
-        }
+        panel.GetButton("Exit").SetSprite(TextureManager::GetTexture("yellowButton"));
+        PlayHoverSound();
     }
     else
     {
         panel.GetButton("Start").SetTextFillColor(sf::Color::White);
-        panel.GetButton("Start").SetSprite(TextureManager::getTexture("yellowButton"));
-        panel.GetButton("Options").SetSprite(TextureManager::getTexture("blueButton"));
-        panel.GetButton("Exit").SetSprite(TextureManager::getTexture("blueButton"));
+        panel.GetButton("Start").SetSprite(TextureManager::GetTexture("yellowButton"));
+        panel.GetButton("Options").SetSprite(TextureManager::GetTexture("blueButton"));
+        panel.GetButton("Exit").SetSprite(TextureManager::GetTexture("blueButton"));
         hasPlayedSound = false;
     }
     panel.Render(window);
 }
+
+void Menu::PlayHoverSound()
+{
+    if (hover.getStatus() != sf::Sound::Playing && !hasPlayedSound)
+    {
+        hasPlayedSound = true;
+        hover.play();
+    }
+}
+
+

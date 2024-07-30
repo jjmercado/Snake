@@ -25,48 +25,36 @@ GameOver::~GameOver()
 {
 }
 
-void GameOver::handleDrawings(sf::RenderWindow& window)
+void GameOver::HandleDrawings(sf::RenderWindow& window)
 {
     if (gameOverPanel.GetButton("PlayAgain").IsMouseOnButton(window))
     {
-        gameOverPanel.GetButton("PlayAgain").SetSprite(TextureManager::getTexture("blueButton13"));
+        gameOverPanel.GetButton("PlayAgain").SetSprite(TextureManager::GetTexture("blueButton13"));
         gameOverPanel.GetButton("PlayAgain").SetTextFillColor(sf::Color::Black);
-        if (hover.getStatus() != sf::Sound::Playing && !hasPlayedSound)
-        {
-            hasPlayedSound = true;
-            hover.play();
-        }
+        PlayHoverSound();
     }
     else if (gameOverPanel.GetButton("Options").IsMouseOnButton(window))
     {
-        gameOverPanel.GetButton("Options").SetSprite(TextureManager::getTexture("yellowButton"));
-        if (hover.getStatus() != sf::Sound::Playing && !hasPlayedSound)
-        {
-            hasPlayedSound = true;
-            hover.play();
-        }
+        gameOverPanel.GetButton("Options").SetSprite(TextureManager::GetTexture("yellowButton"));
+        PlayHoverSound();
     }
     else if (gameOverPanel.GetButton("Exit").IsMouseOnButton(window))
     {
-        gameOverPanel.GetButton("Exit").SetSprite(TextureManager::getTexture("yellowButton"));
-        if (hover.getStatus() != sf::Sound::Playing && !hasPlayedSound)
-        {
-            hasPlayedSound = true;
-            hover.play();
-        }
+        gameOverPanel.GetButton("Exit").SetSprite(TextureManager::GetTexture("yellowButton"));
+        PlayHoverSound();
     }
     else
     {
-
         gameOverPanel.GetButton("PlayAgain").SetTextFillColor(sf::Color::White);
-        gameOverPanel.GetButton("PlayAgain").SetSprite(TextureManager::getTexture("yellowButton"));
-        gameOverPanel.GetButton("Options").SetSprite(TextureManager::getTexture("blueButton"));
-        gameOverPanel.GetButton("Exit").SetSprite(TextureManager::getTexture("blueButton"));
+        gameOverPanel.GetButton("PlayAgain").SetSprite(TextureManager::GetTexture("yellowButton"));
+        gameOverPanel.GetButton("Options").SetSprite(TextureManager::GetTexture("blueButton"));
+        gameOverPanel.GetButton("Exit").SetSprite(TextureManager::GetTexture("blueButton"));
+        hasPlayedSound = false;
     }
     gameOverPanel.Render(window);
 }
 
-void GameOver::handleEvents(sf::Event& event, sf::RenderWindow& window, IGameState& gameState, Charakter& charakter, Apple& apple)
+void GameOver::HandleEvents(sf::Event& event, sf::RenderWindow& window, IGameState& gameState, Charakter& charakter, Apple& apple)
 {
     if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
     {
@@ -89,6 +77,15 @@ void GameOver::handleEvents(sf::Event& event, sf::RenderWindow& window, IGameSta
     }
 }
 
-void GameOver::handleUpdate(sf::Time deltaTime)
+void GameOver::HandleUpdate(sf::Time deltaTime)
 {
+}
+
+void GameOver::PlayHoverSound()
+{
+    if (hover.getStatus() != sf::Sound::Playing && !hasPlayedSound)
+    {
+        hasPlayedSound = true;
+        hover.play();
+    }
 }

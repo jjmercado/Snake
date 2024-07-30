@@ -22,17 +22,17 @@ void MyGame::ProcessEvents()
         {
             case IGameState::StartMenu:
             {
-                menu.handleEvents(window, event, *this);
+                menu.HandleEvents(window, event, *this);
                 break;
             }
             case IGameState::Playing:
             {
-                play.handleEvents(window, event, *this);
+                play.HandleEvents(window, event, *this);
                 break;
             }
             case IGameState::GameIsOver:
             {
-                gameOver.handleEvents(event, window, *this, play.GetCharakter(), play.GetApple());
+                gameOver.HandleEvents(event, window, *this, play.GetCharakter(), play.GetApple());
                 break;
             }
             default:
@@ -52,7 +52,7 @@ void MyGame::Update(sf::Time deltaTime)
         }
         case IGameState::Playing:
         {
-            play.handleUpdate(deltaTime, *this);
+            play.HandleUpdate(deltaTime, *this);
             break;
         }
         case IGameState::GameIsOver:
@@ -73,18 +73,18 @@ void MyGame::Render()
     {
         case IGameState::StartMenu:
         {
-            menu.handleDrawings(window);
+            menu.HandleDrawings(window);
             break;
         }
         case IGameState::Playing:
         {
-            play.handleDrawings(window);
+            play.HandleDrawings(window);
             break;
         }
         case IGameState::GameIsOver:
         {
-            play.handleDrawings(window);
-            gameOver.handleDrawings(window);
+            play.HandleDrawings(window);
+            gameOver.HandleDrawings(window);
             break;
         }
         default:

@@ -38,9 +38,9 @@ Charakter::Charakter(sf::RenderWindow& window)
 	hasCollided = false;
 	sf::Vector2f startPosition = sf::Vector2f(window.getSize().x / 2, window.getSize().y / 2 - 20);
 	direction = Direction::Left;
-	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("headLeft"), startPosition));
-	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("bodyHorizontal"), startPosition));
-	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("tailRight"), startPosition));
+	snakeBodyParts.push_back(BodyPart(TextureManager::GetTexture("headLeft"), startPosition));
+	snakeBodyParts.push_back(BodyPart(TextureManager::GetTexture("bodyHorizontal"), startPosition));
+	snakeBodyParts.push_back(BodyPart(TextureManager::GetTexture("tailRight"), startPosition));
 
 	snakeBodyParts.front().SetPosition(startPosition);
 
@@ -123,11 +123,11 @@ void Charakter::Render(sf::RenderWindow& window)
 
 			if (lastDirection.x < 0 || lastDirection.x > 0)
 			{
-				itr->SetTexture(TextureManager::getTexture("bodyHorizontal"));
+				itr->SetTexture(TextureManager::GetTexture("bodyHorizontal"));
 			}
 			else if (lastDirection.y < 0 || lastDirection.y > 0)
 			{
-				itr->SetTexture(TextureManager::getTexture("bodyVertical"));
+				itr->SetTexture(TextureManager::GetTexture("bodyVertical"));
 			}
 
 			ChangeTailTexture();
@@ -214,22 +214,22 @@ void Charakter::ChangeHeadTexture()
 {
 	if (direction.x > 0)
 	{
-		snakeBodyParts.front().SetTexture(TextureManager::getTexture("headRight"));
+		snakeBodyParts.front().SetTexture(TextureManager::GetTexture("headRight"));
 		snakeHeadRect = sf::IntRect(snakeBodyParts.front().GetPosition().x + 45, snakeBodyParts.front().GetPosition().y + 17.5, 5, 5);
 	}
 	else if (direction.x < 0)
 	{
-		snakeBodyParts.front().SetTexture(TextureManager::getTexture("headLeft"));
+		snakeBodyParts.front().SetTexture(TextureManager::GetTexture("headLeft"));
 		snakeHeadRect = sf::IntRect(snakeBodyParts.front().GetPosition().x - 5, snakeBodyParts.front().GetPosition().y + 20, 5, 5);
 	}
 	else if (direction.y > 0)
 	{
-		snakeBodyParts.front().SetTexture(TextureManager::getTexture("headDown"));
+		snakeBodyParts.front().SetTexture(TextureManager::GetTexture("headDown"));
 		snakeHeadRect = sf::IntRect(snakeBodyParts.front().GetPosition().x + 17.5, snakeBodyParts.front().GetPosition().y + 45, 5, 5);
 	}
 	else if (direction.y < 0)
 	{
-		snakeBodyParts.front().SetTexture(TextureManager::getTexture("headUp"));
+		snakeBodyParts.front().SetTexture(TextureManager::GetTexture("headUp"));
 		snakeHeadRect = sf::IntRect(snakeBodyParts.front().GetPosition().x + 20, snakeBodyParts.front().GetPosition().y - 5, 5, 5);
 	}
 }
@@ -238,19 +238,19 @@ void Charakter::ChangeTailTexture()
 {
 	if (lastDirection.x > 0)
 	{
-		snakeBodyParts.back().SetTexture(TextureManager::getTexture("tailLeft"));
+		snakeBodyParts.back().SetTexture(TextureManager::GetTexture("tailLeft"));
 	}
 	else if (lastDirection.x < 0)
 	{
-		snakeBodyParts.back().SetTexture(TextureManager::getTexture("tailRight"));
+		snakeBodyParts.back().SetTexture(TextureManager::GetTexture("tailRight"));
 	}
 	else if (lastDirection.y > 0)
 	{
-		snakeBodyParts.back().SetTexture(TextureManager::getTexture("tailUp"));
+		snakeBodyParts.back().SetTexture(TextureManager::GetTexture("tailUp"));
 	}
 	else if (lastDirection.y < 0)
 	{
-		snakeBodyParts.back().SetTexture(TextureManager::getTexture("tailDown"));
+		snakeBodyParts.back().SetTexture(TextureManager::GetTexture("tailDown"));
 	}
 }
 
@@ -278,11 +278,11 @@ void Charakter::AddBodyPart()
 
 	if (lastDirection.x > 0 || lastDirection.x < 0)
 	{
-		snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("bodyHorizontal"), back.GetPosition()));
+		snakeBodyParts.push_back(BodyPart(TextureManager::GetTexture("bodyHorizontal"), back.GetPosition()));
 	}
 	else if (lastDirection.y > 0 || lastDirection.y < 0)
 	{
-		snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("bodyVertical"), back.GetPosition()));
+		snakeBodyParts.push_back(BodyPart(TextureManager::GetTexture("bodyVertical"), back.GetPosition()));
 	}
 }
 
@@ -291,9 +291,9 @@ void Charakter::Reset(sf::RenderWindow& window, Apple& apple)
 	gameOver.stop();
 	snakeBodyParts.clear();
 	sf::Vector2f startPosition = sf::Vector2f(window.getSize().x / 2, window.getSize().y / 2 - 20);
-	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("headLeft"), startPosition));
-	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("bodyHorizontal"), startPosition));
-	snakeBodyParts.push_back(BodyPart(TextureManager::getTexture("tailRight"), startPosition));
+	snakeBodyParts.push_back(BodyPart(TextureManager::GetTexture("headLeft"), startPosition));
+	snakeBodyParts.push_back(BodyPart(TextureManager::GetTexture("bodyHorizontal"), startPosition));
+	snakeBodyParts.push_back(BodyPart(TextureManager::GetTexture("tailRight"), startPosition));
 
 	snakeBodyParts.front().SetPosition(startPosition);
 

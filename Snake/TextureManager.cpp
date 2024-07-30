@@ -2,7 +2,7 @@
 
 std::unordered_map<std::string, sf::Texture> TextureManager::textures;
 
-sf::Texture& TextureManager::getTexture(const std::string& textureName)
+sf::Texture& TextureManager::GetTexture(const std::string& textureName)
 {
     auto it = textures.find(textureName);
     if (it == textures.end()) 
@@ -12,28 +12,28 @@ sf::Texture& TextureManager::getTexture(const std::string& textureName)
     return it->second;
 }
 
-void TextureManager::loadTextures() 
+void TextureManager::LoadTextures() 
 {
-	loadTexture("panel", "..\\UIpack\\PNG\\panel.png");
-    loadTexture("yellowButton", "..\\UIpack\\PNG\\yellow_button00.png");
-	loadTexture("blueButton", "..\\UIpack\\PNG\\blue_button00.png");
-    loadTexture("blueButton13", "..\\UIpack\\PNG\\blue_button13.png");
-    loadTexture("startMenuBackground", "..\\snake_graphics\\snakeBackground.png");
-    loadTexture("playingBackground", "..\\snake_graphics\\playingBackground.png");
-    loadTexture("headLeft", "..\\snake_graphics\\Graphics\\head_left.png");
-    loadTexture("headRight", "..\\snake_graphics\\Graphics\\head_right.png");
-    loadTexture("headUp", "..\\snake_graphics\\Graphics\\head_up.png");
-    loadTexture("headDown", "..\\snake_graphics\\Graphics\\head_down.png");
-    loadTexture("tailRight", "..\\snake_graphics\\Graphics\\tail_right.png");
-    loadTexture("tailLeft", "..\\snake_graphics\\Graphics\\tail_left.png");
-    loadTexture("tailUp", "..\\snake_graphics\\Graphics\\tail_up.png");
-    loadTexture("tailDown", "..\\snake_graphics\\Graphics\\tail_down.png");
-    loadTexture("bodyHorizontal", "..\\snake_graphics\\Graphics\\body_horizontal.png");
-    loadTexture("bodyVertical", "..\\snake_graphics\\Graphics\\body_vertical.png");
-    loadTexture("apple", "..\\snake_graphics\\Graphics\\apple.png");
+	LoadTexture("panel", "..\\UIpack\\PNG\\panel.png");
+    LoadTexture("yellowButton", "..\\UIpack\\PNG\\yellow_button00.png");
+	LoadTexture("blueButton", "..\\UIpack\\PNG\\blue_button00.png");
+    LoadTexture("blueButton13", "..\\UIpack\\PNG\\blue_button13.png");
+    LoadTexture("startMenuBackground", "..\\snake_graphics\\snakeBackground.png");
+    LoadTexture("playingBackground", "..\\snake_graphics\\playingBackground.png");
+    LoadTexture("headLeft", "..\\snake_graphics\\Graphics\\head_left.png");
+    LoadTexture("headRight", "..\\snake_graphics\\Graphics\\head_right.png");
+    LoadTexture("headUp", "..\\snake_graphics\\Graphics\\head_up.png");
+    LoadTexture("headDown", "..\\snake_graphics\\Graphics\\head_down.png");
+    LoadTexture("tailRight", "..\\snake_graphics\\Graphics\\tail_right.png");
+    LoadTexture("tailLeft", "..\\snake_graphics\\Graphics\\tail_left.png");
+    LoadTexture("tailUp", "..\\snake_graphics\\Graphics\\tail_up.png");
+    LoadTexture("tailDown", "..\\snake_graphics\\Graphics\\tail_down.png");
+    LoadTexture("bodyHorizontal", "..\\snake_graphics\\Graphics\\body_horizontal.png");
+    LoadTexture("bodyVertical", "..\\snake_graphics\\Graphics\\body_vertical.png");
+    LoadTexture("apple", "..\\snake_graphics\\Graphics\\apple.png");
 }
 
-void TextureManager::loadTexture(const std::string& name, const std::string& filePath) 
+void TextureManager::LoadTexture(const std::string& name, const std::string& filePath) 
 {
     sf::Texture texture;
     if (!texture.loadFromFile(filePath)) {

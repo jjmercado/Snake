@@ -9,7 +9,8 @@ Game::Game() : window(sf::VideoMode(800, 600), "Snake")
 
     window.setKeyRepeatEnabled(false);
 
-    TextureManager::loadTextures();
+    TextureManager::LoadTextures();
+    frameCount = 0;
 }
 
 Game::~Game()
@@ -20,7 +21,7 @@ void Game::Run()
 {
     sf::Clock clock;
     sf::Time timeSinceLastUpdate = sf::Time::Zero;
-    sf::Time TimePerFrame = sf::seconds(1.f / 60.f); // 60 Updates pro Sekunde
+    sf::Time TimePerFrame = sf::seconds(1.f / 60.f);
 
     while (window.isOpen())
     {
@@ -31,7 +32,7 @@ void Game::Run()
         {
             timeSinceLastUpdate -= TimePerFrame;
             ProcessEvents();
-            Update(TimePerFrame); // Update mit fester Zeitrate
+            Update(TimePerFrame);
             Render();
             frameCount++;
             if (fpsClock.getElapsedTime().asSeconds() >= 1.0f)

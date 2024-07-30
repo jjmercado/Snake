@@ -10,7 +10,7 @@ Panel::Panel(sf::RenderWindow& window, sf::Font& font) : startButton(font), opti
 	buttonMap["Options"] = &optionsButton;
 	buttonMap["Exit"] = &exitButton;
 
-	SetTexture(TextureManager::getTexture("panel"));
+	SetTexture(TextureManager::GetTexture("panel"));
 
 	sprite.setOrigin(sf::Vector2f(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2));
 	sprite.setPosition(sf::Vector2f(window.getSize().x / 2, window.getSize().y / 2));
@@ -22,17 +22,17 @@ Panel::Panel(sf::RenderWindow& window, sf::Font& font) : startButton(font), opti
 	menuText.setOrigin(menuText.getLocalBounds().width / 2, menuText.getLocalBounds().height / 2);
 	menuText.setPosition(sf::Vector2f(window.getSize().x / 2, (window.getSize().y / 2) - 165));
 
-	startButton.SetSprite(TextureManager::getTexture("yellowButton"));
+	startButton.SetSprite(TextureManager::GetTexture("yellowButton"));
 	startButton.SetPosition(sf::Vector2f(window.getSize().x / 2, (window.getSize().y / 2) - 50));
 	startButton.SetText("Start");
 	startButton.SetTextPosition(sf::Vector2f(window.getSize().x / 2 - 55, (window.getSize().y / 2) - 70));
 
-	optionsButton.SetSprite(TextureManager::getTexture("blueButton"));
+	optionsButton.SetSprite(TextureManager::GetTexture("blueButton"));
 	optionsButton.SetPosition(sf::Vector2f(window.getSize().x / 2, (window.getSize().y / 2) + 20));
 	optionsButton.SetText("Options");
 	optionsButton.SetTextPosition(sf::Vector2f(window.getSize().x / 2 - 75, (window.getSize().y / 2)));
 
-	exitButton.SetSprite(TextureManager::getTexture("blueButton"));
+	exitButton.SetSprite(TextureManager::GetTexture("blueButton"));
 	exitButton.SetPosition(sf::Vector2f(window.getSize().x / 2, (window.getSize().y / 2) + 90));
 	exitButton.SetText("Exit");
 	exitButton.SetTextPosition(sf::Vector2f(window.getSize().x / 2 - 40, (window.getSize().y / 2) + 70));

@@ -6,7 +6,7 @@ Apple::Apple()
 	srand(time(NULL));
 	position = sf::Vector2f(rand() % (800 / 40) * 40, rand() % (600 / 40) * 40);
 	sprite.setPosition(position + sf::Vector2f(20,20));
-	sprite.setTexture(TextureManager::getTexture("apple"));
+	sprite.setTexture(TextureManager::GetTexture("apple"));
 	rect = sf::IntRect(position.x, position.y, sprite.getTextureRect().width, sprite.getTextureRect().height);
 	animationSpeed = 0.1f;
 	sprite.setOrigin(sprite.getTextureRect().width / 2, sprite.getTextureRect().height / 2);

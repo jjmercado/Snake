@@ -5,14 +5,12 @@
 
 class TextureManager
 {
-public:
-    TextureManager();
+    public:
+        TextureManager();
+        static sf::Texture& GetTexture(const std::string& textureName);
+        static void LoadTextures();
 
-    static sf::Texture& getTexture(const std::string& textureName);
-    static void loadTextures();
-
-private:
-    static std::unordered_map<std::string, sf::Texture> textures;
-
-    static void loadTexture(const std::string& name, const std::string& filePath);
+    private:
+        static std::unordered_map<std::string, sf::Texture> textures;
+        static void LoadTexture(const std::string& name, const std::string& filePath);
 };

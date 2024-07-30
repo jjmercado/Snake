@@ -8,17 +8,15 @@ class Game
 	public:
 		Game();
 		virtual ~Game();
-
 		void Run();
 
 	protected:
 		virtual void ProcessEvents();
 		virtual void Update(sf::Time deltaTime);
 		virtual void Render();
-
 		sf::RenderWindow window;
+		sf::Clock fpsClock;
 		sf::Font font;
-		unsigned int frameCount; // Variable für die Frame-Zählung
-		sf::Clock fpsClock; // Uhr für die FPS-Berechnung
+		unsigned int frameCount;
 };
 
