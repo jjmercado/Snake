@@ -17,6 +17,7 @@ class BodyPart
 		sf::IntRect GetBodyRect();
 		sf::IntRect GetCollisionRect();
 		sf::Sprite bodyPart;
+		void RenderBodyParts();
 		void SetDirection(const sf::Vector2f& position);
 		void SetPosition(const sf::Vector2f& position);
 		void SetTexture(sf::Texture& texture);
@@ -28,5 +29,6 @@ class BodyPart
 		std::deque<sf::Vector2f> positions;
 		sf::IntRect collisionRect;
 		sf::Vector2f direction;
+		sf::Clock clock;
 		int maxListValue;
 };

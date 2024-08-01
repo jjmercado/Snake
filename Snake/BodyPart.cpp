@@ -6,6 +6,7 @@ BodyPart::BodyPart(sf::Texture& texture, sf::Vector2f prev)
 	bodyPart.setPosition(prev);
 	bodyPart.setTexture(texture);
 	maxListValue = 8;
+	direction = sf::Vector2f(-1, 0);
 }
 
 BodyPart::~BodyPart()
@@ -53,7 +54,7 @@ void BodyPart::Render(sf::RenderWindow& window)
 
 	directions.push_back(direction);
 
-	if(directions.size() > maxListValue)
+	if(directions.size() > 6)
 	{
 		directions.pop_front();
 	}
@@ -78,3 +79,17 @@ sf::Vector2f& BodyPart::GetLastDirection()
 {
 	return directions.front();
 }
+
+void BodyPart::RenderBodyParts()
+{
+	if (directions.front().x < 0 || directions.front().x > 0)
+	{
+		bodyPart.setTexture(TextureManager::GetTexture("bodyHorizontal"));
+	}
+	else if (directions.front().y < 0 || directions.front().y > 0)
+	{
+		bodyPart.setTexture(TextureManager::GetTexture("bodyVertical"));
+	}
+}
+
+

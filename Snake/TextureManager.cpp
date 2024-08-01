@@ -31,6 +31,10 @@ void TextureManager::LoadTextures()
     LoadTexture("bodyHorizontal", "..\\snake_graphics\\Graphics\\body_horizontal.png");
     LoadTexture("bodyVertical", "..\\snake_graphics\\Graphics\\body_vertical.png");
     LoadTexture("apple", "..\\snake_graphics\\Graphics\\apple.png");
+    LoadTexture("bottomLeft", "..\\snake_graphics\\Graphics\\body_bottomleft.png");
+    LoadTexture("bottomRight", "..\\snake_graphics\\Graphics\\body_bottomright.png");
+    LoadTexture("topLeft", "..\\snake_graphics\\Graphics\\body_topleft.png");
+    LoadTexture("topRight", "..\\snake_graphics\\Graphics\\body_topright.png");
 }
 
 void TextureManager::LoadTexture(const std::string& name, const std::string& filePath) 

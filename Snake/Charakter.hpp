@@ -42,6 +42,7 @@ class Charakter
 		bool isLerping;
 		std::list<BodyPart> snakeBodyParts;
 		sf::Vector2f targetPosition;
+		sf::Vector2f newDirection;
 		sf::Vector2f direction;
 		sf::Vector2f lastPosition;
 		sf::Vector2f lastDirection;

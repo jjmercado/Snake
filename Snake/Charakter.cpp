@@ -4,6 +4,8 @@ Charakter::Charakter()
 {
 }
 
+// notiz an mich selbst... die körperteile müssen nur den vorderman und hinterman überpfüfen - jedes körperteil prüft für sich selbst den vorderman vielleicht ist das ja besser als die letzte direction durch die liste zu reichen
+
 Charakter::Charakter(sf::RenderWindow& window)
 {
 	if(!moveBuffer.loadFromFile("move.wav"))
@@ -61,7 +63,7 @@ void Charakter::Events(sf::Event& event)
 {
 	if (event.type == sf::Event::KeyPressed && !hasCollided)
 	{
-		sf::Vector2f newDirection = direction;
+		newDirection = direction;
 
 		if ((event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::D) && newDirection != Direction::Left)
 		{
@@ -110,27 +112,13 @@ void Charakter::Render(sf::RenderWindow& window)
 
 	if (!hasCollided)
 	{
-		for (auto itr = snakeBodyParts.begin(); itr != snakeBodyParts.end(); ++itr)
+		for (auto itr = std::next(snakeBodyParts.begin()); itr != snakeBodyParts.end(); ++itr)
 		{
-			if (itr == snakeBodyParts.begin())
-			{
-				itr = std::next(itr, 1);
-			}
-
 			lastDirection = std::prev(itr)->GetLastDirection();
 			itr->SetDirection(lastDirection);
-
-			if (lastDirection.x < 0 || lastDirection.x > 0)
-			{
-				itr->SetTexture(TextureManager::GetTexture("bodyHorizontal"));
-			}
-			else if (lastDirection.y < 0 || lastDirection.y > 0)
-			{
-				itr->SetTexture(TextureManager::GetTexture("bodyVertical"));
-			}
-
-			ChangeTailTexture();
+			itr->RenderBodyParts();
 		}
+		ChangeTailTexture();
 	}
 
 	ChangeHeadTexture();
@@ -269,15 +257,15 @@ void Charakter::Collision(const sf::IntRect& rect, Apple& apple)
 
 void Charakter::AddBodyPart()
 {
-	auto back = snakeBodyParts.back();
+	auto back = std::prev(snakeBodyParts.end());
 
 	if (lastDirection.x > 0 || lastDirection.x < 0)
 	{
-		snakeBodyParts.push_back(BodyPart(TextureManager::GetTexture("bodyHorizontal"), back.GetPosition()));
+		snakeBodyParts.push_back(BodyPart(TextureManager::GetTexture("bodyHorizontal"), back->GetPosition()));
 	}
 	else if (lastDirection.y > 0 || lastDirection.y < 0)
 	{
-		snakeBodyParts.push_back(BodyPart(TextureManager::GetTexture("bodyVertical"), back.GetPosition()));
+		snakeBodyParts.push_back(BodyPart(TextureManager::GetTexture("bodyVertical"), back->GetPosition()));
 	}
 }
 
