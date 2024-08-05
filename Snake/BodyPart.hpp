@@ -18,6 +18,7 @@ class BodyPart
 		sf::IntRect GetCollisionRect();
 		sf::Sprite bodyPart;
 		void RenderBodyParts();
+		void RenderCurveBodyParts(std::list<BodyPart>::iterator itr, std::list<BodyPart>::iterator listEnd);
 		void SetDirection(const sf::Vector2f& position);
 		void SetPosition(const sf::Vector2f& position);
 		void SetTexture(sf::Texture& texture);

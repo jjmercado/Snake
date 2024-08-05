@@ -92,4 +92,50 @@ void BodyPart::RenderBodyParts()
 	}
 }
 
+void BodyPart::RenderCurveBodyParts(std::list<BodyPart>::iterator itr, std::list<BodyPart>::iterator listEnd)
+{
+	auto prev = std::prev(itr);
+	auto next = std::next(itr);
+	sf::Vector2f prevDir = prev->GetLastDirection();
+	sf::Vector2f nextDir;
+
+	if (next != listEnd)
+		nextDir = next->GetLastDirection();
+	else
+		nextDir = sf::Vector2f(0, 0);
+
+	if (prevDir.x < 0 && nextDir.y < 0) // hoch dann links
+	{
+		bodyPart.setTexture(TextureManager::GetTexture("bottomLeft"));
+	}
+	else if(prevDir.x > 0 && nextDir.y < 0) // hoch dann rechts
+	{
+		bodyPart.setTexture(TextureManager::GetTexture("bottomRight"));
+	}
+	else if(prevDir.x < 0 && nextDir.y > 0) // runter dann links
+	{
+		bodyPart.setTexture(TextureManager::GetTexture("topLeft"));
+	}
+	else if(prevDir.x > 0 && nextDir.y > 0) // runter dann rechts
+	{
+		bodyPart.setTexture(TextureManager::GetTexture("topRight"));
+	}
+	else if(prevDir.y < 0 && nextDir.x < 0) // links dann hoch
+	{
+		bodyPart.setTexture(TextureManager::GetTexture("topRight"));
+	}
+	else if(prevDir.y > 0 && nextDir.x < 0) // links dann runter
+	{
+		bodyPart.setTexture(TextureManager::GetTexture("bottomRight"));
+	}
+	else if(prevDir.y < 0 && nextDir.x > 0) // rechts dann hoch
+	{
+		bodyPart.setTexture(TextureManager::GetTexture("topLeft"));
+	}
+	else if(prevDir.y > 0 && nextDir.x > 0) // rechts dann runter
+	{
+		bodyPart.setTexture(TextureManager::GetTexture("bottomLeft"));
+	}
+}
+
 

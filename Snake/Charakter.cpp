@@ -117,6 +117,7 @@ void Charakter::Render(sf::RenderWindow& window)
 			lastDirection = std::prev(itr)->GetLastDirection();
 			itr->SetDirection(lastDirection);
 			itr->RenderBodyParts();
+			itr->RenderCurveBodyParts(itr, snakeBodyParts.end());
 		}
 		ChangeTailTexture();
 	}
