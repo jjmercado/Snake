@@ -193,7 +193,6 @@ void Charakter::Update(sf::Time deltaTime, IGameState& gameState)
 		BodyPartCollision(col, gameState);
 	}
 
-	rndApplePos = sf::Vector2f(rand() % (800 / (int)tileSize) * (int)tileSize, rand() % (600 / (int)tileSize) * (int)tileSize);
 	SetHeadCollisionRect();
 	CheckBoundaries();
 }
@@ -240,6 +239,8 @@ void Charakter::ChangeTailTexture()
 
 void Charakter::Collision(const sf::IntRect& rect, Apple& apple)
 {
+	sf::Vector2f rndApplePos = sf::Vector2f(rand() % (800 / (int)tileSize) * (int)tileSize, rand() % (600 / (int)tileSize) * (int)tileSize);
+
 	if (snakeHeadRect.intersects(rect))
 	{
 		eat.play();
@@ -272,6 +273,7 @@ void Charakter::AddBodyPart()
 
 void Charakter::Reset(sf::RenderWindow& window, Apple& apple)
 {
+	sf::Vector2f rndApplePos = sf::Vector2f(rand() % (800 / (int)tileSize) * (int)tileSize, rand() % (600 / (int)tileSize) * (int)tileSize);
 	gameOver.stop();
 	snakeBodyParts.clear();
 	sf::Vector2f startPosition = sf::Vector2f(window.getSize().x / 2, window.getSize().y / 2 - 20);
