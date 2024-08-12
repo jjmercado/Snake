@@ -107,19 +107,18 @@ void Charakter::Render(sf::RenderWindow& window)
 	for (auto& bodyPart : snakeBodyParts)
 	{
 		bodyPart.Render(window);
-		bodyPart.SetDirection(direction);
 	}
 
 	if (!hasCollided)
 	{
 		for (auto itr = std::next(snakeBodyParts.begin()); itr != snakeBodyParts.end(); ++itr)
 		{
-			lastDirection = std::prev(itr)->GetLastDirection();
-			itr->SetDirection(lastDirection);
 			itr->RenderBodyParts();
 			itr->RenderCurveBodyParts(itr, snakeBodyParts.end());
+
+			if (itr == std::prev(snakeBodyParts.end()))
+				itr->ChangeTailTexture();
 		}
-		ChangeTailTexture();
 	}
 
 	ChangeHeadTexture();
@@ -141,6 +140,12 @@ void Charakter::Update(sf::Time deltaTime, IGameState& gameState)
 	}
 	else
 	{
+		for(auto& bodyPart : snakeBodyParts)
+		{
+			bodyPart.SavePosition();
+			bodyPart.SetDirection(direction);
+		}
+
 		for (auto itr = snakeBodyParts.begin(); itr != snakeBodyParts.end(); ++itr)
 		{
 			if (itr == snakeBodyParts.begin())
@@ -148,8 +153,7 @@ void Charakter::Update(sf::Time deltaTime, IGameState& gameState)
 				itr = std::next(itr, 1);
 			}
 
-			itr->Update(std::prev(itr)->GetPosition());
-			lastPosition = itr->GetLastPosition();
+			lastPosition = std::prev(itr)->GetLastPosition();
 			itr->SetPosition(lastPosition);
 		}
 	}
@@ -217,26 +221,6 @@ void Charakter::ChangeHeadTexture()
 	}
 }
 
-void Charakter::ChangeTailTexture()
-{
-	if (lastDirection.x > 0)
-	{
-		snakeBodyParts.back().SetTexture(TextureManager::GetTexture("tailLeft"));
-	}
-	else if (lastDirection.x < 0)
-	{
-		snakeBodyParts.back().SetTexture(TextureManager::GetTexture("tailRight"));
-	}
-	else if (lastDirection.y > 0)
-	{
-		snakeBodyParts.back().SetTexture(TextureManager::GetTexture("tailUp"));
-	}
-	else if (lastDirection.y < 0)
-	{
-		snakeBodyParts.back().SetTexture(TextureManager::GetTexture("tailDown"));
-	}
-}
-
 void Charakter::Collision(const sf::IntRect& rect, Apple& apple)
 {
 	sf::Vector2f rndApplePos = sf::Vector2f(rand() % (800 / (int)tileSize) * (int)tileSize, rand() % (600 / (int)tileSize) * (int)tileSize);
@@ -259,15 +243,23 @@ void Charakter::Collision(const sf::IntRect& rect, Apple& apple)
 
 void Charakter::AddBodyPart()
 {
-	auto back = std::prev(snakeBodyParts.end());
+	auto back = std::prev(snakeBodyParts.end(), 1);
 
-	if (lastDirection.x > 0 || lastDirection.x < 0)
+	if (direction.x > 0)
 	{
-		snakeBodyParts.push_back(BodyPart(TextureManager::GetTexture("bodyHorizontal"), back->GetPosition()));
+		snakeBodyParts.push_back(BodyPart(TextureManager::GetTexture("tailLeft"), back->GetPosition()));
 	}
-	else if (lastDirection.y > 0 || lastDirection.y < 0)
+	else if (direction.x < 0)
 	{
-		snakeBodyParts.push_back(BodyPart(TextureManager::GetTexture("bodyVertical"), back->GetPosition()));
+		snakeBodyParts.push_back(BodyPart(TextureManager::GetTexture("tailRight"), back->GetPosition()));
+	}
+	else if (direction.y > 0)
+	{
+		snakeBodyParts.push_back(BodyPart(TextureManager::GetTexture("tailUp"), back->GetPosition()));
+	}
+	else if (direction.y < 0)
+	{
+		snakeBodyParts.push_back(BodyPart(TextureManager::GetTexture("tailDown"), back->GetPosition()));
 	}
 }
 

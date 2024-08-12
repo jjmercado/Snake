@@ -25,7 +25,6 @@ class Charakter
 
 	private:
 		void ChangeHeadTexture();
-		void ChangeTailTexture();
 		void AddBodyPart();
 		void BodyPartCollision(const sf::IntRect& bodyPartRect, IGameState& gameState);
 		void CheckBoundaries();
