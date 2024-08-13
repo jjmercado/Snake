@@ -29,11 +29,6 @@ sf::Vector2f BodyPart::GetPosition()
 	return bodyPart.getPosition();
 }
 
-sf::IntRect BodyPart::GetBodyRect()
-{
-	return bodyPart.getTextureRect();
-}
-
 sf::IntRect BodyPart::GetCollisionRect()
 {
 	return collisionRect;

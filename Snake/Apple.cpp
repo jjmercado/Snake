@@ -4,9 +4,11 @@
 Apple::Apple()
 {
 	srand(time(NULL));
+	texture.loadFromFile("..\\snake_graphics\\Graphics\\apple.png");
+	texture.setSmooth(true);
 	position = sf::Vector2f(rand() % (800 / 40) * 40, rand() % (600 / 40) * 40);
 	sprite.setPosition(position + sf::Vector2f(20,20));
-	sprite.setTexture(TextureManager::GetTexture("apple"));
+	sprite.setTexture(texture);
 	rect = sf::IntRect(position.x, position.y, sprite.getTextureRect().width, sprite.getTextureRect().height);
 	animationSpeed = 0.1f;
 	sprite.setOrigin(sprite.getTextureRect().width / 2, sprite.getTextureRect().height / 2);
@@ -37,8 +39,8 @@ void Apple::SetPosition(const sf::Vector2f& position)
 void Apple::Animation()
 {
     const float delay = 0.6f;
-    const float maxScale = 1.5f;
-    const float minScale = 1.0f;
+    const float maxScale = 1.0f;
+    const float minScale = 0.6f;
     sf::Time time = clock.getElapsedTime();
 
     if (time.asSeconds() > delay)

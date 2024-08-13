@@ -14,7 +14,6 @@ class BodyPart
 		sf::Vector2f GetPosition();
 		void ChangeTailTexture();
 		sf::Vector2f& GetLastPosition();
-		sf::IntRect GetBodyRect();
 		sf::IntRect GetCollisionRect();
 		sf::Sprite bodyPart;
 		void RenderBodyParts();

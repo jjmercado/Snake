@@ -14,7 +14,7 @@ void Play::HandleEvents(sf::RenderWindow& window, sf::Event& event, IGameState& 
 			gameState.SetState(IGameState::StartMenu);
 		}
 	}
-	charakter.Events(event);
+	charakter.Events(event, apple);
 }
 
 void Play::HandleDrawings(sf::RenderWindow& window)
@@ -26,8 +26,7 @@ void Play::HandleDrawings(sf::RenderWindow& window)
 
 void Play::HandleUpdate(sf::Time deltaTime, IGameState& gameState)
 {
-	charakter.Update(deltaTime, gameState);
-	charakter.Collision(apple.GetRect(), apple);
+	charakter.Update(deltaTime, gameState, apple);
 }
 
 Charakter& Play::GetCharakter()

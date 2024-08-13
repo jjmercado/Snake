@@ -17,10 +17,9 @@ class Charakter
 		Charakter();
 		Charakter(sf::RenderWindow& window);
 		~Charakter();
-		void Events(sf::Event& event);
+		void Events(sf::Event& event, Apple& apple);
 		void Render(sf::RenderWindow& window);
-		void Update(sf::Time deltaTime, IGameState& gameState);
-		void Collision(const sf::IntRect& rect, Apple& apple);
+		void Update(sf::Time deltaTime, IGameState& gameState, Apple& apple);
 		void Reset(sf::RenderWindow& window, Apple& apple);
 
 	private:
@@ -29,6 +28,7 @@ class Charakter
 		void BodyPartCollision(const sf::IntRect& bodyPartRect, IGameState& gameState);
 		void CheckBoundaries();
 		void StartGameOverMusic();
+		void Collision(const sf::IntRect& bodyPartRect, Apple& apple);
 		void SetHeadCollisionRect();
 		sf::Vector2f CalculateTargetPosition(sf::Time deltaTime);
 		sf::Vector2f Lerp(const sf::Vector2f& a, const sf::Vector2f& b, float t);

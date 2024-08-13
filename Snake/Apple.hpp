@@ -12,10 +12,11 @@ class Apple
 		void Update();
 		void SetPosition(const sf::Vector2f& position);
 		void Animation();
+		sf::Vector2f position;
 
 	private:
 		sf::Sprite sprite;
-		sf::Vector2f position;
+		sf::Texture texture;
 		sf::IntRect rect;
 		float animationSpeed;
 		sf::Clock clock;

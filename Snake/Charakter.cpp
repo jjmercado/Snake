@@ -59,7 +59,7 @@ Charakter::~Charakter()
 
 // eventuell ein struct definieren für die richtungen
 
-void Charakter::Events(sf::Event& event)
+void Charakter::Events(sf::Event& event, Apple& apple)
 {
 	if (event.type == sf::Event::KeyPressed && !hasCollided)
 	{
@@ -86,9 +86,14 @@ void Charakter::Events(sf::Event& event)
 			move.play();
 		}
 
+		if (event.key.code == sf::Keyboard::J)
+		{
+			apple.SetPosition(sf::Vector2f(rand() % (800 / (int)tileSize) * (int)tileSize, rand() % (600 / (int)tileSize) * (int)tileSize) + sf::Vector2f(20,20));
+		}
+
 		if(event.key.code == sf::Keyboard::Space)
 		{
-			for(int i = 0; i < 10; i++)
+			for(int i = 0; i < 100; i++)
 				AddBodyPart();
 		}
 
@@ -124,7 +129,7 @@ void Charakter::Render(sf::RenderWindow& window)
 	ChangeHeadTexture();
 }
 
-void Charakter::Update(sf::Time deltaTime, IGameState& gameState)
+void Charakter::Update(sf::Time deltaTime, IGameState& gameState, Apple& apple)
 {
 	if (hasCollided)
 	{
@@ -195,6 +200,7 @@ void Charakter::Update(sf::Time deltaTime, IGameState& gameState)
 		sf::IntRect col = sf::IntRect(itr->GetPosition().x, itr->GetPosition().y, itr->GetCollisionRect().width, itr->GetCollisionRect().height);
 
 		BodyPartCollision(col, gameState);
+		Collision(col, apple);
 	}
 
 	SetHeadCollisionRect();
@@ -221,21 +227,20 @@ void Charakter::ChangeHeadTexture()
 	}
 }
 
-void Charakter::Collision(const sf::IntRect& rect, Apple& apple)
+void Charakter::Collision(const sf::IntRect& bodyPartRect, Apple& apple)
 {
 	sf::Vector2f rndApplePos = sf::Vector2f(rand() % (800 / (int)tileSize) * (int)tileSize, rand() % (600 / (int)tileSize) * (int)tileSize);
 
-	if (snakeHeadRect.intersects(rect))
+	if(apple.GetRect().intersects(bodyPartRect))
+	{
+		rndApplePos = sf::Vector2f(rand() % (800 / (int)tileSize) * (int)tileSize, rand() % (600 / (int)tileSize) * (int)tileSize);
+		apple.SetPosition(rndApplePos + adjustApplePosition);
+		std::cout << "Collision" << std::endl;
+	}
+	
+	if (snakeHeadRect.intersects(apple.GetRect()))
 	{
 		eat.play();
-
-		for(auto position : snakeBodyParts)
-		{
-			if(position.GetPosition() == rndApplePos)
-			{
-				apple.SetPosition(rndApplePos + adjustApplePosition);
-			}
-		}
 		apple.SetPosition(rndApplePos + adjustApplePosition);
 		AddBodyPart();
 	}
