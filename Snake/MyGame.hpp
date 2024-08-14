@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include "Game.hpp"
-#include "Menu.hpp"
+#include "MenuPanel.hpp"
 #include "Play.hpp"
 #include "GameOver.hpp"
 #include "IGameState.hpp"
@@ -20,7 +20,7 @@ class MyGame : public Game, public IGameState
 
 	private:
 		GameState gameState;
-		Menu menu;
+		MenuPanel menuPanel;
 		Play play;
 		GameOver gameOver;
 };

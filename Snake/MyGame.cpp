@@ -1,6 +1,6 @@
 #include "MyGame.hpp"
 
-MyGame::MyGame() : gameState(IGameState::StartMenu), menu(window, font), play(window, font), gameOver(window, font)
+MyGame::MyGame() : gameState(IGameState::StartMenu), menuPanel(window, font), play(window, font), gameOver(window, font)
 {  
 }
 
@@ -22,7 +22,7 @@ void MyGame::ProcessEvents()
         {
             case IGameState::StartMenu:
             {
-                menu.HandleEvents(window, event, *this);
+                menuPanel.HandleEvents(window, event, *this);
                 break;
             }
             case IGameState::Playing:
@@ -73,7 +73,7 @@ void MyGame::Render()
     {
         case IGameState::StartMenu:
         {
-            menu.HandleDrawings(window);
+            menuPanel.Render(window);
             break;
         }
         case IGameState::Playing:

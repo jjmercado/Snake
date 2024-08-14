@@ -24,13 +24,10 @@
     <ClInclude Include="Button.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Panel.hpp">
+    <ClInclude Include="MenuPanel.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TextureManager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Menu.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IGameState.hpp">
@@ -71,13 +68,10 @@
     <ClCompile Include="Button.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Panel.cpp">
+    <ClCompile Include="MenuPanel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TextureManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Play.cpp">

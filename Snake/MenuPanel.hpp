@@ -6,25 +6,33 @@
 #include <string>
 #include <stdexcept>
 #include "TextureManager.hpp"
+#include <SFML/Audio.hpp>
+#include "IGameState.hpp"
 
-
-class Panel
+class MenuPanel
 {
 	public:
-		Panel();
-		Panel(sf::RenderWindow& window, sf::Font& font);
-		~Panel();
+		MenuPanel();
+		MenuPanel(sf::RenderWindow& window, sf::Font& font);
+		~MenuPanel();
 		void Render(sf::RenderWindow& window);
-		Button& GetButton(const std::string& buttonName);
+		void HandleEvents(sf::RenderWindow& window, sf::Event& event, IGameState& gameState);
 		void SetTexture(sf::Texture& texture);
 
 	private:
 		std::unordered_map<std::string, Button*> buttonMap;
 		sf::Texture texture;
 		sf::Sprite sprite;
+		sf::Sprite background;
 		sf::Text menuText;
 		Button optionsButton;
 		Button startButton;
 		Button exitButton;
+		sf::SoundBuffer hoverBuffer;
+		sf::SoundBuffer clickBuffer;
+		sf::Sound hover;
+		sf::Sound click;
+		bool hasPlayedSound;
+		void PlayHoverSound();
 };
 

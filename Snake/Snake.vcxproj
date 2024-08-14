@@ -145,9 +145,8 @@
     <ClInclude Include="GameOver.hpp" />
     <ClInclude Include="GameOverPanel.hpp" />
     <ClInclude Include="IGameState.hpp" />
-    <ClInclude Include="Menu.hpp" />
     <ClInclude Include="MyGame.hpp" />
-    <ClInclude Include="Panel.hpp" />
+    <ClInclude Include="MenuPanel.hpp" />
     <ClInclude Include="Play.hpp" />
     <ClInclude Include="TextureManager.hpp" />
   </ItemGroup>
@@ -161,9 +160,8 @@
     <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="GameOverPanel.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MyGame.cpp" />
-    <ClCompile Include="Panel.cpp" />
+    <ClCompile Include="MenuPanel.cpp" />
     <ClCompile Include="Play.cpp" />
     <ClCompile Include="TextureManager.cpp" />
   </ItemGroup>
