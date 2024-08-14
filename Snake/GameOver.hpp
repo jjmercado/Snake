@@ -17,11 +17,5 @@ class GameOver
 
 	private:
 		GameOverPanel gameOverPanel;
-		sf::SoundBuffer hoverBuffer;
-		sf::SoundBuffer clickBuffer;
-		sf::Sound hover;
-		sf::Sound click;
-		bool hasPlayedSound;
-		void PlayHoverSound();
 };
 
