@@ -3,7 +3,7 @@
 #include "Game.hpp"
 #include "MenuPanel.hpp"
 #include "Play.hpp"
-#include "GameOver.hpp"
+#include "GameOverPanel.hpp"
 #include "IGameState.hpp"
 
 class MyGame : public Game, public IGameState
@@ -22,6 +22,6 @@ class MyGame : public Game, public IGameState
 		GameState gameState;
 		MenuPanel menuPanel;
 		Play play;
-		GameOver gameOver;
+		GameOverPanel gameOverPanel;
 };
 

@@ -4,6 +4,7 @@
 #include "Button.hpp"
 #include "TextureManager.hpp"
 #include <SFML/Audio.hpp>
+#include "Charakter.hpp"
 
 class GameOverPanel
 {
@@ -11,11 +12,10 @@ class GameOverPanel
 		GameOverPanel();
 		GameOverPanel(sf::RenderWindow& window, sf::Font& font);
 		void Render(sf::RenderWindow& window);
-		Button& GetButton(const std::string& buttonName);
+		void HandleEvents(sf::Event& event, sf::RenderWindow& window, IGameState& gameState, Charakter& charakter, Apple& apple);
 		void SetTexture(sf::Texture& texture);
 
 	private:
-		std::unordered_map<std::string, Button*> buttonMap;
 		sf::Texture texture;
 		sf::Sprite sprite;
 		sf::Text menuText;

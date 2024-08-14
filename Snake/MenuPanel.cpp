@@ -6,10 +6,6 @@ MenuPanel::MenuPanel()
 
 MenuPanel::MenuPanel(sf::RenderWindow& window, sf::Font& font) : startButton(font), optionsButton(font), exitButton(font)
 {
-	buttonMap["Start"] = &startButton;
-	buttonMap["Options"] = &optionsButton;
-	buttonMap["Exit"] = &exitButton;
-
 	SetTexture(TextureManager::GetTexture("panel"));
 	background.setTexture(TextureManager::GetTexture("startMenuBackground"));
 

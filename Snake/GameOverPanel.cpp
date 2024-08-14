@@ -6,10 +6,6 @@ GameOverPanel::GameOverPanel()
 
 GameOverPanel::GameOverPanel(sf::RenderWindow& window, sf::Font& font) : playAgain(font), optionsButton(font), exitButton(font)
 {
-	buttonMap["PlayAgain"] = &playAgain;
-	buttonMap["Options"] = &optionsButton;
-	buttonMap["Exit"] = &exitButton;
-
 	SetTexture(TextureManager::GetTexture("panel"));
 
 	sprite.setOrigin(sf::Vector2f(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2));
@@ -52,6 +48,29 @@ GameOverPanel::GameOverPanel(sf::RenderWindow& window, sf::Font& font) : playAga
 	hover.setBuffer(hoverBuffer);
 }
 
+void GameOverPanel::HandleEvents(sf::Event& event, sf::RenderWindow& window, IGameState& gameState, Charakter& charakter, Apple& apple)
+{
+	if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+	{
+		if (playAgain.IsMouseOnButton(window))
+		{
+			gameState.SetState(IGameState::Playing);
+			charakter.Reset(window, apple);
+			click.play();
+		}
+		else if (optionsButton.IsMouseOnButton(window))
+		{
+			// TODO: Implement options menu
+			click.play();
+		}
+		else if (exitButton.IsMouseOnButton(window))
+		{
+			window.close();
+			click.play();
+		}
+	}
+}
+
 void GameOverPanel::Render(sf::RenderWindow& window)
 {
 	window.draw(sprite);
@@ -83,23 +102,6 @@ void GameOverPanel::Render(sf::RenderWindow& window)
 		optionsButton.SetSprite(TextureManager::GetTexture("blueButton"));
 		exitButton.SetSprite(TextureManager::GetTexture("blueButton"));
 		hasPlayedSound = false;
-	}
-}
-
-Button& GameOverPanel::GetButton(const std::string& buttonName)
-{
-	if (buttonMap.empty())
-	{
-		throw std::invalid_argument("Button map is empty");
-	}
-	else
-	{
-		auto it = buttonMap.find(buttonName);
-		if (it != buttonMap.end())
-		{
-			return *(it->second);
-		}
-		throw std::invalid_argument("Button not found: " + buttonName);
 	}
 }
 

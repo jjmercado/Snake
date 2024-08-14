@@ -20,7 +20,6 @@ class MenuPanel
 		void SetTexture(sf::Texture& texture);
 
 	private:
-		std::unordered_map<std::string, Button*> buttonMap;
 		sf::Texture texture;
 		sf::Sprite sprite;
 		sf::Sprite background;

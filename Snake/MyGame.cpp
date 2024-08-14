@@ -1,6 +1,6 @@
 #include "MyGame.hpp"
 
-MyGame::MyGame() : gameState(IGameState::StartMenu), menuPanel(window, font), play(window, font), gameOver(window, font)
+MyGame::MyGame() : gameState(IGameState::StartMenu), menuPanel(window, font), play(window, font), gameOverPanel(window, font)
 {  
 }
 
@@ -32,7 +32,7 @@ void MyGame::ProcessEvents()
             }
             case IGameState::GameIsOver:
             {
-                gameOver.HandleEvents(event, window, *this, play.GetCharakter(), play.GetApple());
+                gameOverPanel.HandleEvents(event, window, *this, play.GetCharakter(), play.GetApple());
                 break;
             }
             default:
@@ -84,7 +84,7 @@ void MyGame::Render()
         case IGameState::GameIsOver:
         {
             play.HandleDrawings(window);
-            gameOver.HandleDrawings(window);
+            gameOverPanel.Render(window);
             break;
         }
         default:
