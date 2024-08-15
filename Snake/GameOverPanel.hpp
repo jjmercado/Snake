@@ -5,8 +5,9 @@
 #include "TextureManager.hpp"
 #include <SFML/Audio.hpp>
 #include "Charakter.hpp"
+#include "Panel.hpp"
 
-class GameOverPanel
+class GameOverPanel : public Panel
 {
 	public:
 		GameOverPanel();
@@ -22,11 +23,5 @@ class GameOverPanel
 		Button optionsButton;
 		Button playAgain;
 		Button exitButton;
-		sf::SoundBuffer hoverBuffer;
-		sf::SoundBuffer clickBuffer;
-		sf::Sound hover;
-		sf::Sound click;
-		bool hasPlayedSound;
-		void PlayHoverSound();
 };
 

@@ -4,7 +4,7 @@ MenuPanel::MenuPanel()
 {
 }
 
-MenuPanel::MenuPanel(sf::RenderWindow& window, sf::Font& font) : startButton(font), optionsButton(font), exitButton(font)
+MenuPanel::MenuPanel(sf::RenderWindow& window, sf::Font& font) : startButton(font), optionsButton(font), exitButton(font), Panel(window, font)
 {
 	SetTexture(TextureManager::GetTexture("panel"));
 	background.setTexture(TextureManager::GetTexture("startMenuBackground"));
@@ -33,21 +33,6 @@ MenuPanel::MenuPanel(sf::RenderWindow& window, sf::Font& font) : startButton(fon
 	exitButton.SetPosition(sf::Vector2f(window.getSize().x / 2, (window.getSize().y / 2) + 90));
 	exitButton.SetText("Exit");
 	exitButton.SetTextPosition(sf::Vector2f(window.getSize().x / 2 - 40, (window.getSize().y / 2) + 70));
-
-	hasPlayedSound = false;
-
-	if (!hoverBuffer.loadFromFile("hover.wav"))
-	{
-		throw std::runtime_error("Failed to load audio file: random.wav");
-	}
-
-	if (!clickBuffer.loadFromFile("click.mp3"))
-	{
-		throw std::runtime_error("Failed to load audio file: click.wav");
-	}
-
-	click.setBuffer(clickBuffer);
-	hover.setBuffer(hoverBuffer);
 }
 
 MenuPanel::~MenuPanel()
@@ -114,13 +99,4 @@ void MenuPanel::HandleEvents(sf::RenderWindow& window, sf::Event& event, IGameSt
 void MenuPanel::SetTexture(sf::Texture& texture)
 {
 	sprite.setTexture(texture);
-}
-
-void MenuPanel::PlayHoverSound()
-{
-	if (hover.getStatus() != sf::Sound::Playing && !hasPlayedSound)
-	{
-		hasPlayedSound = true;
-		hover.play();
-	}
 }

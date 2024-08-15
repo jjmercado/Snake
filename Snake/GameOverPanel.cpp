@@ -4,7 +4,7 @@ GameOverPanel::GameOverPanel()
 {
 }
 
-GameOverPanel::GameOverPanel(sf::RenderWindow& window, sf::Font& font) : playAgain(font), optionsButton(font), exitButton(font)
+GameOverPanel::GameOverPanel(sf::RenderWindow& window, sf::Font& font) : playAgain(font), optionsButton(font), exitButton(font), Panel(window, font)
 {
 	SetTexture(TextureManager::GetTexture("panel"));
 
@@ -32,20 +32,6 @@ GameOverPanel::GameOverPanel(sf::RenderWindow& window, sf::Font& font) : playAga
 	exitButton.SetPosition(sf::Vector2f(window.getSize().x / 2, (window.getSize().y / 2) + 90));
 	exitButton.SetText("Exit");
 	exitButton.SetTextPosition(sf::Vector2f(window.getSize().x / 2 - 40, (window.getSize().y / 2) + 70));
-
-	hasPlayedSound = false;
-	if (!hoverBuffer.loadFromFile("hover.wav"))
-	{
-		throw std::runtime_error("Failed to load audio file: random.wav");
-	}
-
-	if (!clickBuffer.loadFromFile("click.mp3"))
-	{
-		throw std::runtime_error("Failed to load audio file: click.wav");
-	}
-
-	click.setBuffer(clickBuffer);
-	hover.setBuffer(hoverBuffer);
 }
 
 void GameOverPanel::HandleEvents(sf::Event& event, sf::RenderWindow& window, IGameState& gameState, Charakter& charakter, Apple& apple)
@@ -108,13 +94,4 @@ void GameOverPanel::Render(sf::RenderWindow& window)
 void GameOverPanel::SetTexture(sf::Texture& texture)
 {
 	sprite.setTexture(texture);
-}
-
-void GameOverPanel::PlayHoverSound()
-{
-	if (hover.getStatus() != sf::Sound::Playing && !hasPlayedSound)
-	{
-		hasPlayedSound = true;
-		hover.play();
-	}
 }
