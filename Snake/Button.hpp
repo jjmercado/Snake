@@ -14,6 +14,7 @@ class Button
 		void Render(sf::RenderWindow& window);
 		bool IsMouseOnButton(sf::RenderWindow& window);
 		void SetSprite(sf::Texture& texture);
+		void SetScale(sf::Vector2f scale);
 
 	private:
 		sf::Texture texture;

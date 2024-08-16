@@ -4,7 +4,7 @@ Panel::Panel()
 {
 }
 
-Panel::Panel(sf::RenderWindow& window, sf::Font& font) : firstButton(font), secondButton(font), thirdButton(font)
+Panel::Panel(sf::RenderWindow& window, sf::Font& font) : firstButton(font), secondButton(font), thirdButton(font), optionPanel(window, font)
 {
 	sprite.setTexture(TextureManager::GetTexture("panel"));
 
@@ -56,35 +56,42 @@ void Panel::Render(sf::RenderWindow& window)
 	thirdButton.Render(window);
 	window.draw(menuText);
 
-	if (firstButton.IsMouseOnButton(window))
+	if (optionPanel.GetActive())
+		optionPanel.Render(window);
+
+	if (!optionPanel.GetActive())
 	{
-		firstButton.SetSprite(TextureManager::GetTexture("blueButton13"));
-		firstButton.SetTextFillColor(sf::Color::Black);
-		PlayHoverSound();
-	}
-	else if (secondButton.IsMouseOnButton(window))
-	{
-		secondButton.SetSprite(TextureManager::GetTexture("yellowButton"));
-		PlayHoverSound();
-	}
-	else if (thirdButton.IsMouseOnButton(window))
-	{
-		thirdButton.SetSprite(TextureManager::GetTexture("yellowButton"));
-		PlayHoverSound();
-	}
-	else
-	{
-		firstButton.SetTextFillColor(sf::Color::White);
-		firstButton.SetSprite(TextureManager::GetTexture("yellowButton"));
-		secondButton.SetSprite(TextureManager::GetTexture("blueButton"));
-		thirdButton.SetSprite(TextureManager::GetTexture("blueButton"));
-		hasPlayedSound = false;
+		if (firstButton.IsMouseOnButton(window))
+		{
+			firstButton.SetSprite(TextureManager::GetTexture("blueButton13"));
+			firstButton.SetTextFillColor(sf::Color::Black);
+			PlayHoverSound();
+		}
+		else if (secondButton.IsMouseOnButton(window))
+		{
+			secondButton.SetSprite(TextureManager::GetTexture("yellowButton"));
+			PlayHoverSound();
+		}
+		else if (thirdButton.IsMouseOnButton(window))
+		{
+			thirdButton.SetSprite(TextureManager::GetTexture("yellowButton"));
+			PlayHoverSound();
+		}
+		else
+		{
+			firstButton.SetTextFillColor(sf::Color::White);
+			firstButton.SetSprite(TextureManager::GetTexture("yellowButton"));
+			secondButton.SetSprite(TextureManager::GetTexture("blueButton"));
+			thirdButton.SetSprite(TextureManager::GetTexture("blueButton"));
+			hasPlayedSound = false;
+		}
+
 	}
 }
 
 void Panel::HandleEvents(sf::RenderWindow& window, sf::Event& event, IGameState& gameState, IGameState::GameState newState)
 {
-	if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+	if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left && !optionPanel.GetActive())
 	{
 		if (firstButton.IsMouseOnButton(window))
 		{
@@ -93,7 +100,7 @@ void Panel::HandleEvents(sf::RenderWindow& window, sf::Event& event, IGameState&
 		}
 		else if (secondButton.IsMouseOnButton(window))
 		{
-			// TODO: Implement options menu
+			optionPanel.SetActive(true);
 			click.play();
 		}
 		else if (thirdButton.IsMouseOnButton(window))
@@ -102,6 +109,12 @@ void Panel::HandleEvents(sf::RenderWindow& window, sf::Event& event, IGameState&
 			click.play();
 		}
 	}
+	else if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left && optionPanel.GetActive() && !optionPanel.IsMouseOnPanel(window))
+	{
+		optionPanel.SetActive(false);
+	}
+
+	optionPanel.HandleEvents(event, window);
 }
 
 void Panel::SetString(const std::string& text)

@@ -18,6 +18,9 @@ void TextureManager::LoadTextures()
     LoadTexture("yellowButton", "..\\UIpack\\PNG\\yellow_button00.png");
 	LoadTexture("blueButton", "..\\UIpack\\PNG\\blue_button00.png");
     LoadTexture("blueButton13", "..\\UIpack\\PNG\\blue_button13.png");
+    LoadTexture("greenPanel", "..\\UIpack\\PNG\\green_panel.png");
+	LoadTexture("graySliderHorizontal", "..\\UIpack\\PNG\\grey_sliderHorizontal.png");
+    LoadTexture("graySliderDown", "..\\UIpack\\PNG\\grey_sliderDown.png");
     LoadTexture("startMenuBackground", "..\\snake_graphics\\snakeBackground.png");
     LoadTexture("playingBackground", "..\\snake_graphics\\playingBackground.png");
     LoadTexture("headLeft", "..\\snake_graphics\\Graphics\\head_left.png");

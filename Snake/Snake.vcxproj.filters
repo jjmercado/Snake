@@ -54,6 +54,9 @@
     <ClInclude Include="Panel.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="OptionPanel.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -93,6 +96,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Panel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OptionPanel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

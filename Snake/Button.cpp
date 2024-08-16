@@ -40,10 +40,10 @@ void Button::Render(sf::RenderWindow& window)
 
 bool Button::IsMouseOnButton(sf::RenderWindow& window)
 {
-	if (sf::Mouse::getPosition(window).x > sprite.getPosition().x - sprite.getLocalBounds().width / 2 &&
-		sf::Mouse::getPosition(window).x < sprite.getPosition().x + sprite.getLocalBounds().width / 2 &&
-		sf::Mouse::getPosition(window).y > sprite.getPosition().y - sprite.getLocalBounds().height / 2 &&
-		sf::Mouse::getPosition(window).y < sprite.getPosition().y + sprite.getLocalBounds().height / 2)
+	if (sf::Mouse::getPosition(window).x > sprite.getPosition().x - sprite.getGlobalBounds().width / 2 &&
+		sf::Mouse::getPosition(window).x < sprite.getPosition().x + sprite.getGlobalBounds().width / 2 &&
+		sf::Mouse::getPosition(window).y > sprite.getPosition().y - sprite.getGlobalBounds().height / 2 &&
+		sf::Mouse::getPosition(window).y < sprite.getPosition().y + sprite.getGlobalBounds().height / 2)
 	{
 		return true;
 	}
@@ -53,4 +53,9 @@ bool Button::IsMouseOnButton(sf::RenderWindow& window)
 void Button::SetSprite(sf::Texture& texture)
 {
 	sprite.setTexture(texture);
+}
+
+void Button::SetScale(sf::Vector2f scale)
+{
+	sprite.setScale(scale);
 }

@@ -5,6 +5,7 @@
 #include "IGameState.hpp"
 #include "Button.hpp"
 #include "TextureManager.hpp"
+#include "OptionPanel.hpp"
 
 class Panel
 {
@@ -25,6 +26,7 @@ class Panel
 		Button& GetFirstButton();
 
 	private:
+		OptionPanel optionPanel;
 		Button firstButton;
 		Button secondButton;
 		Button thirdButton;
