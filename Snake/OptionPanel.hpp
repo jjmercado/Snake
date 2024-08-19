@@ -11,14 +11,15 @@ class OptionPanel
 		OptionPanel(sf::RenderWindow& window, sf::Font& font);
 		void Render(sf::RenderWindow& window);
 		void HandleEvents(sf::Event& event, sf::RenderWindow& window);
+		void Update(sf::RenderWindow& window);
 		void SetActive(bool status);
 		bool GetActive();
 		bool IsMouseOnPanel(sf::RenderWindow& window);
 
 	private:
+		static sf::Sprite sliderArrow;
 		Button button;
 		sf::Sprite sliderHorizontalLine;
-		sf::Sprite sliderArrow;
 		sf::Text sliderText;
 		bool isActive;
 		bool isDragging;

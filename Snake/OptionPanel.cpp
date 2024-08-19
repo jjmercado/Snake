@@ -1,5 +1,7 @@
 #include "OptionPanel.hpp"
 
+sf::Sprite OptionPanel::sliderArrow;
+
 OptionPanel::OptionPanel()
 {
 }
@@ -38,6 +40,7 @@ void OptionPanel::HandleEvents(sf::Event& event, sf::RenderWindow& window)
 {
     if (event.type == sf::Event::MouseButtonPressed)
     {
+		sliderArrow.setPosition(sliderArrow.getPosition().x, sliderArrow.getPosition().y);
         if (event.mouseButton.button == sf::Mouse::Left)
         {
             if (sf::Mouse::getPosition(window).x > sliderArrow.getPosition().x - sliderArrow.getGlobalBounds().width / 2 &&
@@ -75,6 +78,11 @@ void OptionPanel::HandleEvents(sf::Event& event, sf::RenderWindow& window)
 			volumeSound.setGlobalVolume((newX - minX) / (maxX - minX) * 100);
         }
     }
+}
+
+void OptionPanel::Update(sf::RenderWindow& window)
+{
+	// überprüfen ob der Volume wert sich geäner hat und den slider entsprechend auf die neue Position setzen
 }
 
 void OptionPanel::SetActive(bool status)

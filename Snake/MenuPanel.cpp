@@ -27,4 +27,5 @@ void MenuPanel::Render(sf::RenderWindow& window)
 void MenuPanel::HandleEvents(sf::RenderWindow& window, sf::Event& event, IGameState& gameState)
 {
 	Panel::HandleEvents(window, event, gameState, gameState.Playing);
+
 }
