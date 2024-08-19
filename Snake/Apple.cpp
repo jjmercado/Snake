@@ -22,7 +22,7 @@ Apple::Apple()
 void Apple::Render(sf::RenderWindow& window)
 {
 	window.draw(sprite);
-	window.draw(colSprite);
+	//window.draw(colSprite);
 	Animation();
 }
 
