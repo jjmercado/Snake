@@ -4,8 +4,6 @@ Charakter::Charakter()
 {
 }
 
-// notiz an mich selbst... die körperteile müssen nur den vorderman und hinterman überpfüfen - jedes körperteil prüft für sich selbst den vorderman vielleicht ist das ja besser als die letzte direction durch die liste zu reichen
-
 Charakter::Charakter(sf::RenderWindow& window)
 {
 	if(!moveBuffer.loadFromFile("move.wav"))
@@ -50,7 +48,6 @@ Charakter::Charakter(sf::RenderWindow& window)
 
 	isLerping = false;
 	tileSize = 40.0f;
-	adjustApplePosition = sf::Vector2f(20, 20);
 }
 
 Charakter::~Charakter()
@@ -88,7 +85,7 @@ void Charakter::Events(sf::Event& event, Apple& apple)
 
 		if (event.key.code == sf::Keyboard::J)
 		{
-			apple.SetPosition(sf::Vector2f(rand() % (800 / (int)tileSize) * (int)tileSize, rand() % (600 / (int)tileSize) * (int)tileSize) + sf::Vector2f(20,20));
+			apple.SetPosition(sf::Vector2f(rand() % (800 / (int)tileSize) * (int)tileSize, rand() % (600 / (int)tileSize) * (int)tileSize));
 		}
 
 		if(event.key.code == sf::Keyboard::Space)
@@ -234,14 +231,14 @@ void Charakter::Collision(const sf::IntRect& bodyPartRect, Apple& apple)
 	if(apple.GetRect().intersects(bodyPartRect))
 	{
 		rndApplePos = sf::Vector2f(rand() % (800 / (int)tileSize) * (int)tileSize, rand() % (600 / (int)tileSize) * (int)tileSize);
-		apple.SetPosition(rndApplePos + adjustApplePosition);
+		apple.SetPosition(rndApplePos);
 		std::cout << "Collision" << std::endl;
 	}
 	
 	if (snakeHeadRect.intersects(apple.GetRect()))
 	{
 		eat.play();
-		apple.SetPosition(rndApplePos + adjustApplePosition);
+		apple.SetPosition(rndApplePos);
 		AddBodyPart();
 	}
 }
@@ -283,7 +280,7 @@ void Charakter::Reset(sf::RenderWindow& window, Apple& apple)
 	isBodyCollisionActive = false;
 	hasCollided = false;
 
-	apple.SetPosition(rndApplePos + adjustApplePosition);
+	apple.SetPosition(rndApplePos);
 
 	speed = 250.0f;
 	direction = Direction::Left;

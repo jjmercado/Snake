@@ -13,6 +13,9 @@ class Apple
 		void SetPosition(const sf::Vector2f& position);
 		void Animation();
 		sf::Vector2f position;
+		sf::Image colImage;
+		sf::Texture colTexture;
+		sf::Sprite colSprite;
 
 	private:
 		sf::Sprite sprite;

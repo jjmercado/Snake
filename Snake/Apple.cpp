@@ -12,16 +12,23 @@ Apple::Apple()
 	rect = sf::IntRect(position.x, position.y, sprite.getTextureRect().width, sprite.getTextureRect().height);
 	animationSpeed = 0.1f;
 	sprite.setOrigin(sprite.getTextureRect().width / 2, sprite.getTextureRect().height / 2);
+
+	colImage.create(40, 40, sf::Color::Red);
+	colTexture.loadFromImage(colImage);
+	colSprite.setTexture(colTexture);
+	colSprite.setPosition(position);
 }
 
 void Apple::Render(sf::RenderWindow& window)
 {
 	window.draw(sprite);
+	window.draw(colSprite);
 	Animation();
 }
 
 void Apple::Update()
 {
+
 }
 
 sf::IntRect Apple::GetRect()
@@ -32,7 +39,8 @@ sf::IntRect Apple::GetRect()
 void Apple::SetPosition(const sf::Vector2f& position)
 {
 	this->position = position;
-	sprite.setPosition(position);
+	colSprite.setPosition(position);
+	sprite.setPosition(position + sf::Vector2f(20, 20));
 	rect = sf::IntRect(position.x, position.y, sprite.getTextureRect().width, sprite.getTextureRect().height);
 }
 

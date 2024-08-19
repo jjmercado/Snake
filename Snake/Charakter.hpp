@@ -45,7 +45,6 @@ class Charakter
 		sf::Vector2f direction;
 		sf::Vector2f lastPosition;
 		sf::Vector2f lastDirection;
-		sf::Vector2f adjustApplePosition;
 		sf::IntRect snakeHeadRect;
 		sf::Clock directionChangeClock;
 		sf::Clock testClock;
